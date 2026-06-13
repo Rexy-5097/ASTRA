@@ -331,7 +331,7 @@ export function CosmicBackground() {
 
   const isHomepage = pathname === '/';
   const isTargetPage = pathname.startsWith('/target/');
-  const opacity = isTargetPage ? 0.35 : isHomepage ? 0.65 : 0.50;
+  const opacity = 1.0; // Keep background container opaque to prevent double-dimming
 
   const videoSrc = useMemo(() => {
     if (pathname === '/') return '/blackhole.mp4';
@@ -360,12 +360,12 @@ export function CosmicBackground() {
         muted
         playsInline
         className="absolute inset-0 w-full h-full object-cover scale-[1.03]"
-        style={{ filter: 'brightness(0.25) blur(4px) saturate(0.6)' }}
+        style={{ filter: 'brightness(0.30) blur(3px) saturate(0.6)' }}
       >
         <source src={videoSrc} type="video/mp4" />
       </video>
-      {/* 80% Dark overlay & Vignette */}
-      <div className="absolute inset-0 bg-[#05070B]/80 pointer-events-none" />
+      {/* 75% Dark overlay & Vignette */}
+      <div className="absolute inset-0 bg-[#05070B]/75 pointer-events-none" />
       <div className="absolute inset-0 bg-gradient-to-t from-[#05070B] via-transparent to-[#05070B] pointer-events-none" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_30%,#05070B_95%)] pointer-events-none" />
     </div>
