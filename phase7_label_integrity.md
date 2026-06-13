@@ -1,0 +1,110 @@
+# ASTRA Phase 7A — Label Integrity Report
+
+## 1. Per-Class Label Verification Audit (N=100 random stars)
+
+| TIC ID | Metadata Class | Manifest Class | Status |
+| :--- | :---: | :---: | :---: |
+| TIC_418708978 | rr_lyrae | rr_lyrae | ✅ Pass |
+| TIC_159988739 | rr_lyrae | rr_lyrae | ✅ Pass |
+| TIC_116893327 | rr_lyrae | rr_lyrae | ✅ Pass |
+| TIC_468770269 | rr_lyrae | rr_lyrae | ✅ Pass |
+| TIC_232068425 | rr_lyrae | rr_lyrae | ✅ Pass |
+| TIC_220578651 | rr_lyrae | rr_lyrae | ✅ Pass |
+| TIC_207205130 | rr_lyrae | rr_lyrae | ✅ Pass |
+| TIC_191147281 | rr_lyrae | rr_lyrae | ✅ Pass |
+| TIC_468693783 | rr_lyrae | rr_lyrae | ✅ Pass |
+| TIC_15731173 | rr_lyrae | rr_lyrae | ✅ Pass |
+| TIC_435856298 | rr_lyrae | rr_lyrae | ✅ Pass |
+| TIC_382416638 | rr_lyrae | rr_lyrae | ✅ Pass |
+| TIC_142945584 | rr_lyrae | rr_lyrae | ✅ Pass |
+| TIC_399136271 | rr_lyrae | rr_lyrae | ✅ Pass |
+| TIC_301800534 | rr_lyrae | rr_lyrae | ✅ Pass |
+| TIC_120444483 | rr_lyrae | rr_lyrae | ✅ Pass |
+| TIC_117643432 | rr_lyrae | rr_lyrae | ✅ Pass |
+| TIC_152309890 | rr_lyrae | rr_lyrae | ✅ Pass |
+| TIC_207148607 | rr_lyrae | rr_lyrae | ✅ Pass |
+| TIC_20926299 | rr_lyrae | rr_lyrae | ✅ Pass |
+| TIC_388643203 | cepheid | cepheid | ✅ Pass |
+| TIC_419921689 | cepheid | cepheid | ✅ Pass |
+| TIC_104661281 | cepheid | cepheid | ✅ Pass |
+| TIC_414869861 | cepheid | cepheid | ✅ Pass |
+| TIC_270731065 | cepheid | cepheid | ✅ Pass |
+| TIC_438557377 | cepheid | cepheid | ✅ Pass |
+| TIC_435453344 | cepheid | cepheid | ✅ Pass |
+| TIC_436602740 | cepheid | cepheid | ✅ Pass |
+| TIC_40367312 | cepheid | cepheid | ✅ Pass |
+| TIC_341996390 | cepheid | cepheid | ✅ Pass |
+| TIC_273633862 | cepheid | cepheid | ✅ Pass |
+| TIC_344847886 | cepheid | cepheid | ✅ Pass |
+| TIC_418698305 | cepheid | cepheid | ✅ Pass |
+| TIC_296761599 | cepheid | cepheid | ✅ Pass |
+| TIC_469704389 | cepheid | cepheid | ✅ Pass |
+| TIC_85932032 | cepheid | cepheid | ✅ Pass |
+| TIC_102236050 | cepheid | cepheid | ✅ Pass |
+| TIC_443271206 | cepheid | cepheid | ✅ Pass |
+| TIC_468316377 | cepheid | cepheid | ✅ Pass |
+| TIC_256386224 | cepheid | cepheid | ✅ Pass |
+| TIC_451585544 | eclipsing_binary | eclipsing_binary | ✅ Pass |
+| TIC_363572836 | eclipsing_binary | eclipsing_binary | ✅ Pass |
+| TIC_317530970 | eclipsing_binary | eclipsing_binary | ✅ Pass |
+| TIC_181065747 | eclipsing_binary | eclipsing_binary | ✅ Pass |
+| TIC_279942136 | eclipsing_binary | eclipsing_binary | ✅ Pass |
+| TIC_349835367 | eclipsing_binary | eclipsing_binary | ✅ Pass |
+| TIC_163258441 | eclipsing_binary | eclipsing_binary | ✅ Pass |
+| TIC_163032189 | eclipsing_binary | eclipsing_binary | ✅ Pass |
+| TIC_405104610 | eclipsing_binary | eclipsing_binary | ✅ Pass |
+| TIC_163035777 | eclipsing_binary | eclipsing_binary | ✅ Pass |
+| TIC_363574566 | eclipsing_binary | eclipsing_binary | ✅ Pass |
+| TIC_363573185 | eclipsing_binary | eclipsing_binary | ✅ Pass |
+| TIC_316931488 | eclipsing_binary | eclipsing_binary | ✅ Pass |
+| TIC_113930263 | eclipsing_binary | eclipsing_binary | ✅ Pass |
+| TIC_451791676 | eclipsing_binary | eclipsing_binary | ✅ Pass |
+| TIC_70284284 | eclipsing_binary | eclipsing_binary | ✅ Pass |
+| TIC_173144979 | eclipsing_binary | eclipsing_binary | ✅ Pass |
+| TIC_398245916 | eclipsing_binary | eclipsing_binary | ✅ Pass |
+| TIC_157754137 | eclipsing_binary | eclipsing_binary | ✅ Pass |
+| TIC_7206989 | eclipsing_binary | eclipsing_binary | ✅ Pass |
+| TIC_137313601 | solar_like | solar_like | ✅ Pass |
+| TIC_149603524 | solar_like | solar_like | ✅ Pass |
+| TIC_137146271 | solar_like | solar_like | ✅ Pass |
+| TIC_122679853 | solar_like | solar_like | ✅ Pass |
+| TIC_122673562 | solar_like | solar_like | ✅ Pass |
+| TIC_137147365 | solar_like | solar_like | ✅ Pass |
+| TIC_137313572 | solar_like | solar_like | ✅ Pass |
+| TIC_122680392 | solar_like | solar_like | ✅ Pass |
+| TIC_137147422 | solar_like | solar_like | ✅ Pass |
+| TIC_122783474 | solar_like | solar_like | ✅ Pass |
+| TIC_229980647 | solar_like | solar_like | ✅ Pass |
+| TIC_137307746 | solar_like | solar_like | ✅ Pass |
+| TIC_351052534 | solar_like | solar_like | ✅ Pass |
+| TIC_167602316 | solar_like | solar_like | ✅ Pass |
+| TIC_137098357 | solar_like | solar_like | ✅ Pass |
+| TIC_176956893 | solar_like | solar_like | ✅ Pass |
+| TIC_137496578 | solar_like | solar_like | ✅ Pass |
+| TIC_137146678 | solar_like | solar_like | ✅ Pass |
+| TIC_137307391 | solar_like | solar_like | ✅ Pass |
+| TIC_122679928 | solar_like | solar_like | ✅ Pass |
+| TIC_396234347 | stable | stable | ✅ Pass |
+| TIC_405251305 | stable | stable | ✅ Pass |
+| TIC_165879493 | stable | stable | ✅ Pass |
+| TIC_378534800 | stable | stable | ✅ Pass |
+| TIC_439951000 | stable | stable | ✅ Pass |
+| TIC_201252550 | stable | stable | ✅ Pass |
+| TIC_160148344 | stable | stable | ✅ Pass |
+| TIC_347007416 | stable | stable | ✅ Pass |
+| TIC_290465680 | stable | stable | ✅ Pass |
+| TIC_20892978 | stable | stable | ✅ Pass |
+| TIC_405267949 | stable | stable | ✅ Pass |
+| TIC_427687025 | stable | stable | ✅ Pass |
+| TIC_382473126 | stable | stable | ✅ Pass |
+| TIC_201249058 | stable | stable | ✅ Pass |
+| TIC_422843277 | stable | stable | ✅ Pass |
+| TIC_259258109 | stable | stable | ✅ Pass |
+| TIC_70744288 | stable | stable | ✅ Pass |
+| TIC_70762901 | stable | stable | ✅ Pass |
+| TIC_120428981 | stable | stable | ✅ Pass |
+| TIC_201251188 | stable | stable | ✅ Pass |
+
+## 2. Verdict
+
+✅ **All random class samples match labels exactly between directory, metadata, and manifest.**
