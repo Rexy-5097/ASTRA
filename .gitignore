@@ -1,0 +1,120 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.pyd
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+env.bak/
+venv.bak/
+
+# PyTorch / ML
+# Note: .pt files are tracked if they are release checkpoints.
+# Large smoke/development checkpoints can be excluded here:
+*_smoke.pt
+*.onnx.data
+
+# Keep primary production checkpoints:
+# !models/saved/best_star_transformer_shared.pt
+# !models/saved/best_star_cnn_dual_aug.pt
+
+# Logs
+logs/
+*.log
+tensorboard_logs/
+
+# macOS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V4
+.Trashes
+ehthumbs.db
+Thumbs.db
+.AppleDouble
+.LSOverride
+Icon?
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*.sublime-project
+*.sublime-workspace
+.ropeproject/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+*.cover
+.hypothesis/
+.tox/
+nosetests.xml
+coverage.xml
+*.coveragerc
+
+# Type checking
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.pytype/
+
+# Next.js / Node
+astra-platform/node_modules/
+astra-platform/.next/
+astra-platform/out/
+astra-platform/.env
+astra-platform/.env.local
+astra-platform/.env.*.local
+astra-platform/npm-debug.log*
+astra-platform/yarn-debug.log*
+astra-platform/yarn-error.log*
+
+# Processed data (large binary arrays — do NOT commit)
+# data/processed/
+# Use dataset_fingerprint.md to verify integrity instead
+
+# Scratch
+scratch/
+*.tmp
+*.bak
+
+# Security
+.env
+.env.*
+*.key
+*.pem
+secrets.yaml
+
+# OS
+*.pid
+*.seed
+*.pid.lock

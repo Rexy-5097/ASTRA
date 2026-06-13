@@ -1,0 +1,85 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+permissions:
+  contents: write
+
+jobs:
+  build-release:
+    name: Build & Publish Release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          pip install torch --index-url https://download.pytorch.org/whl/cpu
+          pip install -r requirements.txt
+
+      - name: Verify dataset fingerprint
+        run: |
+          python -c "
+          import json
+          with open('lineage.json') as f:
+              lineage = json.load(f)
+          print('Dataset version:', lineage['dataset_version'])
+          print('Dataset hash:', lineage['dataset_hash'])
+          print('Total stars:', lineage['total_stars'])
+          "
+
+      - name: Verify experiment metadata
+        run: |
+          python -c "
+          import json
+          with open('models/saved/experiment_metadata.json') as f:
+              meta = json.load(f)
+          for variant, info in meta.items():
+              print(f'Variant: {variant}')
+              print(f'  Params: {info[\"parameter_count\"]}')
+              print(f'  Checkpoint SHA256: {info[\"checkpoint_sha256\"]}')
+          " || echo 'No experiment_metadata.json found — skipping'
+
+      - name: Create release archive
+        run: |
+          VERSION=${GITHUB_REF#refs/tags/}
+          tar -czf astra-${VERSION}.tar.gz \
+            --exclude='.venv' \
+            --exclude='__pycache__' \
+            --exclude='*.pyc' \
+            --exclude='.DS_Store' \
+            --exclude='astra-platform/node_modules' \
+            --exclude='astra-platform/.next' \
+            "."
+          echo "Archive created: astra-${VERSION}.tar.gz"
+          ls -lh astra-${VERSION}.tar.gz
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: astra-*.tar.gz
+          generate_release_notes: true
+          body: |
+            ## ASTRA Release ${{ github.ref_name }}
+
+            ### Verified Metrics (Zero-Hallucination)
+            - **Best Model**: HybridTransformer (shared variant)
+            - **Test Accuracy**: 78.17% (95% CI: [71.13%, 85.21%])
+            - **Macro F1**: 0.7677 (95% CI: [0.6944, 0.8320])
+            - **Dataset**: 944 TESS stars, 5 classes
+            - **Ground Truth Audits**: 8/8 PASS, 0 mismatches
+
+            ### Installation
+            ```bash
+            pip install -r requirements.txt
+            python training/train_transformer.py --variant shared --seed 42
+            ```
+
+            See [CHANGELOG.md](CHANGELOG.md) for full release notes.

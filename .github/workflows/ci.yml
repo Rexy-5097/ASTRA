@@ -1,0 +1,114 @@
+name: CI — ASTRA Pipeline Tests
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  lint:
+    name: Lint (ruff)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install ruff
+      - run: ruff check pipeline/ training/ data/ tests/
+
+  test:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.11', '3.12']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install torch --index-url https://download.pytorch.org/whl/cpu
+          pip install -r requirements.txt
+          pip install pytest pytest-cov
+      - name: Run tests
+        run: |
+          python -m pytest tests/ -v --tb=short
+      - name: Pipeline smoke test
+        run: |
+          python -c "
+          import sys
+          sys.path.insert(0, '.')
+          from training.models.star_cnn import StarCNN
+          from training.models.hybrid_transformer import HybridTransformer
+          import torch
+          
+          # Verify CNN
+          m = StarCNN()
+          x = torch.randn(2, 1, 1000)
+          out = m(x)
+          assert out.shape == (2, 5), f'CNN output shape mismatch: {out.shape}'
+          print('✅ StarCNN forward pass OK')
+          
+          # Verify HybridTransformer (shared)
+          m = HybridTransformer(variant='shared')
+          x_raw = torch.randn(2, 1, 1000)
+          x_fold = torch.randn(2, 1, 200)
+          out = m(x_raw, x_fold)
+          assert out.shape == (2, 5), f'Transformer output shape mismatch: {out.shape}'
+          print('✅ HybridTransformer (shared) forward pass OK')
+          print('✅ All model smoke tests passed')
+          "
+
+  dataset-integrity:
+    name: Dataset Integrity Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify split files exist
+        run: |
+          python -c "
+          import json, os
+
+          for fname in ['phase6_train_ids.json', 'phase6_val_ids.json', 'phase6_test_ids.json']:
+              assert os.path.exists(fname), f'Missing split file: {fname}'
+              with open(fname) as f:
+                  data = json.load(f)
+              assert len(data) > 0, f'Empty split file: {fname}'
+              print(f'✅ {fname}: {len(data)} entries')
+
+          # Verify no overlap
+          with open('phase6_train_ids.json') as f: train = set(json.load(f))
+          with open('phase6_val_ids.json') as f: val = set(json.load(f))
+          with open('phase6_test_ids.json') as f: test = set(json.load(f))
+
+          assert not (train & val), 'Data leakage: train/val overlap!'
+          assert not (train & test), 'Data leakage: train/test overlap!'
+          assert not (val & test), 'Data leakage: val/test overlap!'
+          print('✅ No data leakage detected')
+          "
+
+  frontend:
+    name: Next.js Build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: astra-platform
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: astra-platform/package-lock.json
+      - run: npm ci
+      - run: npm run build
+        env:
+          NEXT_TELEMETRY_DISABLED: 1

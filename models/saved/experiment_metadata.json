@@ -1,0 +1,38 @@
+{
+  "dual_aug": {
+    "variant": "dual_aug",
+    "seed": 42,
+    "device": "mps",
+    "python_version": "3.12.12 (main, Oct  9 2025, 11:07:00) [Clang 17.0.0 (clang-1700.6.3.2)]",
+    "torch_version": "2.12.0",
+    "parameter_count": 1043333,
+    "git_commit": "unknown",
+    "dataset_fingerprint_hash": "f99b4b06f16952033b5445bb0682d059e9ea4c3f99320a05d31aebb25c2dbf58",
+    "split_hash_root": "ebcdc44c3dba849579675369b1559c77e50b6fead06abd40d3fc187425a7d4e4",
+    "split_hashes": {
+      "train": "5a9bf6c6ad40757a52d0f4a044626e82a4876839b175f5070fb28834c815eed0",
+      "val": "c733ab95c4a22ebc29ca123b2e923c8b8069933ccdff2e9f03a3fdc882f761b3",
+      "test": "2b62970d610f66f12711b6d9594305b33961a04d17c48807bd6123562350f4c0"
+    },
+    "checkpoint_sha256": "65da1034868c5460b2c269e1a11936864fe6191fa81116d5fe2be934d8478af2",
+    "timestamp": "2026-06-12T14:58:52.333692Z"
+  },
+  "shared": {
+    "variant": "shared",
+    "seed": 42,
+    "device": "mps",
+    "python_version": "3.12.12 (main, Oct  9 2025, 11:07:00) [Clang 17.0.0 (clang-1700.6.3.2)]",
+    "torch_version": "2.12.0",
+    "parameter_count": 1373701,
+    "git_commit": "unknown",
+    "dataset_fingerprint_hash": "f99b4b06f16952033b5445bb0682d059e9ea4c3f99320a05d31aebb25c2dbf58",
+    "split_hash_root": "ebcdc44c3dba849579675369b1559c77e50b6fead06abd40d3fc187425a7d4e4",
+    "split_hashes": {
+      "train": "5a9bf6c6ad40757a52d0f4a044626e82a4876839b175f5070fb28834c815eed0",
+      "val": "c733ab95c4a22ebc29ca123b2e923c8b8069933ccdff2e9f03a3fdc882f761b3",
+      "test": "2b62970d610f66f12711b6d9594305b33961a04d17c48807bd6123562350f4c0"
+    },
+    "checkpoint_sha256": "bf374ce492825916f2f97a4e29673a1eca35f76cc08f603b384d103fbe95d388",
+    "timestamp": "2026-06-13T00:35:13.421968Z"
+  }
+}

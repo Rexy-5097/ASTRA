@@ -1,0 +1,28 @@
+cff-version: 1.2.0
+title: 'ASTRA: Automated Stellar Transient Recognition & Analysis'
+message: 'If you use this software, please cite it as below.'
+type: software
+authors:
+  - family-names: Tripathy
+    given-names: Soumyadeb
+repository-code: 'https://github.com/soumyadebtripathy/ASTRA'
+license: MIT
+version: '1.0.0'
+date-released: '2026-06-13'
+keywords:
+  - stellar variability
+  - variable star classification
+  - TESS light curves
+  - machine learning
+  - deep learning
+  - astronomy
+  - astrophysics
+  - transformer
+  - CNN
+abstract: >-
+  ASTRA is an end-to-end machine learning pipeline for automated classification
+  of stellar variability from TESS light curves. It implements a Hybrid CNN +
+  Transformer architecture achieving 78.17% test accuracy across five stellar
+  variability classes (RR Lyrae, Cepheid, Eclipsing Binary, Solar-like, and
+  Stable stars) on a verified dataset of 944 stars with cryptographic integrity
+  guarantees.

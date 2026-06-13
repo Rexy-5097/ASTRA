@@ -1,0 +1,13 @@
+{
+  "total": 300,
+  "per_class": {
+    "rr_lyrae": 60,
+    "cepheid": 60,
+    "eclipsing_binary": 60,
+    "solar_like": 60,
+    "stable": 60
+  },
+  "balanced_to": 60,
+  "failures": [],
+  "note": "TESS availability not verified \u2014 checked at download time"
+}

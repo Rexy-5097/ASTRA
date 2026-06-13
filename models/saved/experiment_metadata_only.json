@@ -1,0 +1,11 @@
+{
+  "variant": "only",
+  "seed": 42,
+  "device": "mps",
+  "python_version": "3.12.12 (main, Oct  9 2025, 11:07:00) [Clang 17.0.0 (clang-1700.6.3.2)]",
+  "torch_version": "2.12.0",
+  "parameter_count": 316933,
+  "git_commit": "unknown",
+  "split_hash": "ebcdc44c3dba849579675369b1559c77e50b6fead06abd40d3fc187425a7d4e4",
+  "checkpoint_sha256": "8f66b566c408e56df60f42068b2f5710e75f45722650e3befd770be4cd64df1c"
+}

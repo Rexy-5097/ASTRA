@@ -1,0 +1,35 @@
+{
+  "epochs": [
+    1
+  ],
+  "train_loss": [
+    0.923185
+  ],
+  "train_grad_norm": [
+    3.553078
+  ],
+  "train_entropy": [
+    4.765867
+  ],
+  "val_loss": [
+    1.027949
+  ],
+  "val_accuracy": [
+    0.185185
+  ],
+  "val_entropy": [
+    4.792561
+  ],
+  "gpu_mem_mb": [
+    5.09
+  ],
+  "best_epoch": 1,
+  "best_val_accuracy": 0.185185,
+  "model_params": 316933,
+  "subgroup_evaluation": {
+    "catalog_accuracy": 0.3125,
+    "catalog_count": 32,
+    "bls_accuracy": 0.0,
+    "bls_count": 22
+  }
+}

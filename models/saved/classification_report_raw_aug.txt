@@ -1,0 +1,11 @@
+                  precision    recall  f1-score   support
+
+        rr_lyrae       0.92      0.85      0.88        13
+         cepheid       0.60      1.00      0.75         9
+eclipsing_binary       1.00      0.70      0.82        10
+      solar_like       0.67      0.22      0.33         9
+          stable       0.59      0.77      0.67        13
+
+        accuracy                           0.72        54
+       macro avg       0.75      0.71      0.69        54
+    weighted avg       0.76      0.72      0.71        54

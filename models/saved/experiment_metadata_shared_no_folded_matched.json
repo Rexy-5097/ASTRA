@@ -1,0 +1,11 @@
+{
+  "variant": "shared_no_folded_matched",
+  "seed": 42,
+  "device": "mps",
+  "python_version": "3.13.5 (v3.13.5:6cb20a219a8, Jun 11 2025, 12:23:45) [Clang 16.0.0 (clang-1600.0.26.6)]",
+  "torch_version": "2.9.1",
+  "parameter_count": 1324089,
+  "git_commit": "unknown",
+  "split_hash": "6b838be3c7aa46a2b6c78d335d1303fd571bf35b3fdf4236ac0891c85187b019",
+  "checkpoint_sha256": "ff39f8b53d89e796f2a1a7846a68f8c250a490d400cc2887bd363771480a8f98"
+}
