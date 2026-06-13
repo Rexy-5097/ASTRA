@@ -16,4 +16,4 @@ services:
       - key: NEXT_TELEMETRY_DISABLED
         value: "1"
       - key: NODE_VERSION
-        value: "20.10.0"
+        value: "22.11.0"
