@@ -6,13 +6,34 @@ import { Sidebar } from './Sidebar';
 import { TopBar } from './TopBar';
 import { CommandPalette } from './CommandPalette';
 import { CosmicBackground } from '../three/CosmicBackground';
+import { ParticleLayer } from '../shared/ParticleLayer';
 import { useAstraStore } from '@/lib/store';
 import { spaceHumSynth } from '@/lib/utils/SpaceHum';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export function GlobalClientContainer({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const { audioState } = useAstraStore();
+  const { 
+    audioState, 
+    setAudioState, 
+    audioVolume, 
+    setAudioVolume, 
+    qualityState, 
+    setQualityState 
+  } = useAstraStore();
+
+  // Load from localStorage on mount
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const savedAudio = localStorage.getItem('astra-audio-state') as 'muted' | 'playing' | null;
+      const savedVolume = localStorage.getItem('astra-audio-volume');
+      const savedQuality = localStorage.getItem('astra-quality-state') as 'low' | 'medium' | 'high' | null;
+
+      if (savedAudio) setAudioState(savedAudio);
+      if (savedVolume) setAudioVolume(parseFloat(savedVolume));
+      if (savedQuality) setQualityState(savedQuality);
+    }
+  }, [setAudioState, setAudioVolume, setQualityState]);
 
   // Manage programmatic deep-space hum synthesis
   useEffect(() => {
@@ -22,6 +43,11 @@ export function GlobalClientContainer({ children }: { children: React.ReactNode 
       spaceHumSynth?.stop();
     }
   }, [audioState]);
+
+  // Sync volume with synthesizer
+  useEffect(() => {
+    spaceHumSynth?.setVolume(audioVolume);
+  }, [audioVolume]);
 
   // Clean up audio on unmount
   useEffect(() => {
@@ -34,6 +60,7 @@ export function GlobalClientContainer({ children }: { children: React.ReactNode 
     <div className="flex h-screen overflow-hidden text-[#D7DEE7]">
       {/* 3D Cosmic Starfield Layer (behind everything) */}
       <CosmicBackground />
+      <ParticleLayer />
 
       {/* Global Navigation Sidebar */}
       <Sidebar />
@@ -48,10 +75,10 @@ export function GlobalClientContainer({ children }: { children: React.ReactNode 
           <AnimatePresence mode="wait">
             <motion.div
               key={pathname}
-              initial={{ opacity: 0, scale: 0.995, y: 3 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.995, y: -3 }}
-              transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] as const }}
+              initial={{ opacity: 0, y: 6, filter: 'blur(4px)' }}
+              animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+              exit={{ opacity: 0, y: -6, filter: 'blur(4px)' }}
+              transition={{ duration: 0.35, ease: 'easeInOut' }}
               className="h-full w-full"
             >
               {children}

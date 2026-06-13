@@ -9,40 +9,89 @@ import { AUDIT_EVENTS, CLASS_LABELS, CLASS_COLORS } from '@/lib/data/constants';
 import { formatParams, formatPercent } from '@/lib/utils';
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from 'recharts';
 import { motion, useScroll, useSpring } from 'framer-motion';
-import { ChevronDown, ArrowRight, ShieldCheck, Cpu, Database, Compass, Globe, Sparkles } from 'lucide-react';
+import { 
+  ChevronDown, 
+  ArrowRight, 
+  ShieldCheck, 
+  Cpu, 
+  Database, 
+  Compass, 
+  Globe, 
+  Sparkles, 
+  AlertTriangle, 
+  Activity, 
+  Play, 
+  TrendingUp, 
+  Search, 
+  BarChart2, 
+  FileText, 
+  CheckCircle2 
+} from 'lucide-react';
 
 const sectionNames = [
-  { id: 0, tag: '01', title: 'MISSION INITIATION', desc: 'Objective & Parameters' },
-  { id: 1, tag: '02', title: 'DATA FREEZE', desc: 'Dataset Lock' },
-  { id: 2, tag: '03', title: 'MODEL CORE', desc: 'Neural Encoder' },
-  { id: 3, tag: '04', title: 'CELESTIAL GLOBAL', desc: 'Sky Projections' },
-  { id: 4, tag: '05', title: 'TACTICAL COMMAND', desc: 'Operational Telemetry' },
+  { id: 0, tag: '01', title: 'MISSION BRIEFING', desc: 'Objective & Telemetry' },
+  { id: 1, tag: '02', title: 'SCIENTIFIC DATASET', desc: 'Stellar Cohorts' },
+  { id: 2, tag: '03', title: 'SCIENTIFIC FINDINGS', desc: 'BLS Bottleneck Analysis' },
+  { id: 3, tag: '04', title: 'MODEL INTELLIGENCE', desc: 'Neural Core Configurations' },
+  { id: 4, tag: '05', title: 'LAUNCH MISSION', desc: 'Operations Control Room' },
 ];
 
 const sectionVariants = {
-  hidden: { opacity: 0, y: 20 },
+  hidden: { opacity: 0, y: 15 },
   visible: { 
     opacity: 1, 
     y: 0,
-    transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] as const }
+    transition: { duration: 0.45, ease: [0.16, 1, 0.3, 1] as const }
   }
 };
 
 const staggerContainer = {
   hidden: {},
   visible: {
-    transition: { staggerChildren: 0.05 }
+    transition: { staggerChildren: 0.04 }
   }
 };
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 10 },
+  hidden: { opacity: 0, y: 8 },
   visible: { 
     opacity: 1, 
     y: 0,
-    transition: { duration: 0.3, ease: 'easeOut' as const }
+    transition: { duration: 0.25, ease: 'easeOut' as const }
   }
 };
+
+// Simple animated counter helper
+function AnimatedCounter({ value, suffix = '' }: { value: number; suffix?: string }) {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    let start = 0;
+    const end = value;
+    if (start === end) {
+      setCount(end);
+      return;
+    }
+
+    const duration = 1200; // 1.2s
+    const stepTime = Math.max(Math.floor(duration / end), 16);
+    const stepSize = Math.ceil(end / (duration / stepTime));
+
+    const timer = setInterval(() => {
+      start += stepSize;
+      if (start >= end) {
+        clearInterval(timer);
+        setCount(end);
+      } else {
+        setCount(start);
+      }
+    }, stepTime);
+
+    return () => clearInterval(timer);
+  }, [value]);
+
+  return <span>{count.toLocaleString()}{suffix}</span>;
+}
 
 export default function Home() {
   const [health, setHealth] = useState<any>(null);
@@ -85,7 +134,7 @@ export default function Home() {
       },
       { 
         root: mainElement,
-        threshold: 0.2, 
+        threshold: 0.15, 
         rootMargin: '-20% 0px -40% 0px' 
       }
     );
@@ -110,13 +159,13 @@ export default function Home() {
     return (
       <div className="space-y-6">
         <div>
-          <h1 className="text-xl font-semibold text-[#D7DEE7]">Mission Control</h1>
-          <p className="text-[0.8125rem] text-[#8B97A7] mt-0.5 animate-pulse">
+          <h1 className="text-xl font-bold tracking-tight text-[#D7DEE7]">Mission Control</h1>
+          <p className="text-[11px] text-[#8B97A7] mt-0.5 animate-pulse font-mono">
             Loading stellar intelligence parameters…
           </p>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-          {[...Array(6)].map((_, i) => (
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {[...Array(4)].map((_, i) => (
             <div key={i} className="h-24 astra-glass rounded animate-pulse" />
           ))}
         </div>
@@ -147,7 +196,7 @@ export default function Home() {
 
   const modelMetrics = {
     name: modelDetails.checkpoint.filename === 'best_star_transformer_shared.pt' ? 'ASTRA-TRANS-SHARED' : modelDetails.checkpoint.filename.replace('.pt', '').toUpperCase(),
-    version: 'v2.0.0-phase7b',
+    version: 'v1.0.0',
     architecture: modelDetails.checkpoint.architecture,
     parameters: modelDetails.checkpoint.loaded_params,
     checkpoint_hash: modelDetails.checkpoint.sha256,
@@ -193,16 +242,16 @@ export default function Home() {
   return (
     <div className="relative select-text w-full">
       
-      {/* 1. Fixed Top Progress Indicator (Always tracks scroll progress inside main) */}
+      {/* Scroll Progress Indicator */}
       <motion.div 
-        className="fixed top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-400 origin-left z-50 shadow-[0_0_8px_rgba(245,158,11,0.4)]" 
+        className="fixed top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-blue-600 via-indigo-500 to-[#6EA8FE] origin-left z-50 shadow-[0_0_8px_rgba(110,168,254,0.4)]" 
         style={{ scaleX }} 
       />
 
-      {/* 2. Responsive 2-Column Grid Layout (Prevents Left Sidebar overlap) */}
+      {/* Side-by-side Columns */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 relative w-full">
         
-        {/* Sticky Narrative Timeline Left Column (lg:span-3) */}
+        {/* Sticky Sidebar Navigation Indicator */}
         <div className="hidden lg:block lg:col-span-3">
           <div className="sticky top-6 border-l border-white/5 pl-4 py-2 space-y-6 select-none font-mono">
             {sectionNames.map((node) => {
@@ -216,11 +265,11 @@ export default function Home() {
                   {isActive && (
                     <motion.div 
                       layoutId="activeTimelineIndicator"
-                      className="absolute left-[-17px] top-1.5 w-1 h-8 rounded-r bg-[#F59E0B] shadow-[0_0_8px_rgba(245,158,11,0.5)]"
+                      className="absolute left-[-17px] top-1.5 w-1 h-8 rounded-r bg-[#6EA8FE] shadow-[0_0_8px_rgba(110,168,254,0.5)]"
                       transition={{ type: 'spring', stiffness: 220, damping: 24 }}
                     />
                   )}
-                  <span className={`text-[10px] leading-none tracking-[0.12em] ${isActive ? 'text-[#F59E0B] font-bold' : 'text-[#5A6878] group-hover:text-[#8B97A7]'}`}>
+                  <span className={`text-[10px] leading-none tracking-[0.12em] ${isActive ? 'text-[#6EA8FE] font-bold' : 'text-[#5A6878] group-hover:text-[#8B97A7]'}`}>
                     {node.tag} // {node.title}
                   </span>
                   <span className={`text-[9px] leading-none mt-1.5 ${isActive ? 'text-white/60' : 'text-transparent group-hover:text-white/20'}`}>
@@ -232,14 +281,14 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Content Right Column (lg:span-9) */}
-        <div className="col-span-1 lg:col-span-9 flex flex-col gap-20">
+        {/* Content Area */}
+        <div className="col-span-1 lg:col-span-9 flex flex-col gap-24">
 
-          {/* SECTION 1: HERO / MISSION INITIATION */}
+          {/* SECTION 1: MISSION BRIEFING (Hero) */}
           <section 
             id="section-0" 
             data-section-id="0"
-            className="min-h-[80vh] flex flex-col justify-center relative py-6"
+            className="min-h-[85vh] flex flex-col justify-center relative py-6"
           >
             <motion.div
               initial="hidden"
@@ -248,339 +297,128 @@ export default function Home() {
               variants={sectionVariants}
               className="space-y-6"
             >
-              <div className="flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-[#F59E0B] animate-pulse" />
-                <span className="text-[10px] text-[#F59E0B] font-mono uppercase tracking-[0.25em] font-semibold">
-                  ASTRA Stellar Intelligence
+              <div className="flex items-center gap-2 font-mono">
+                <span className="w-2 h-2 rounded-full bg-[#56D364] animate-pulse" />
+                <span className="text-[10px] text-[#56D364] tracking-[0.25em] font-bold">
+                  SYSTEM STATUS: OPERATIONAL
                 </span>
               </div>
 
-              <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight leading-[1.1] text-white">
-                Automated Stellar Transient <br className="hidden md:inline" /> Recognition &amp; Analysis
+              <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.05] text-white">
+                ASTRA <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#D7DEE7] via-[#8B97A7] to-[#6EA8FE] text-3xl md:text-5xl font-bold">
+                  Stellar Intelligence Platform
+                </span>
               </h1>
 
               <p className="text-[12px] text-[#8B97A7] leading-relaxed max-w-2xl font-mono">
-                A multi-modal deep learning platform mapping variable stars observed by the TESS spacecraft. ASTRA fuses time-series convolutions and self-attention representations to deliver high-confidence, calibrated orbital classifications.
+                Aerospace command-grade interface for classifying stellar variability from TESS light curves. 
+                Fuses time-series convolutions and self-attention to map orbital morphologies.
               </p>
 
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl border-t border-white/5 pt-4 text-[10px] font-mono text-[#8B97A7]">
+                <div className="flex flex-col gap-1">
+                  <span className="text-[#5A6878] text-[9px] tracking-wider uppercase">DATASET LOCK FINGERPRINT</span>
+                  <span className="text-white/70 select-all break-all">{datasetMetrics.manifest_sha256}</span>
+                </div>
+                <div className="flex flex-col gap-1">
+                  <span className="text-[#5A6878] text-[9px] tracking-wider uppercase">MODEL CHECKPOINT HASH</span>
+                  <span className="text-white/70 select-all break-all">{modelMetrics.checkpoint_hash}</span>
+                </div>
+              </div>
+
               <div className="flex items-center gap-4 pt-4">
-                <Link 
-                  href="/search"
-                  className="flex items-center gap-2 text-[11px] font-mono px-4 py-2 bg-[#78350F]/40 hover:bg-[#78350F] text-white border border-[#78350F]/80 rounded transition-all duration-300 shadow-[0_0_15px_rgba(245,158,11,0.08)] hover:shadow-[0_0_20px_rgba(245,158,11,0.15)]"
+                <button
+                  onClick={() => handleScrollToSection(4)}
+                  className="flex items-center gap-2 text-[11px] font-mono px-5 py-2.5 bg-[#1D3A6B]/40 hover:bg-[#1D3A6B] text-white border border-[#6EA8FE]/20 hover:border-[#6EA8FE]/50 rounded transition-all duration-300 shadow-lg"
                 >
-                  <span>Query Target Search</span>
-                  <ArrowRight className="w-3.5 h-3.5 text-[#F59E0B]" />
-                </Link>
+                  <span>Launch Operations</span>
+                  <Play className="w-3.5 h-3.5 fill-current text-[#6EA8FE]" />
+                </button>
                 <button 
                   onClick={() => handleScrollToSection(1)}
                   className="flex items-center gap-1.5 text-[11px] font-mono text-[#8B97A7] hover:text-[#D7DEE7] transition-colors"
                 >
-                  <span>Scroll Narrative</span>
+                  <span>Stellar Catalog Data</span>
                   <ChevronDown className="w-3.5 h-3.5 animate-bounce" />
                 </button>
               </div>
             </motion.div>
 
-            {/* Secure indicator banner */}
+            {/* Zero-Trust Audit Banner */}
             {health && health.status === 'READY' && (
               <motion.div 
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
-                transition={{ delay: 0.4 }}
-                className="mt-12 w-full max-w-md p-3.5 rounded border border-emerald-500/10 bg-emerald-500/5 text-[10px] font-mono flex items-center gap-3"
+                transition={{ delay: 0.3 }}
+                className="mt-12 w-full max-w-xl p-3.5 rounded border border-emerald-500/10 bg-emerald-500/5 text-[10px] font-mono flex items-center gap-3 astra-glass"
               >
                 <ShieldCheck className="w-5 h-5 text-emerald-400 shrink-0" />
                 <div className="flex-1">
                   <p className="text-emerald-400 font-bold leading-none uppercase tracking-wider">Zero-Trust Audit Verified</p>
-                  <p className="text-white/40 mt-1 leading-tight">Database loaded. ONNX model hashes locked and verified.</p>
+                  <p className="text-white/50 mt-1 leading-tight">Database integrity checks match lineage specifications. Model ONNX signatures verified.</p>
                 </div>
               </motion.div>
             )}
           </section>
 
-          {/* SECTION 2: DATA FREEZE */}
+          {/* SECTION 2: SCIENTIFIC DATASET */}
           <section 
             id="section-1" 
             data-section-id="1"
-            className="min-h-[75vh] flex flex-col justify-center py-6 border-t border-white/5"
+            className="min-h-[80vh] flex flex-col justify-center py-6 border-t border-white/5"
           >
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-              <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: '-10%' }}
-                variants={sectionVariants}
-                className="space-y-4"
-              >
-                <div className="flex items-center gap-2 text-[#8B97A7] font-mono text-[10px]">
-                  <Database className="w-3.5 h-3.5 text-[#F59E0B]" />
-                  <span className="uppercase tracking-wider">02 // DATASET FINGERPRINT</span>
-                </div>
-                <h2 className="text-2xl font-bold text-white tracking-tight leading-tight">
-                  Cryptographic Dataset <br /> Hard Freeze Lock
-                </h2>
-                <p className="text-[11px] text-[#8B97A7] leading-relaxed font-mono">
-                  ASTRA seals the dataset of <strong className="text-[#D7DEE7]">{datasetMetrics.total_stars} stars</strong>. Checksums are verified programmatically: if the SHA256 matches the baseline index, inference is unlocked. Mismatch aborts evaluation.
-                </p>
-                <div className="pt-4 text-[10px] font-mono border-t border-white/5 space-y-1">
-                  <p className="flex justify-between">
-                    <span className="text-[#5A6878]">FINGERPRINT:</span>
-                    <span className="text-[#F59E0B] select-all tracking-wider font-semibold">{datasetMetrics.manifest_sha256.slice(0, 12)}...{datasetMetrics.manifest_sha256.slice(-12)}</span>
-                  </p>
-                  <p className="flex justify-between">
-                    <span className="text-[#5A6878]">RELEASED:</span>
-                    <span className="text-white/70">{datasetMetrics.freeze_date}</span>
-                  </p>
-                </div>
-              </motion.div>
-
-              <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: '-10%' }}
-                variants={sectionVariants}
-                className="astra-glass border border-white/5 p-5 rounded space-y-4 font-mono shadow-xl relative overflow-hidden group hover:border-white/10"
-              >
-                <div className="absolute top-0 right-0 w-20 h-20 bg-[#78350F]/5 rounded-full blur-2xl pointer-events-none" />
-                <div className="flex justify-between items-center text-[10px] border-b border-white/5 pb-2">
-                  <span className="text-[#D7DEE7] font-bold">COHORT CODES</span>
-                  <span className="text-emerald-400 font-bold uppercase tracking-wider">verified</span>
-                </div>
-                <div className="space-y-3 text-[11px]">
-                  <div className="flex justify-between">
-                    <span className="text-[#8B97A7]">Total Samples:</span>
-                    <span className="text-white font-semibold">{datasetMetrics.total_stars} Targets</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-[#8B97A7]">TESS Light Curves:</span>
-                    <span className="text-white">PDCSAP Flux</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-[#8B97A7]">Validation Partition:</span>
-                    <span className="text-[#A78BFA]">{datasetMetrics.splits.val} stars</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-[#8B97A7]">Lock Integrity:</span>
-                    <span className="text-[#56D364] font-bold">SHA256 SECURED</span>
-                  </div>
-                </div>
-              </motion.div>
-            </div>
-          </section>
-
-          {/* SECTION 3: NEURAL MODEL CORE */}
-          <section 
-            id="section-2" 
-            data-section-id="2"
-            className="min-h-[75vh] flex flex-col justify-center py-6 border-t border-white/5"
-          >
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-              
-              <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: '-10%' }}
-                variants={sectionVariants}
-                className="order-2 md:order-1 astra-glass border border-white/5 p-5 rounded space-y-4 font-mono shadow-xl"
-              >
-                <div className="flex justify-between items-center text-[10px] border-b border-white/5 pb-2">
-                  <span className="text-[#D7DEE7] font-bold">MODEL CONFIG</span>
-                  <span className="text-[#F59E0B] font-bold uppercase tracking-wider">active</span>
-                </div>
-                <div className="space-y-3 text-[11px]">
-                  <div className="flex justify-between">
-                    <span className="text-[#8B97A7]">Model:</span>
-                    <span className="text-[#F59E0B] font-semibold">{modelMetrics.name}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-[#8B97A7]">Base Architecture:</span>
-                    <span className="text-white">{modelMetrics.architecture}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-[#8B97A7]">Parameters:</span>
-                    <span className="text-white">{formatParams(modelMetrics.parameters)}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-[#8B97A7]">ECE (Calibrated):</span>
-                    <span className="text-emerald-400 font-bold">{performanceMetrics.ece_after.toFixed(4)}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-[#8B97A7]">Softmax Temp (T):</span>
-                    <span className="text-[#A78BFA] font-bold">{performanceMetrics.calibration_temperature.toFixed(3)}</span>
-                  </div>
-                </div>
-              </motion.div>
-
-              <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: '-10%' }}
-                variants={sectionVariants}
-                className="space-y-4 order-1 md:order-2"
-              >
-                <div className="flex items-center gap-2 text-[#8B97A7] font-mono text-[10px]">
-                  <Cpu className="w-3.5 h-3.5 text-[#F59E0B]" />
-                  <span className="uppercase tracking-wider">03 // NEURAL ENCODER</span>
-                </div>
-                <h2 className="text-2xl font-bold text-white tracking-tight leading-tight">
-                  Dual-Path Transformer &amp; Calibration
-                </h2>
-                <p className="text-[11px] text-[#8B97A7] leading-relaxed font-mono">
-                  A dual 1D-CNN branch extracts short-term local morphology, and a 4-layer Star Transformer tracks long-term dependencies. Validation scaling at $T={performanceMetrics.calibration_temperature.toFixed(3)}$ addresses classifier overconfidence.
-                </p>
-              </motion.div>
-            </div>
-          </section>
-
-          {/* SECTION 4: SPATIAL COVERAGE */}
-          <section 
-            id="section-3" 
-            data-section-id="3"
-            className="min-h-[75vh] flex flex-col justify-center py-6 border-t border-white/5"
-          >
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-              <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: '-10%' }}
-                variants={sectionVariants}
-                className="space-y-4"
-              >
-                <div className="flex items-center gap-2 text-[#8B97A7] font-mono text-[10px]">
-                  <Compass className="w-3.5 h-3.5 text-[#F59E0B]" />
-                  <span className="uppercase tracking-wider">04 // SPATIAL REFERENCE</span>
-                </div>
-                <h2 className="text-2xl font-bold text-white tracking-tight leading-tight">
-                  TESS Photometric <br /> Celestial Globe Mapping
-                </h2>
-                <p className="text-[11px] text-[#8B97A7] leading-relaxed font-mono">
-                  Coordinates are projected in a 3D orbital space to visual tracking arrays. Resolving coordinates helps prevent telemetry gaps and spatial biases.
-                </p>
-                <div className="pt-2">
-                  <Link 
-                    href="/visualization"
-                    className="inline-flex items-center gap-2 text-[11px] font-mono text-[#F59E0B] hover:text-[#fde047] transition-colors"
-                  >
-                    <span>Explore 3D Celestial Globe</span>
-                    <ArrowRight className="w-3.5 h-3.5 text-[#F59E0B]" />
-                  </Link>
-                </div>
-              </motion.div>
-
-              <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: '-10%' }}
-                variants={sectionVariants}
-                className="h-48 relative border border-white/5 rounded overflow-hidden bg-black/40 flex items-center justify-center shadow-xl group hover:border-white/10"
-              >
-                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(120,53,15,0.2),transparent_70%)]" />
-                <div className="z-10 text-center space-y-2">
-                  <Globe className="w-8 h-8 text-[#F59E0B] mx-auto animate-pulse" />
-                  <p className="text-[10px] font-mono text-white/60 tracking-wider">GLOBE PROJECTIONS LOADED</p>
-                  <p className="text-[9px] font-mono text-white/30 leading-none">RA: 0° to 360° / DEC: -90° to +90°</p>
-                </div>
-              </motion.div>
-            </div>
-          </section>
-
-          {/* SECTION 5: TACTICAL CONTROL CENTER */}
-          <section 
-            id="section-4" 
-            data-section-id="4"
-            className="py-6 border-t border-white/5 space-y-8"
-          >
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={sectionVariants}
-              className="space-y-2"
-            >
+            <div className="space-y-6">
               <div className="flex items-center gap-2 text-[#8B97A7] font-mono text-[10px]">
-                <Compass className="w-3.5 h-3.5 text-[#F59E0B]" />
-                <span className="uppercase tracking-wider">05 // TELEMETRY DASHBOARD</span>
+                <Database className="w-3.5 h-3.5 text-[#6EA8FE]" />
+                <span className="uppercase tracking-wider">02 // SCIENTIFIC COHORT SUMMARY</span>
               </div>
-              <h2 className="text-2xl font-bold text-white tracking-tight">
-                Operational Command Center
-              </h2>
-            </motion.div>
-
-            {/* Top Metrics Row */}
-            <motion.div 
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={staggerContainer}
-              className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4"
-            >
-              <motion.div variants={itemVariants}>
-                <MetricCard
-                  label="Dataset"
-                  value={`${datasetMetrics.total_stars} Stars`}
-                  sub="Freeze V2"
-                  accentColor="text-[#F59E0B]"
-                />
-              </motion.div>
-              <motion.div variants={itemVariants}>
-                <MetricCard
-                  label="Model"
-                  value={modelMetrics.name}
-                  sub={modelMetrics.version}
-                />
-              </motion.div>
-              <motion.div variants={itemVariants}>
-                <MetricCard
-                  label="Test Accuracy"
-                  value={formatPercent(performanceMetrics.test_accuracy)}
-                  sub={`Phase 8 · ${datasetMetrics.splits.test} stars`}
-                />
-              </motion.div>
-              <motion.div variants={itemVariants}>
-                <MetricCard
-                  label="Macro F1"
-                  value={performanceMetrics.macro_f1.toFixed(4)}
-                  sub={`Weighted: ${performanceMetrics.weighted_f1.toFixed(4)}`}
-                />
-              </motion.div>
-              <motion.div variants={itemVariants}>
-                <MetricCard
-                  label="ECE (Calibrated)"
-                  value={performanceMetrics.ece_after.toFixed(4)}
-                  sub={`T=${performanceMetrics.calibration_temperature.toFixed(3)}`}
-                />
-              </motion.div>
-              <motion.div variants={itemVariants}>
-                <MetricCard
-                  label="Parameters"
-                  value={formatParams(modelMetrics.parameters)}
-                  sub={modelMetrics.architecture}
-                />
-              </motion.div>
-            </motion.div>
-
-            {/* Class & Split Layout */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               
-              {/* Class Distribution Donut */}
-              <motion.div
-                initial={{ opacity: 0, y: 15 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.1 }}
-              >
-                <Panel title="Class Distribution" subtitle="Composition of verified star classifications">
-                  <div className="h-64 flex flex-col justify-between">
-                    <div className="flex-1 min-h-[180px]">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div className="astra-glass border border-white/5 p-4 rounded font-mono">
+                  <span className="text-[#5A6878] text-[9px] uppercase tracking-wider block">Target Cohort</span>
+                  <span className="text-2xl font-bold text-white block mt-1">
+                    <AnimatedCounter value={944} suffix=" Stars" />
+                  </span>
+                  <span className="text-[10px] text-[#8B97A7] mt-0.5 block">TESS Light Curves</span>
+                </div>
+                <div className="astra-glass border border-white/5 p-4 rounded font-mono">
+                  <span className="text-[#5A6878] text-[9px] uppercase tracking-wider block">Stellar Classes</span>
+                  <span className="text-2xl font-bold text-white block mt-1">
+                    <AnimatedCounter value={5} suffix=" Classes" />
+                  </span>
+                  <span className="text-[10px] text-[#8B97A7] mt-0.5 block">RR Lyrae, EB, Cep, etc.</span>
+                </div>
+                <div className="astra-glass border border-white/5 p-4 rounded font-mono">
+                  <span className="text-[#5A6878] text-[9px] uppercase tracking-wider block">Catalog Periods</span>
+                  <span className="text-2xl font-bold text-white block mt-1">
+                    <AnimatedCounter value={597} suffix=" Periods" />
+                  </span>
+                  <span className="text-[10px] text-[#8B97A7] mt-0.5 block">Ground Truth VSX</span>
+                </div>
+                <div className="astra-glass border border-white/5 p-4 rounded font-mono">
+                  <span className="text-[#5A6878] text-[9px] uppercase tracking-wider block">BLS Estimations</span>
+                  <span className="text-2xl font-bold text-white block mt-1">
+                    <AnimatedCounter value={347} suffix=" Detections" />
+                  </span>
+                  <span className="text-[10px] text-[#8B97A7] mt-0.5 block">Transit Detections</span>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4">
+                {/* Donut Chart */}
+                <Panel title="Class Composition" subtitle="Proportions of stellar classes in the cohort">
+                  <div className="h-60 flex flex-col justify-between">
+                    <div className="flex-1 min-h-[160px]">
                       <ResponsiveContainer width="100%" height="100%">
                         <PieChart>
                           <Pie
                             data={pieData}
                             cx="50%"
                             cy="50%"
-                            innerRadius={55}
-                            outerRadius={85}
+                            innerRadius={50}
+                            outerRadius={75}
                             paddingAngle={2}
                             dataKey="value"
                           >
@@ -590,10 +428,10 @@ export default function Home() {
                           </Pie>
                           <Tooltip
                             contentStyle={{
-                              background: '#0C1118',
-                              border: '1px solid #1A2430',
-                              borderRadius: 2,
-                              fontSize: 11,
+                              background: '#080C14',
+                              border: '1px solid rgba(255, 255, 255, 0.08)',
+                              borderRadius: 4,
+                              fontSize: 10,
                               fontFamily: 'IBM Plex Mono, monospace',
                               color: '#D7DEE7',
                             }}
@@ -601,38 +439,31 @@ export default function Home() {
                         </PieChart>
                       </ResponsiveContainer>
                     </div>
-                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mt-4 text-[11px] font-mono">
+                    <div className="grid grid-cols-3 gap-1.5 mt-2 text-[10px] font-mono">
                       {pieData.map((item, idx) => (
                         <div key={idx} className="flex items-center gap-1.5">
-                          <span className="w-2.5 h-2.5 rounded-full shrink-0" style={{ backgroundColor: item.color }} />
-                          <span className="text-[#8B97A7] truncate text-[10px]">{item.name}</span>
-                          <span className="text-[#D7DEE7] ml-auto pr-2">{item.value}</span>
+                          <span className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: item.color }} />
+                          <span className="text-[#8B97A7] truncate">{item.name}</span>
+                          <span className="text-white/60 ml-auto pr-1">{item.value}</span>
                         </div>
                       ))}
                     </div>
                   </div>
                 </Panel>
-              </motion.div>
 
-              {/* Split Strategy */}
-              <motion.div
-                initial={{ opacity: 0, y: 15 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.2 }}
-              >
-                <Panel title="Split Allocation" subtitle="Subdivision of dataset for model training & evaluation">
-                  <div className="h-64 flex flex-col justify-center space-y-5">
+                {/* Split Bars */}
+                <Panel title="Split Allocation" subtitle="Subdivision of stellar targets for model verification">
+                  <div className="h-60 flex flex-col justify-center space-y-4">
                     {splitData.map((item, idx) => (
                       <div key={idx} className="space-y-1.5">
                         <div className="flex items-baseline justify-between text-[11px]">
-                          <span className="text-[#D7DEE7] font-medium">{item.name} Split</span>
-                          <div className="space-x-1.5 font-mono">
-                            <span className="text-[#8B97A7]">{item.count} stars</span>
+                          <span className="text-[#D7DEE7] font-medium font-mono">{item.name} Set</span>
+                          <div className="space-x-1.5 font-mono text-[10px]">
+                            <span className="text-[#8B97A7]">{item.count} targets</span>
                             <span className="text-[#6EA8FE]">{item.pct.toFixed(1)}%</span>
                           </div>
                         </div>
-                        <div className="h-2 bg-[#1A2430] rounded-full overflow-hidden">
+                        <div className="h-1.5 bg-[#1A2430] rounded-full overflow-hidden">
                           <motion.div
                             initial={{ width: 0 }}
                             whileInView={{ width: `${item.pct}%` }}
@@ -646,104 +477,272 @@ export default function Home() {
                         </div>
                       </div>
                     ))}
-                    <div className="text-[10px] text-[#5A6878] leading-normal bg-[#05070B] p-2.5 rounded border border-white/5 font-mono">
-                      Note: Split assignment is strictly controlled by JSON files. Zero data leakage has been mathematically verified across all subsets.
+                    <div className="text-[9px] text-[#5A6878] leading-normal bg-black/35 p-3 rounded border border-white/5 font-mono mt-2">
+                      Allocation is strictly isolated via deterministic hash keys to ensure zero target/validation leakage.
                     </div>
                   </div>
                 </Panel>
-              </motion.div>
+              </div>
+            </div>
+          </section>
+
+          {/* SECTION 3: SCIENTIFIC FINDINGS */}
+          <section 
+            id="section-2" 
+            data-section-id="2"
+            className="min-h-[80vh] flex flex-col justify-center py-6 border-t border-white/5"
+          >
+            <div className="space-y-6">
+              <div className="flex items-center gap-2 text-[#8B97A7] font-mono text-[10px]">
+                <TrendingUp className="w-3.5 h-3.5 text-[#F59E0B]" />
+                <span className="uppercase tracking-wider">03 // BOTTLENECK INVESTIGATION</span>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+                <div className="md:col-span-7 space-y-4">
+                  <h2 className="text-2xl font-bold text-white tracking-tight">
+                    BLS Period Mismatch <br />
+                    <span className="text-[#F59E0B]">The Core Classification Bottleneck</span>
+                  </h2>
+                  <p className="text-[11px] text-[#8B97A7] leading-relaxed font-mono">
+                    Audit reports show that **BLS-derived period estimations represent the primary bottleneck** in classification accuracy. 
+                    Due to short TESS observation baselines, the Box Least Squares (BLS) search is prone to harmonic and sub-harmonic period aliasing.
+                  </p>
+                  
+                  <div className="bg-[#78350F]/5 border border-[#78350F]/20 p-3.5 rounded text-[10px] font-mono text-[#D7DEE7] leading-relaxed">
+                    <div className="flex items-center gap-2 text-amber-500 font-bold mb-1.5">
+                      <AlertTriangle className="w-4 h-4" />
+                      <span>BLS ACCURACY REDUCTION</span>
+                    </div>
+                    variable targets with incorrect BLS periods suffer an accuracy drop of over 30%, showing severe sensitivity to period estimation quality.
+                  </div>
+                </div>
+
+                <div className="md:col-span-5 astra-glass border border-white/5 p-5 rounded space-y-5 font-mono">
+                  <h3 className="text-[11px] font-bold text-white uppercase tracking-wider border-b border-white/5 pb-2">
+                    Classification Accuracy Comparison
+                  </h3>
+
+                  {/* Accuracy bars */}
+                  <div className="space-y-3">
+                    <div className="space-y-1">
+                      <div className="flex justify-between text-[10px]">
+                        <span className="text-[#56D364] font-semibold">Non-BLS Targets (Correct Period)</span>
+                        <span className="text-white">90.3%</span>
+                      </div>
+                      <div className="h-2 bg-[#1A2430] rounded-full overflow-hidden">
+                        <div className="h-full bg-[#56D364] rounded-full w-[90.3%]" />
+                      </div>
+                    </div>
+
+                    <div className="space-y-1">
+                      <div className="flex justify-between text-[10px]">
+                        <span className="text-[#D29922] font-semibold">BLS-Dependent Targets</span>
+                        <span className="text-white">58.2%</span>
+                      </div>
+                      <div className="h-2 bg-[#1A2430] rounded-full overflow-hidden">
+                        <div className="h-full bg-[#D29922] rounded-full w-[58.2%]" />
+                      </div>
+                    </div>
+                  </div>
+
+                  <p className="text-[9px] text-[#5A6878] leading-tight">
+                    *Source: Verified Phase 7C audit reports and coordinate validation files.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* SECTION 4: MODEL INTELLIGENCE */}
+          <section 
+            id="section-3" 
+            data-section-id="3"
+            className="min-h-[80vh] flex flex-col justify-center py-6 border-t border-white/5"
+          >
+            <div className="space-y-6">
+              <div className="flex items-center gap-2 text-[#8B97A7] font-mono text-[10px]">
+                <Cpu className="w-3.5 h-3.5 text-[#6EA8FE]" />
+                <span className="uppercase tracking-wider">04 // NEURAL BACKBONE</span>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
+                
+                {/* Left Column - Specs */}
+                <div className="md:col-span-5 astra-glass border border-white/5 p-4 rounded font-mono space-y-4">
+                  <div className="border-b border-white/5 pb-2 flex justify-between items-center text-[10px]">
+                    <span className="text-[#D7DEE7] font-bold">NEURAL NETWORKS CONFIG</span>
+                    <span className="text-[#6EA8FE] uppercase font-bold tracking-widest text-[9px]">LOCKED</span>
+                  </div>
+
+                  <div className="space-y-3.5 text-[11px]">
+                    <div className="flex justify-between">
+                      <span className="text-[#8B97A7]">Model Tag:</span>
+                      <span className="text-white font-bold">{modelMetrics.name}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-[#8B97A7]">Transformer Core:</span>
+                      <span className="text-[#6EA8FE]">4 Layers, 8 Heads</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-[#8B97A7]">CNN Backbone:</span>
+                      <span className="text-[#6EA8FE]">Dual-Branch 1D-Conv</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-[#8B97A7]">Transformer Params:</span>
+                      <span className="text-white">{formatParams(1373701)}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-[#8B97A7]">CNN Branch Params:</span>
+                      <span className="text-white">{formatParams(1043333)}</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Right Column - Stats */}
+                <div className="md:col-span-7 astra-glass border border-white/5 p-4 rounded font-mono space-y-4">
+                  <div className="border-b border-white/5 pb-2 flex justify-between items-center text-[10px]">
+                    <span className="text-[#D7DEE7] font-bold">CALIBRATION &amp; UNCERTAINTY DIAGNOSTICS</span>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="p-3 bg-black/20 border border-white/5 rounded">
+                      <span className="text-[9px] text-[#5A6878] uppercase block">ECE (Uncalibrated)</span>
+                      <span className="text-lg font-bold text-amber-500 block mt-1">
+                        {performanceMetrics.ece_before.toFixed(4)}
+                      </span>
+                      <span className="text-[9px] text-[#8B97A7]">Significant overconfidence</span>
+                    </div>
+                    <div className="p-3 bg-black/20 border border-white/5 rounded">
+                      <span className="text-[9px] text-[#5A6878] uppercase block">ECE (Calibrated)</span>
+                      <span className="text-lg font-bold text-emerald-400 block mt-1">
+                        {performanceMetrics.ece_after.toFixed(4)}
+                      </span>
+                      <span className="text-[9px] text-[#8B97A7]">T={performanceMetrics.calibration_temperature.toFixed(3)} temperature scaling</span>
+                    </div>
+                  </div>
+
+                  <div className="text-[10px] text-[#8B97A7] leading-relaxed bg-[#05070B]/50 p-2.5 rounded border border-white/5">
+                    <strong>Uncertainty Filtering:</strong> Applying entropy thresholding to isolate low-confidence predictions enables a target error rate below 5% for high-certainty subsets, proving the value of calibration.
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </section>
+
+          {/* SECTION 5: LAUNCH MISSION */}
+          <section 
+            id="section-4" 
+            data-section-id="4"
+            className="py-6 border-t border-white/5 space-y-6"
+          >
+            <div className="space-y-2">
+              <div className="flex items-center gap-2 text-[#8B97A7] font-mono text-[10px]">
+                <Activity className="w-3.5 h-3.5 text-[#6EA8FE]" />
+                <span className="uppercase tracking-wider">05 // MISSION OPERATIONS</span>
+              </div>
+              <h2 className="text-3xl font-bold text-white tracking-tight">
+                Operations Command Room
+              </h2>
+              <p className="text-[11px] text-[#8B97A7] max-w-xl font-mono">
+                De-mute audio controls, set GFX settings, and launch workspace dashboards to explore light curve targets.
+              </p>
             </div>
 
-            {/* Bottom Info Row */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Launch Dashboards Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
               
-              {/* Phase Audit Log */}
-              <motion.div
-                initial={{ opacity: 0, y: 15 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.1 }}
+              <Link 
+                href="/search"
+                className="group p-4 rounded border border-white/5 hover:border-[#6EA8FE]/30 astra-glass hover:bg-[#1D3A6B]/10 transition-all duration-300 flex flex-col justify-between h-36 font-mono text-left"
               >
-                <Panel title="Phase Audit Log" subtitle="Milestones of the ASTRA platform development">
-                  <div className="overflow-x-auto">
-                    <table className="w-full text-left text-[11px] text-[#D7DEE7]">
-                      <thead>
-                        <tr className="border-b border-white/5">
-                          <th className="py-2 font-medium text-[#8B97A7] uppercase tracking-wider w-16">Phase</th>
-                          <th className="py-2 font-medium text-[#8B97A7] uppercase tracking-wider">Gate Title</th>
-                          <th className="py-2 font-medium text-[#8B97A7] uppercase tracking-wider w-20">Date</th>
-                          <th className="py-2 font-medium text-[#8B97A7] uppercase tracking-wider w-16 text-right">Status</th>
-                        </tr>
-                      </thead>
-                      <tbody className="divide-y divide-white/5">
-                        {AUDIT_EVENTS.map((evt, idx) => (
-                          <tr key={idx} className="hover:bg-white/5">
-                            <td className="py-2.5 font-mono text-[#F59E0B]">{evt.phase}</td>
-                            <td className="py-2.5 font-medium">{evt.title}</td>
-                            <td className="py-2.5 text-[#8B97A7] font-mono">{evt.date}</td>
-                            <td className="py-2.5 text-right">
-                              <StatusBadge status={evt.status as 'PASS'} />
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                </Panel>
-              </motion.div>
+                <div className="flex justify-between items-center text-[#8B97A7] group-hover:text-[#6EA8FE]">
+                  <Search className="w-5 h-5" />
+                  <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
+                </div>
+                <div className="mt-4">
+                  <span className="text-white font-bold block text-[13px]">Target Search</span>
+                  <span className="text-[10px] text-[#8B97A7] mt-0.5 block">Search 944 variable stars</span>
+                </div>
+              </Link>
 
-              {/* Performance Overview */}
-              <motion.div
-                initial={{ opacity: 0, y: 15 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.2 }}
+              <Link 
+                href="/analysis"
+                className="group p-4 rounded border border-white/5 hover:border-[#6EA8FE]/30 astra-glass hover:bg-[#1D3A6B]/10 transition-all duration-300 flex flex-col justify-between h-36 font-mono text-left"
               >
-                <Panel title="Performance Overview" subtitle="Statistical comparison of the active architecture">
-                  <div className="overflow-x-auto">
-                    <table className="w-full text-left text-[11px] text-[#D7DEE7]">
-                      <thead>
-                        <tr className="border-b border-white/5">
-                          <th className="py-2 font-medium text-[#8B97A7] uppercase tracking-wider">Metric</th>
-                          <th className="py-2 font-medium text-[#8B97A7] uppercase tracking-wider text-right">Validation Set</th>
-                          <th className="py-2 font-medium text-[#8B97A7] uppercase tracking-wider text-right">Test Set</th>
-                        </tr>
-                      </thead>
-                      <tbody className="divide-y divide-white/5 font-mono">
-                        <tr className="hover:bg-white/5">
-                          <td className="py-2.5 text-left font-sans font-medium text-[#8B97A7]">Accuracy</td>
-                          <td className="py-2.5 text-right">{formatPercent(performanceMetrics.val_accuracy)}</td>
-                          <td className="py-2.5 text-right text-[#F59E0B] font-bold">{formatPercent(performanceMetrics.val_accuracy)}</td>
-                        </tr>
-                        <tr className="hover:bg-white/5">
-                          <td className="py-2.5 text-left font-sans font-medium text-[#8B97A7]">Macro F1 Score</td>
-                          <td className="py-2.5 text-right">—</td>
-                          <td className="py-2.5 text-right">0.7677</td>
-                        </tr>
-                        <tr className="hover:bg-white/5">
-                          <td className="py-2.5 text-left font-sans font-medium text-[#8B97A7]">Weighted F1 Score</td>
-                          <td className="py-2.5 text-right">—</td>
-                          <td className="py-2.5 text-right">0.7710</td>
-                        </tr>
-                        <tr className="hover:bg-white/5">
-                          <td className="py-2.5 text-left font-sans font-medium text-[#8B97A7]">Expected Calibration Error (ECE)</td>
-                          <td className="py-2.5 text-right">—</td>
-                          <td className="py-2.5 text-right text-emerald-400">0.0442</td>
-                        </tr>
-                        <tr className="hover:bg-white/5">
-                          <td className="py-2.5 text-left font-sans font-medium text-[#8B97A7]">ECE Before Temperature Scaling</td>
-                          <td className="py-2.5 text-right">—</td>
-                          <td className="py-2.5 text-right text-amber-500">0.0810</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </Panel>
-              </motion.div>
+                <div className="flex justify-between items-center text-[#8B97A7] group-hover:text-[#6EA8FE]">
+                  <BarChart2 className="w-5 h-5" />
+                  <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
+                </div>
+                <div className="mt-4">
+                  <span className="text-white font-bold block text-[13px]">Curve Analysis</span>
+                  <span className="text-[10px] text-[#8B97A7] mt-0.5 block">Folded &amp; raw light curves</span>
+                </div>
+              </Link>
+
+              <Link 
+                href="/research"
+                className="group p-4 rounded border border-white/5 hover:border-[#6EA8FE]/30 astra-glass hover:bg-[#1D3A6B]/10 transition-all duration-300 flex flex-col justify-between h-36 font-mono text-left"
+              >
+                <div className="flex justify-between items-center text-[#8B97A7] group-hover:text-[#6EA8FE]">
+                  <FileText className="w-5 h-5" />
+                  <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
+                </div>
+                <div className="mt-4">
+                  <span className="text-white font-bold block text-[13px]">Research Mode</span>
+                  <span className="text-[10px] text-[#8B97A7] mt-0.5 block">Scientific audits &amp; papers</span>
+                </div>
+              </Link>
+
+              <Link 
+                href="/osint"
+                className="group p-4 rounded border border-white/5 hover:border-[#6EA8FE]/30 astra-glass hover:bg-[#1D3A6B]/10 transition-all duration-300 flex flex-col justify-between h-36 font-mono text-left"
+              >
+                <div className="flex justify-between items-center text-[#8B97A7] group-hover:text-[#6EA8FE]">
+                  <Globe className="w-5 h-5" />
+                  <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
+                </div>
+                <div className="mt-4">
+                  <span className="text-white font-bold block text-[13px]">Space OSINT</span>
+                  <span className="text-[10px] text-[#8B97A7] mt-0.5 block">Live satellite metadata feeds</span>
+                </div>
+              </Link>
+
             </div>
 
-            {/* Dataset Fingerprint Monospace Footer */}
-            <div className="flex justify-between items-center text-[9px] text-[#5A6878] font-mono py-2 border-t border-white/5 select-none">
+            {/* Audit log table in Launch section */}
+            <div className="pt-8">
+              <Panel title="Mission Milestones" subtitle="Verified project gate releases and audits">
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left text-[11px] text-[#D7DEE7]">
+                    <thead>
+                      <tr className="border-b border-white/5">
+                        <th className="py-2 font-medium text-[#8B97A7] uppercase tracking-wider w-16">Phase</th>
+                        <th className="py-2 font-medium text-[#8B97A7] uppercase tracking-wider">Gate Title</th>
+                        <th className="py-2 font-medium text-[#8B97A7] uppercase tracking-wider w-20">Date</th>
+                        <th className="py-2 font-medium text-[#8B97A7] uppercase tracking-wider w-16 text-right">Status</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-white/5 font-mono">
+                      {AUDIT_EVENTS.slice(-3).map((evt, idx) => (
+                        <tr key={idx} className="hover:bg-white/5">
+                          <td className="py-2.5 text-[#6EA8FE] font-bold">{evt.phase}</td>
+                          <td className="py-2.5 font-sans font-medium text-[#D7DEE7]">{evt.title}</td>
+                          <td className="py-2.5 text-[#8B97A7]">{evt.date}</td>
+                          <td className="py-2.5 text-right">
+                            <StatusBadge status={evt.status as 'PASS'} />
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </Panel>
+            </div>
+
+            {/* Cryptographic Footer */}
+            <div className="flex justify-between items-center text-[9px] text-[#5A6878] font-mono py-2 border-t border-white/5 select-none pt-4">
               <span>DATASET_MANIFEST_SHA256: {datasetMetrics.manifest_sha256}</span>
               <span>MODEL_CHECKPOINT_SHA256: {modelMetrics.checkpoint_hash}</span>
             </div>

@@ -324,23 +324,25 @@ export function CosmicBackground() {
   }, [pathname]);
 
   if (qualityState === 'low') {
-    return null;
+    return (
+      <div className="fixed inset-0 z-0 bg-[#05070B] pointer-events-none" />
+    );
   }
 
   const isHomepage = pathname === '/';
   const isTargetPage = pathname.startsWith('/target/');
-  const opacity = isTargetPage ? 0.28 : isHomepage ? 0.60 : 0.45;
+  const opacity = isTargetPage ? 0.35 : isHomepage ? 0.65 : 0.50;
 
   const videoSrc = useMemo(() => {
     if (pathname === '/') return '/blackhole.mp4';
-    if (pathname === '/search') return '/space-backdrop.mp4';
+    if (pathname === '/search') return '/earth.mp4';
     if (pathname === '/analysis') return '/solar-system.mp4';
     if (pathname === '/dataset') return '/star-cluster.mp4';
     if (pathname === '/model') return '/galaxy.mp4';
     if (pathname === '/research') return '/nebula.mp4';
     if (pathname === '/mission-replay') return '/pulsar.mp4';
     if (pathname === '/osint') return '/satellite.mp4';
-    if (pathname === '/visualization') return '/deep-space.mp4';
+    if (pathname === '/visualization') return '/space-dust.mp4';
     if (pathname.startsWith('/target/')) return '/space-dust.mp4';
     return '/space-backdrop.mp4';
   }, [pathname]);
@@ -358,10 +360,12 @@ export function CosmicBackground() {
         muted
         playsInline
         className="absolute inset-0 w-full h-full object-cover scale-[1.03]"
+        style={{ filter: 'brightness(0.25) blur(4px) saturate(0.6)' }}
       >
         <source src={videoSrc} type="video/mp4" />
       </video>
-      {/* Soft edge vignette & background integration overlay */}
+      {/* 80% Dark overlay & Vignette */}
+      <div className="absolute inset-0 bg-[#05070B]/80 pointer-events-none" />
       <div className="absolute inset-0 bg-gradient-to-t from-[#05070B] via-transparent to-[#05070B] pointer-events-none" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_30%,#05070B_95%)] pointer-events-none" />
     </div>

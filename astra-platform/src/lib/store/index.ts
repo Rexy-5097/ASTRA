@@ -26,8 +26,10 @@ interface AstraStore {
 
   audioState: 'muted' | 'playing';
   setAudioState: (state: 'muted' | 'playing') => void;
-  qualityState: 'low' | 'high';
-  setQualityState: (state: 'low' | 'high') => void;
+  audioVolume: number;
+  setAudioVolume: (volume: number) => void;
+  qualityState: 'low' | 'medium' | 'high';
+  setQualityState: (state: 'low' | 'medium' | 'high') => void;
 }
 
 const defaultFilters: SearchFilters = {
@@ -55,7 +57,24 @@ export const useAstraStore = create<AstraStore>((set) => ({
   setReplayStarId: (id) => set({ replayStarId: id }),
 
   audioState: 'muted',
-  setAudioState: (audioState) => set({ audioState }),
+  setAudioState: (audioState) => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('astra-audio-state', audioState);
+    }
+    set({ audioState });
+  },
+  audioVolume: 0.5,
+  setAudioVolume: (audioVolume) => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('astra-audio-volume', String(audioVolume));
+    }
+    set({ audioVolume });
+  },
   qualityState: 'high',
-  setQualityState: (qualityState) => set({ qualityState }),
+  setQualityState: (qualityState) => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('astra-quality-state', qualityState);
+    }
+    set({ qualityState });
+  },
 }));

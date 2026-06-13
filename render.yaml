@@ -1,0 +1,17 @@
+# Render Blueprint Specification for ASTRA Platform
+# Deploys the Next.js platform web service from the astra-platform subfolder
+services:
+  - type: web
+    name: astra-platform
+    env: node
+    plan: free
+    rootDir: astra-platform
+    buildCommand: npm install && npm run build
+    startCommand: npm run start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: NEXT_TELEMETRY_DISABLED
+        value: "1"

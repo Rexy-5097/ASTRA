@@ -36,7 +36,14 @@ export function TopBar() {
     sqlite_loaded: false,
   });
 
-  const { audioState, setAudioState, qualityState, setQualityState } = useAstraStore();
+  const { 
+    audioState, 
+    setAudioState, 
+    audioVolume, 
+    setAudioVolume, 
+    qualityState, 
+    setQualityState 
+  } = useAstraStore();
 
   useEffect(() => {
     const update = () => setTime(new Date().toISOString().replace('T', ' ').slice(0, 19) + ' UTC');
@@ -165,35 +172,56 @@ export function TopBar() {
         <div className="flex items-center gap-3 border-r border-[#1A2430] pr-6 h-6 select-none">
           {/* Quality control */}
           <button
-            onClick={() => setQualityState(qualityState === 'high' ? 'low' : 'high')}
+            onClick={() => {
+              if (qualityState === 'low') setQualityState('medium');
+              else if (qualityState === 'medium') setQualityState('high');
+              else setQualityState('low');
+            }}
             className="flex items-center gap-1 text-[10px] font-mono text-[#8B97A7] hover:text-[#D7DEE7] transition-colors"
-            title="Toggle canvas starfield quality (low disables R3F background)"
+            title="Toggle graphics quality (low: static, medium: video, high: particle effects)"
           >
             <Cpu className="w-3.5 h-3.5" />
             <span className="text-[9px]">GFX:</span>
-            <span className={qualityState === 'high' ? 'text-[#6EA8FE] font-bold' : 'text-[#8B97A7]'}>
+            <span className="text-[#6EA8FE] font-bold">
               {qualityState.toUpperCase()}
             </span>
           </button>
 
           {/* Sound control */}
-          <button
-            onClick={() => setAudioState(audioState === 'muted' ? 'playing' : 'muted')}
-            className="flex items-center gap-1 text-[10px] font-mono text-[#8B97A7] hover:text-[#D7DEE7] transition-colors pl-2"
-            title="Toggle elegant space ambient audio"
-          >
-            {audioState === 'playing' ? (
-              <>
+          <div className="flex items-center gap-2 pl-2 border-l border-[#1A2430]">
+            <button
+              onClick={() => setAudioState(audioState === 'muted' ? 'playing' : 'muted')}
+              className="flex items-center gap-1 text-[10px] font-mono text-[#8B97A7] hover:text-[#D7DEE7] transition-colors"
+              title="Toggle elegant space ambient audio"
+            >
+              {audioState === 'playing' ? (
                 <Volume2 className="w-3.5 h-3.5 text-[#56D364] animate-pulse" />
-                <span className="text-[#56D364] font-bold text-[9px]">AUDIO: ON</span>
-              </>
-            ) : (
-              <>
-                <VolumeX className="w-3.5 h-3.5" />
-                <span className="text-[9px]">AUDIO: MUTED</span>
-              </>
-            )}
-          </button>
+              ) : (
+                <VolumeX className="w-3.5 h-3.5 text-[#F85149]" />
+              )}
+            </button>
+            <input
+              type="range"
+              min="0"
+              max="1"
+              step="0.05"
+              value={audioVolume}
+              onChange={(e) => {
+                const vol = parseFloat(e.target.value);
+                setAudioVolume(vol);
+                if (vol > 0 && audioState === 'muted') {
+                  setAudioState('playing');
+                } else if (vol === 0 && audioState === 'playing') {
+                  setAudioState('muted');
+                }
+              }}
+              className="w-12 h-1 bg-[#1A2430] rounded-lg appearance-none cursor-pointer accent-[#6EA8FE]"
+              style={{
+                background: `linear-gradient(to right, #6EA8FE 0%, #6EA8FE ${audioVolume * 100}%, #1A2430 ${audioVolume * 100}%, #1A2430 100%)`
+              }}
+              title="Ambient audio volume"
+            />
+          </div>
         </div>
 
         {/* Clock telemetry */}
