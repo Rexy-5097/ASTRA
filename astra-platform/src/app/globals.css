@@ -1,0 +1,158 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --background: #05070B;
+  --surface: #0C1118;
+  --surface-raised: #111922;
+  --border: #1A2430;
+  --border-strong: #253545;
+  --foreground: #D7DEE7;
+  --muted: #8B97A7;
+  --dim: #5A6878;
+  --accent: #6EA8FE;
+  --accent-bg: #1D3A6B30;
+  --success: #56D364;
+  --success-bg: #1A3D2230;
+  --warning: #D29922;
+  --warning-bg: #3D2D0A30;
+  --danger: #F85149;
+  --danger-bg: #4A151530;
+
+  /* Class identity colors */
+  --rr-lyrae: #F59E0B;
+  --cepheid: #6EA8FE;
+  --eclipsing-binary: #34D399;
+  --solar-like: #A78BFA;
+  --stable: #6B7280;
+
+  --radius: 0.25rem;
+
+  /* ShadCN compatibility */
+  --card: var(--surface);
+  --card-foreground: var(--foreground);
+  --popover: var(--surface);
+  --popover-foreground: var(--foreground);
+  --primary: var(--accent);
+  --primary-foreground: #05070B;
+  --secondary: var(--surface-raised);
+  --secondary-foreground: var(--foreground);
+  --muted-foreground: var(--muted);
+  --input: var(--surface-raised);
+  --ring: var(--accent);
+}
+
+/* ── Reset ─────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  background: var(--background);
+  color: var(--foreground);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Typography ─────────────────────────────────────────── */
+.font-mono {
+  font-family: 'IBM Plex Mono', 'Fira Code', 'JetBrains Mono', ui-monospace, monospace !important;
+}
+
+/* ── Scrollbar ──────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--dim);
+}
+
+/* ── Selection ──────────────────────────────────────────── */
+::selection {
+  background: var(--accent-bg);
+  color: var(--accent);
+}
+
+/* ── Focus rings ────────────────────────────────────────── */
+*:focus-visible {
+  outline: 1px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ── Data table ─────────────────────────────────────────── */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8125rem;
+}
+.data-table th {
+  text-align: left;
+  padding: 0.5rem 1rem;
+  background: var(--background);
+  color: var(--muted);
+  font-weight: 500;
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+.data-table td {
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid var(--border);
+  color: var(--foreground);
+}
+.data-table tbody tr:hover td {
+  background: var(--surface-raised);
+}
+.data-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* ── Chart tooltip override ─────────────────────────────── */
+.recharts-tooltip-wrapper .recharts-default-tooltip {
+  background: var(--surface) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius) !important;
+  font-size: 0.75rem !important;
+}
+.recharts-cartesian-grid line {
+  stroke: var(--border) !important;
+}
+.recharts-text {
+  fill: var(--muted) !important;
+  font-size: 0.6875rem !important;
+}
+
+/* ── Glassmorphism Utility (Apple Liquid Glass) ──────────── */
+.astra-glass {
+  background: rgba(10, 16, 26, 0.42) !important;
+  backdrop-filter: blur(24px) saturate(175%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(175%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37), 
+              inset 0 1px 0 0 rgba(255, 255, 255, 0.10),
+              inset 0 -1px 0 0 rgba(0, 0, 0, 0.20) !important;
+  transition: border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1), 
+              transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), 
+              box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.astra-glass-hover:hover {
+  transform: translateY(-1.5px);
+  border-color: rgba(255, 255, 255, 0.15) !important;
+  box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.5), 
+              inset 0 1px 0 0 rgba(255, 255, 255, 0.15),
+              inset 0 -1px 0 0 rgba(0, 0, 0, 0.25) !important;
+}
