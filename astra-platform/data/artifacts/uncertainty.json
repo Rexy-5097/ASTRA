@@ -1,0 +1,83 @@
+{
+  "coverage_sweep": [
+    {
+      "accuracy": 0.823,
+      "confidence_threshold": 0.5,
+      "coverage": 0.915,
+      "model": "cnn_dual"
+    },
+    {
+      "accuracy": 0.873,
+      "confidence_threshold": 0.6,
+      "coverage": 0.831,
+      "model": "cnn_dual"
+    },
+    {
+      "accuracy": 0.9420000000000001,
+      "confidence_threshold": 0.7,
+      "coverage": 0.732,
+      "model": "cnn_dual"
+    },
+    {
+      "accuracy": 0.978,
+      "confidence_threshold": 0.8,
+      "coverage": 0.627,
+      "model": "cnn_dual"
+    },
+    {
+      "accuracy": 1.0,
+      "confidence_threshold": 0.9,
+      "coverage": 0.47200000000000003,
+      "model": "cnn_dual"
+    },
+    {
+      "accuracy": 0.846,
+      "confidence_threshold": 0.5,
+      "coverage": 0.866,
+      "model": "shared"
+    },
+    {
+      "accuracy": 0.884,
+      "confidence_threshold": 0.6,
+      "coverage": 0.789,
+      "model": "shared"
+    },
+    {
+      "accuracy": 0.922,
+      "confidence_threshold": 0.7,
+      "coverage": 0.718,
+      "model": "shared"
+    },
+    {
+      "accuracy": 0.9329999999999999,
+      "confidence_threshold": 0.8,
+      "coverage": 0.634,
+      "model": "shared"
+    },
+    {
+      "accuracy": 0.9840000000000001,
+      "confidence_threshold": 0.9,
+      "coverage": 0.43,
+      "model": "shared"
+    }
+  ],
+  "entropy": {
+    "cnn_dual": {
+      "correct_entropy_var": 0.0969,
+      "correct_mean_entropy": 0.4381,
+      "incorrect_entropy_var": 0.0588,
+      "incorrect_mean_entropy": 0.9769
+    },
+    "shared": {
+      "correct_entropy_var": 0.0964,
+      "correct_mean_entropy": 0.4973,
+      "incorrect_entropy_var": 0.1038,
+      "incorrect_mean_entropy": 0.9998
+    }
+  },
+  "error_detection_auroc": {
+    "cnn_dual": 0.9015,
+    "shared": 0.8628
+  },
+  "generated_at": "2026-06-13T02:15:04+00:00"
+}

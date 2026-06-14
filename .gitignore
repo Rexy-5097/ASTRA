@@ -118,3 +118,4 @@ secrets.yaml
 *.pid
 *.seed
 *.pid.lock
+.vercel

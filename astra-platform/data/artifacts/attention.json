@@ -1,0 +1,18 @@
+{
+  "generated_at": "2026-06-13T02:15:04+00:00",
+  "mean_query_entropy": 3.1618,
+  "mean_sparsity": 0.9333,
+  "onnx_explainability_export_verified": false,
+  "reason": "Current ONNX export exposes logits only.",
+  "single_inference_required_shape": [
+    1,
+    250,
+    250
+  ],
+  "status": "BLOCKED",
+  "verified_test_attention_shape": [
+    142,
+    250,
+    250
+  ]
+}

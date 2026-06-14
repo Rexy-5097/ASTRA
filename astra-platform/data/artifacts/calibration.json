@@ -1,0 +1,57 @@
+{
+  "generated_at": "2026-06-13T02:15:04+00:00",
+  "global": {
+    "cnn_dual": {
+      "brier_calibrated": 0.2617,
+      "brier_raw": 0.262,
+      "ece_calibrated": 0.0907,
+      "ece_raw": 0.0907,
+      "nll_calibrated": 0.0907,
+      "nll_raw": 0.0907
+    },
+    "shared": {
+      "brier_calibrated": 0.3025,
+      "brier_raw": 0.3146,
+      "ece_calibrated": 0.0442,
+      "ece_raw": 0.081,
+      "nll_calibrated": 0.0442,
+      "nll_raw": 0.081
+    }
+  },
+  "per_class": {
+    "cepheid": {
+      "cnn_calibrated": 0.0135,
+      "cnn_raw": 0.0137,
+      "transformer_calibrated": 0.0141,
+      "transformer_raw": 0.0158
+    },
+    "eclipsing_binary": {
+      "cnn_calibrated": 0.0085,
+      "cnn_raw": 0.0089,
+      "transformer_calibrated": 0.0155,
+      "transformer_raw": 0.0101
+    },
+    "rr_lyrae": {
+      "cnn_calibrated": 0.0259,
+      "cnn_raw": 0.0255,
+      "transformer_calibrated": 0.0252,
+      "transformer_raw": 0.0143
+    },
+    "solar_like": {
+      "cnn_calibrated": 0.0221,
+      "cnn_raw": 0.0228,
+      "transformer_calibrated": 0.0628,
+      "transformer_raw": 0.0908
+    },
+    "stable": {
+      "cnn_calibrated": 0.036,
+      "cnn_raw": 0.0354,
+      "transformer_calibrated": 0.0685,
+      "transformer_raw": 0.0732
+    }
+  },
+  "temperatures": {
+    "cnn_dual": 1.010702,
+    "shared": 1.257665
+  }
+}

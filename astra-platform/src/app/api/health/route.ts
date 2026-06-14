@@ -11,7 +11,7 @@ const EXPECTED_MODEL_HASH = 'bf374ce492825916f2f97a4e29673a1eca35f76cc08f603b384
 export async function GET() {
   try {
     // 1. Check Dataset File & Fingerprint
-    const csvPath = path.join(process.cwd(), '..', 'data', 'phase6', 'scientific_dataset_freeze_v2.csv');
+    const csvPath = path.join(process.cwd(), 'data', 'scientific_dataset_freeze_v2.csv');
     let datasetHash = '';
     let datasetExists = false;
     let datasetHashMatch = false;
@@ -31,8 +31,8 @@ export async function GET() {
     const sqliteSize = sqliteExists ? fs.statSync(sqlitePath).size : -1;
 
     // 3. Check ONNX Model
-    const onnxPath = path.join(process.cwd(), '..', 'models', 'saved', 'best_star_transformer_shared.onnx');
-    const onnxExplainPath = path.join(process.cwd(), '..', 'models', 'saved', 'best_star_transformer_shared_explain.onnx');
+    const onnxPath = path.join(process.cwd(), 'data', 'best_star_transformer_shared.onnx');
+    const onnxExplainPath = path.join(process.cwd(), 'data', 'best_star_transformer_shared_explain.onnx');
     const onnxExists = fs.existsSync(onnxPath) || fs.existsSync(onnxExplainPath);
 
     // 4. Calculate System State

@@ -1,0 +1,212 @@
+{
+  "active_model": {
+    "benchmark": {
+      "accuracy_ci": "[71.13%, 85.21%]",
+      "label": "Shared",
+      "macro_f1": 0.7677,
+      "macro_f1_ci": "[0.6944, 0.8320]",
+      "per_class_f1": {
+        "cepheid": 0.8108,
+        "eclipsing_binary": 0.9091,
+        "rr_lyrae": 0.9394,
+        "solar_like": 0.5238,
+        "stable": 0.6552
+      },
+      "subgroups": {
+        "bls_accuracy": 0.5769,
+        "bls_macro_f1": 0.317,
+        "catalog_accuracy": 0.9,
+        "catalog_macro_f1": 0.5602
+      },
+      "test_accuracy": 0.7817000000000001,
+      "weighted_f1": 0.7784
+    },
+    "calibration": {
+      "brier_calibrated": 0.3025,
+      "brier_raw": 0.3146,
+      "ece_calibrated": 0.0442,
+      "ece_raw": 0.081,
+      "nll_calibrated": 0.0442,
+      "nll_raw": 0.081
+    },
+    "checkpoint": {
+      "actual_sha256": "bf374ce492825916f2f97a4e29673a1eca35f76cc08f603b384d103fbe95d388",
+      "architecture": "HybridTransformer (shared)",
+      "exists": true,
+      "expected_params": 1373701,
+      "filename": "best_star_transformer_shared.pt",
+      "loaded_params": 1377680,
+      "missing_keys": 0,
+      "path": "models/saved/best_star_transformer_shared.pt",
+      "sha256": "bf374ce492825916f2f97a4e29673a1eca35f76cc08f603b384d103fbe95d388",
+      "unexpected_keys": 0
+    },
+    "model": "transformer_shared",
+    "onnx_data_hash": "5a8fcc0df518dfca27d2144b05d5ebbdeef2ca9cfe31651a31943cf4c9233e06",
+    "onnx_data_path": "models/saved/best_star_transformer_shared.onnx.data",
+    "onnx_hash": "48e75b7790f7c7b4f1edb86d092c637c6024e41dd6ae2ad0f434540f88b12dfe",
+    "onnx_path": "models/saved/best_star_transformer_shared.onnx",
+    "temperature": 1.257665,
+    "temperature_hash": "d6e61017cc88c21fc7cdbed1e549e87b523fab2287d97d0c00bdc9b36962d2ed",
+    "temperature_path": "models/saved/optimal_temperature_transformer_shared.txt"
+  },
+  "checkpoints": [
+    {
+      "actual_sha256": "02eb0d39ee86d421bf7e9421f839ba142c442375b7ab045e42487bf932e93aea",
+      "architecture": "StarCNN (folded=True)",
+      "exists": true,
+      "expected_params": 1043333,
+      "filename": "best_star_cnn.pt",
+      "loaded_params": 1144140,
+      "missing_keys": 0,
+      "path": "models/saved/best_star_cnn.pt",
+      "sha256": "02eb0d39ee86d421bf7e9421f839ba142c442375b7ab045e42487bf932e93aea",
+      "unexpected_keys": 0
+    },
+    {
+      "actual_sha256": "65da1034868c5460b2c269e1a11936864fe6191fa81116d5fe2be934d8478af2",
+      "architecture": "StarCNN (folded=True)",
+      "exists": true,
+      "expected_params": 1043333,
+      "filename": "best_star_cnn_dual_aug.pt",
+      "loaded_params": 1047312,
+      "missing_keys": 0,
+      "path": "models/saved/best_star_cnn_dual_aug.pt",
+      "sha256": "65da1034868c5460b2c269e1a11936864fe6191fa81116d5fe2be934d8478af2",
+      "unexpected_keys": 0
+    },
+    {
+      "actual_sha256": "e70220a7e479fd88a873604cb120a5125d79a2bd31f66ce1da07f04180f3e564",
+      "architecture": "StarCNN (folded=False)",
+      "exists": true,
+      "expected_params": 1140101,
+      "filename": "best_star_cnn_raw_aug.pt",
+      "loaded_params": 1144140,
+      "missing_keys": 0,
+      "path": "models/saved/best_star_cnn_raw_aug.pt",
+      "sha256": "e70220a7e479fd88a873604cb120a5125d79a2bd31f66ce1da07f04180f3e564",
+      "unexpected_keys": 0
+    },
+    {
+      "actual_sha256": "9d90b14be3b9f4437e0a289810034506734a969c47ccdeae440d420291925a23",
+      "architecture": "HybridTransformer (cross)",
+      "exists": true,
+      "expected_params": 1240965,
+      "filename": "best_star_transformer_cross.pt",
+      "loaded_params": 1244944,
+      "missing_keys": 0,
+      "path": "models/saved/best_star_transformer_cross.pt",
+      "sha256": "9d90b14be3b9f4437e0a289810034506734a969c47ccdeae440d420291925a23",
+      "unexpected_keys": 0
+    },
+    {
+      "actual_sha256": "17b0122f09afb4676bd573ed5dc5537e41406ee6c94480482f681b270d9c9743",
+      "architecture": "HybridTransformer (cross)",
+      "exists": true,
+      "expected_params": 1240965,
+      "filename": "best_star_transformer_cross_smoke.pt",
+      "loaded_params": 1244944,
+      "missing_keys": 0,
+      "path": "models/saved/best_star_transformer_cross_smoke.pt",
+      "sha256": "17b0122f09afb4676bd573ed5dc5537e41406ee6c94480482f681b270d9c9743",
+      "unexpected_keys": 0
+    },
+    {
+      "actual_sha256": "8f66b566c408e56df60f42068b2f5710e75f45722650e3befd770be4cd64df1c",
+      "architecture": "HybridTransformer (only)",
+      "exists": true,
+      "expected_params": 316933,
+      "filename": "best_star_transformer_only.pt",
+      "loaded_params": 317446,
+      "missing_keys": 0,
+      "path": "models/saved/best_star_transformer_only.pt",
+      "sha256": "8f66b566c408e56df60f42068b2f5710e75f45722650e3befd770be4cd64df1c",
+      "unexpected_keys": 0
+    },
+    {
+      "actual_sha256": "d7e007d3c60e4656284ce6c6c64aec84fab7362633cabf1d62fe4eb04218a0c8",
+      "architecture": "HybridTransformer (only)",
+      "exists": true,
+      "expected_params": 316933,
+      "filename": "best_star_transformer_only_smoke.pt",
+      "loaded_params": 317446,
+      "missing_keys": 0,
+      "path": "models/saved/best_star_transformer_only_smoke.pt",
+      "sha256": "d7e007d3c60e4656284ce6c6c64aec84fab7362633cabf1d62fe4eb04218a0c8",
+      "unexpected_keys": 0
+    },
+    {
+      "actual_sha256": "0189295d56641331b8074f18d4395a1bbd204cfac61bf56861ee5a294d933851",
+      "architecture": "HybridTransformer (separate)",
+      "exists": true,
+      "expected_params": 1687557,
+      "filename": "best_star_transformer_separate.pt",
+      "loaded_params": 1691536,
+      "missing_keys": 0,
+      "path": "models/saved/best_star_transformer_separate.pt",
+      "sha256": "0189295d56641331b8074f18d4395a1bbd204cfac61bf56861ee5a294d933851",
+      "unexpected_keys": 0
+    },
+    {
+      "actual_sha256": "98d9eaf7f4fb70478217f26b635b8bdbfd9a81d290e1fc88e5e1a48485828cbb",
+      "architecture": "HybridTransformer (separate)",
+      "exists": true,
+      "expected_params": 1687557,
+      "filename": "best_star_transformer_separate_smoke.pt",
+      "loaded_params": 1691536,
+      "missing_keys": 0,
+      "path": "models/saved/best_star_transformer_separate_smoke.pt",
+      "sha256": "98d9eaf7f4fb70478217f26b635b8bdbfd9a81d290e1fc88e5e1a48485828cbb",
+      "unexpected_keys": 0
+    },
+    {
+      "actual_sha256": "bf374ce492825916f2f97a4e29673a1eca35f76cc08f603b384d103fbe95d388",
+      "architecture": "HybridTransformer (shared)",
+      "exists": true,
+      "expected_params": 1373701,
+      "filename": "best_star_transformer_shared.pt",
+      "loaded_params": 1377680,
+      "missing_keys": 0,
+      "path": "models/saved/best_star_transformer_shared.pt",
+      "sha256": "bf374ce492825916f2f97a4e29673a1eca35f76cc08f603b384d103fbe95d388",
+      "unexpected_keys": 0
+    },
+    {
+      "actual_sha256": "66ab7ac32634f0b8177a17146b25e80619cccd9e7ebabbf4b28be1ac2da4a96f",
+      "architecture": "HybridTransformer (shared_no_folded)",
+      "exists": true,
+      "expected_params": 1275141,
+      "filename": "best_star_transformer_shared_no_folded.pt",
+      "loaded_params": 1279120,
+      "missing_keys": 0,
+      "path": "models/saved/best_star_transformer_shared_no_folded.pt",
+      "sha256": "66ab7ac32634f0b8177a17146b25e80619cccd9e7ebabbf4b28be1ac2da4a96f",
+      "unexpected_keys": 0
+    },
+    {
+      "actual_sha256": "ff39f8b53d89e796f2a1a7846a68f8c250a490d400cc2887bd363771480a8f98",
+      "architecture": "HybridTransformer (shared_no_folded_matched)",
+      "exists": true,
+      "expected_params": 1324089,
+      "filename": "best_star_transformer_shared_no_folded_matched.pt",
+      "loaded_params": 1327704,
+      "missing_keys": 0,
+      "path": "models/saved/best_star_transformer_shared_no_folded_matched.pt",
+      "sha256": "ff39f8b53d89e796f2a1a7846a68f8c250a490d400cc2887bd363771480a8f98",
+      "unexpected_keys": 0
+    },
+    {
+      "actual_sha256": "38d06775d1b1b9adbf03b8be2677d388a08139635d4cbb3323e347d2291340b2",
+      "architecture": "HybridTransformer (shared)",
+      "exists": true,
+      "expected_params": 1373701,
+      "filename": "best_star_transformer_shared_smoke.pt",
+      "loaded_params": 1377680,
+      "missing_keys": 0,
+      "path": "models/saved/best_star_transformer_shared_smoke.pt",
+      "sha256": "38d06775d1b1b9adbf03b8be2677d388a08139635d4cbb3323e347d2291340b2",
+      "unexpected_keys": 0
+    }
+  ],
+  "generated_at": "2026-06-13T02:15:04+00:00"
+}

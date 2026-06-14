@@ -1,0 +1,129 @@
+{
+  "dataset": {
+    "class_counts": {
+      "cepheid": 230,
+      "eclipsing_binary": 150,
+      "rr_lyrae": 217,
+      "solar_like": 142,
+      "stable": 205
+    },
+    "period_source_counts": {
+      "BLS": 347,
+      "catalog": 597
+    },
+    "split_counts": {
+      "test": 142,
+      "train": 661,
+      "val": 141
+    },
+    "total_stars": 944
+  },
+  "generated_at": "2026-06-13T02:15:04+00:00",
+  "models": {
+    "cnn_dual": {
+      "accuracy_ci": "[71.13%, 84.51%]",
+      "label": "Cnn Dual",
+      "macro_f1": 0.7654,
+      "macro_f1_ci": "[0.6840, 0.8317]",
+      "per_class_f1": {
+        "cepheid": 0.8,
+        "eclipsing_binary": 0.8235,
+        "rr_lyrae": 0.9538,
+        "solar_like": 0.6341,
+        "stable": 0.6154
+      },
+      "subgroups": {
+        "bls_accuracy": 0.5577000000000001,
+        "bls_macro_f1": 0.2667,
+        "catalog_accuracy": 0.9111,
+        "catalog_macro_f1": 0.564
+      },
+      "test_accuracy": 0.7817000000000001,
+      "weighted_f1": 0.7738
+    },
+    "cross": {
+      "accuracy_ci": "[73.94%, 87.32%]",
+      "label": "Cross",
+      "macro_f1": 0.7949,
+      "macro_f1_ci": "[0.7252, 0.8594]",
+      "per_class_f1": {
+        "cepheid": 0.8219,
+        "eclipsing_binary": 0.875,
+        "rr_lyrae": 0.9394,
+        "solar_like": 0.6286,
+        "stable": 0.7097
+      },
+      "subgroups": {
+        "bls_accuracy": 0.6346,
+        "bls_macro_f1": 0.2801,
+        "catalog_accuracy": 0.9111,
+        "catalog_macro_f1": 0.7016
+      },
+      "test_accuracy": 0.8099,
+      "weighted_f1": 0.8033
+    },
+    "only": {
+      "accuracy_ci": "[64.79%, 80.28%]",
+      "label": "Only",
+      "macro_f1": 0.7127,
+      "macro_f1_ci": "[0.6420, 0.7834]",
+      "per_class_f1": {
+        "cepheid": 0.75,
+        "eclipsing_binary": 0.8889,
+        "rr_lyrae": 0.9062,
+        "solar_like": 0.4186,
+        "stable": 0.6
+      },
+      "subgroups": {
+        "bls_accuracy": 0.5192,
+        "bls_macro_f1": 0.2258,
+        "catalog_accuracy": 0.8443999999999999,
+        "catalog_macro_f1": 0.5374
+      },
+      "test_accuracy": 0.7254,
+      "weighted_f1": 0.7247
+    },
+    "separate": {
+      "accuracy_ci": "[78.17%, 90.16%]",
+      "label": "Separate",
+      "macro_f1": 0.8394,
+      "macro_f1_ci": "[0.7712, 0.9012]",
+      "per_class_f1": {
+        "cepheid": 0.8857,
+        "eclipsing_binary": 0.9091,
+        "rr_lyrae": 0.9538,
+        "solar_like": 0.7273,
+        "stable": 0.7213
+      },
+      "subgroups": {
+        "bls_accuracy": 0.7308,
+        "bls_macro_f1": 0.3055,
+        "catalog_accuracy": 0.9111,
+        "catalog_macro_f1": 0.7065
+      },
+      "test_accuracy": 0.8451000000000001,
+      "weighted_f1": 0.8456
+    },
+    "shared": {
+      "accuracy_ci": "[71.13%, 85.21%]",
+      "label": "Shared",
+      "macro_f1": 0.7677,
+      "macro_f1_ci": "[0.6944, 0.8320]",
+      "per_class_f1": {
+        "cepheid": 0.8108,
+        "eclipsing_binary": 0.9091,
+        "rr_lyrae": 0.9394,
+        "solar_like": 0.5238,
+        "stable": 0.6552
+      },
+      "subgroups": {
+        "bls_accuracy": 0.5769,
+        "bls_macro_f1": 0.317,
+        "catalog_accuracy": 0.9,
+        "catalog_macro_f1": 0.5602
+      },
+      "test_accuracy": 0.7817000000000001,
+      "weighted_f1": 0.7784
+    }
+  }
+}

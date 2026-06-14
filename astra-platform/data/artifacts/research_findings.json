@@ -1,0 +1,80 @@
+{
+  "accuracy_gap_catalog_vs_bls": 0.32310000000000005,
+  "calibration": {
+    "brier_calibrated": 0.3025,
+    "brier_raw": 0.3146,
+    "ece_calibrated": 0.0442,
+    "ece_raw": 0.081,
+    "nll_calibrated": 0.0442,
+    "nll_raw": 0.081
+  },
+  "findings": [
+    {
+      "id": "bls_gap",
+      "statement": "Catalog-period stars classify more reliably than BLS-period stars.",
+      "unit": "accuracy_delta",
+      "value": 0.32310000000000005
+    },
+    {
+      "id": "calibration_gain",
+      "statement": "Temperature scaling improves transformer calibration on the test split.",
+      "unit": "ece_delta",
+      "value": 0.0368
+    }
+  ],
+  "generated_at": "2026-06-13T02:15:04+00:00",
+  "headline": "Period source quality remains the dominant performance bottleneck.",
+  "selective_prediction": [
+    {
+      "accuracy": 0.846,
+      "confidence_threshold": 0.5,
+      "coverage": 0.866,
+      "model": "shared"
+    },
+    {
+      "accuracy": 0.884,
+      "confidence_threshold": 0.6,
+      "coverage": 0.789,
+      "model": "shared"
+    },
+    {
+      "accuracy": 0.922,
+      "confidence_threshold": 0.7,
+      "coverage": 0.718,
+      "model": "shared"
+    },
+    {
+      "accuracy": 0.9329999999999999,
+      "confidence_threshold": 0.8,
+      "coverage": 0.634,
+      "model": "shared"
+    },
+    {
+      "accuracy": 0.9840000000000001,
+      "confidence_threshold": 0.9,
+      "coverage": 0.43,
+      "model": "shared"
+    }
+  ],
+  "shared_transformer": {
+    "accuracy_ci": "[71.13%, 85.21%]",
+    "label": "Shared",
+    "macro_f1": 0.7677,
+    "macro_f1_ci": "[0.6944, 0.8320]",
+    "per_class_f1": {
+      "cepheid": 0.8108,
+      "eclipsing_binary": 0.9091,
+      "rr_lyrae": 0.9394,
+      "solar_like": 0.5238,
+      "stable": 0.6552
+    },
+    "subgroups": {
+      "bls_accuracy": 0.5769,
+      "bls_macro_f1": 0.317,
+      "catalog_accuracy": 0.9,
+      "catalog_macro_f1": 0.5602
+    },
+    "test_accuracy": 0.7817000000000001,
+    "weighted_f1": 0.7784
+  }
+}

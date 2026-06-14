@@ -1,0 +1,44 @@
+{
+  "class_counts": {
+    "cepheid": 230,
+    "eclipsing_binary": 150,
+    "rr_lyrae": 217,
+    "solar_like": 142,
+    "stable": 205
+  },
+  "dataset_hash": "f99b4b06f16952033b5445bb0682d059e9ea4c3f99320a05d31aebb25c2dbf58",
+  "expected_dataset_hash": "f99b4b06f16952033b5445bb0682d059e9ea4c3f99320a05d31aebb25c2dbf58",
+  "filesystem_processed_count": 944,
+  "generated_at": "2026-06-13T02:15:04+00:00",
+  "missing_processed_dirs": [],
+  "period_source_counts": {
+    "BLS": 347,
+    "catalog": 597
+  },
+  "split_counts": {
+    "test": 142,
+    "train": 661,
+    "val": 141
+  },
+  "split_metadata": {
+    "audit_override_used": true,
+    "calibration_size": 0,
+    "dataset_size": 944,
+    "grouping_key": "duplicate_group_id",
+    "minimum_samples_required": 900,
+    "ratios": {
+      "calibration": 0.0,
+      "test": 0.15,
+      "train": 0.7,
+      "val": 0.15
+    },
+    "seed": 42,
+    "split_hash": "ebcdc44c3dba849579675369b1559c77e50b6fead06abd40d3fc187425a7d4e4",
+    "test_size": 142,
+    "timestamp": "2026-06-12T06:26:24.145470+00:00",
+    "train_size": 661,
+    "val_size": 141
+  },
+  "status": "PASS",
+  "total_stars": 944
+}
