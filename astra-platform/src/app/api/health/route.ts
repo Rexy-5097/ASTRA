@@ -28,6 +28,7 @@ export async function GET() {
     // 2. Check SQLite Database
     const sqlitePath = path.join(process.cwd(), 'data', 'astra.sqlite');
     const sqliteExists = fs.existsSync(sqlitePath);
+    const sqliteSize = sqliteExists ? fs.statSync(sqlitePath).size : -1;
 
     // 3. Check ONNX Model
     const onnxPath = path.join(process.cwd(), '..', 'models', 'saved', 'best_star_transformer_shared.onnx');
@@ -53,6 +54,7 @@ export async function GET() {
         dataset_exists: datasetExists,
         dataset_hash_match: datasetHashMatch,
         sqlite_exists: sqliteExists,
+        sqlite_size: sqliteSize,
         onnx_exists: onnxExists,
         onnx_explain_exists: fs.existsSync(onnxExplainPath)
       }
