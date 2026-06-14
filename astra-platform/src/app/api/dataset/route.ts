@@ -19,7 +19,7 @@ export async function GET() {
     
     // Compute split class matrix from database
     const dbPath = path.join(process.cwd(), 'data', 'astra.sqlite');
-    const db = new DatabaseSync(dbPath);
+    const db = new DatabaseSync(dbPath, { readOnly: true });
     const splitClassCounts = db.prepare('SELECT split, astra_class, COUNT(*) as count FROM stars GROUP BY split, astra_class').all() as any[];
     
     const classSplitMatrix: Record<string, Record<string, number>> = {

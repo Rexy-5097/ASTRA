@@ -13,7 +13,7 @@ export async function GET(
     const ticId = parseInt(id.replace('TIC_', ''));
     
     const dbPath = path.join(process.cwd(), 'data', 'astra.sqlite');
-    const db = new DatabaseSync(dbPath);
+    const db = new DatabaseSync(dbPath, { readOnly: true });
     
     const stmt = db.prepare('SELECT * FROM stars WHERE tic_id = ?');
     const r = stmt.get(ticId) as any;

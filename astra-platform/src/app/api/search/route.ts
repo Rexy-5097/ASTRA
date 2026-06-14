@@ -14,7 +14,7 @@ export async function GET(request: NextRequest) {
     }
     
     const dbPath = path.join(process.cwd(), 'data', 'astra.sqlite');
-    const db = new DatabaseSync(dbPath);
+    const db = new DatabaseSync(dbPath, { readOnly: true });
     
     // Fuzzy matching using SQLite parameters
     const stmt = db.prepare(`
