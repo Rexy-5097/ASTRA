@@ -398,6 +398,7 @@ graph TD
     class FC1,FC2,FC3,FoldedTokens,FCTail,FoldedEmb,AddPosFolded folded
     class CatTokens,TE1,TE2,MeanPool shared
     class ConcatAll,CL1,CL2,CL3,Output classifier
+```
 
 **Key design choices:**
 - **Pre-LN Transformer layers** for training stability on small datasets
