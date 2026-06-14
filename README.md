@@ -197,6 +197,47 @@ print(f'  SHA256: {h}')
 
 ASTRA is organized as four sequential phases. Each phase produces hash-locked outputs consumed by the next.
 
+```mermaid
+flowchart TD
+    %% Styling
+    classDef phase1 fill:#e0f2fe,stroke:#0369a1,stroke-width:2px,color:#0f172a
+    classDef phase2 fill:#f0fdf4,stroke:#15803d,stroke-width:2px,color:#0f172a
+    classDef phase3 fill:#fef3c7,stroke:#b45309,stroke-width:2px,color:#0f172a
+    classDef phase4 fill:#faf5ff,stroke:#6b21a8,stroke-width:2px,color:#0f172a
+
+    subgraph P1 ["Phase 1: Data Acquisition"]
+        A["build_catalog.py"] -->|VSX/AAVSO Catalog via VizieR| B["candidate_expander.py"]
+        B -->|TIC Cross-Matching| C["dataset_builder.py"]
+        C -->|Download Light Curves from MAST| D[(Raw Light Curves)]
+    end
+
+    subgraph P2 ["Phase 2: Preprocessing & Freeze"]
+        D --> E["preprocess.py"]
+        E -->|Normalize, Detrend, Fold, Resample| F["dataset_audit.py"]
+        F -->|Label/Duplicate Audit| G["freeze_phase6_splits.py"]
+        G -->|SHA256 Lock| H[("scientific_dataset_freeze_v2.csv (944 stars)")]
+    end
+
+    subgraph P3 ["Phase 3: Training & Validation"]
+        H --> I["train_transformer.py / train_cnn.py"]
+        I -->|5-Fold x 3-Seed CV| J["calibration.py"]
+        J -->|NLL Minimization / Temp Scaling| K["uncertainty.py"]
+        K -->|MC Dropout 30 passes| L[(Calibrated Checkpoints)]
+    end
+
+    subgraph P4 ["Phase 4: Evaluation & Export"]
+        L --> M["predict.py"]
+        M -->|Evaluate on held-out test set| N["export_model.py"]
+        N -->|ONNX / TorchScript| O["visualize_attention.py"]
+        O -->|Attention Map Visualizer| P[Live Next.js Web Platform]
+    end
+
+    class A,B,C,D,P1 phase1
+    class E,F,G,H,P2 phase2
+    class I,J,K,L,P3 phase3
+    class M,N,O,P,P4 phase4
+```
+
 ### Phase 1 — Data Acquisition
 
 ```bash
@@ -227,6 +268,36 @@ python pipeline/freeze_phase6_splits.py
 
 This produces the cryptographically locked `scientific_dataset_freeze_v2.csv`  
 (944 stars, SHA256: `f99b4b06f16952033b5445bb0682d059e9ea4c3f99320a05d31aebb25c2dbf58`).
+
+```mermaid
+flowchart TD
+    %% Styling
+    classDef steps fill:#f8fafc,stroke:#64748b,stroke-width:2px,color:#0f172a
+    classDef decision fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#0f172a
+    classDef output fill:#f0fdf4,stroke:#16a34a,stroke-width:2px,color:#0f172a
+
+    Input["Raw TESS FITS/CSV Light Curve"] --> Norm["Normalisation (Median Division)"]
+    Norm --> Detrend["Spline Detrending (Biweight, window_length=0.5 days)"]
+    Detrend --> Detrended["Detrended Flux"]
+    
+    Detrended --> CheckPeriod{"Has Catalog Period?"}
+    CheckPeriod -->|Yes| UseCatalog["Fetch VSX/AAVSO Period"]
+    CheckPeriod -->|No| RunBLS["Compute Period via BLS (Box Least Squares)"]
+    
+    UseCatalog --> Fold["Phase-Folding (Phase = modulo Time, Period)"]
+    RunBLS --> Fold
+    
+    Fold --> Folded["Folded Light Curve"]
+    
+    Folded --> Resample["Dual-Channel Resampling (1000 linear bins)"]
+    Detrended --> Resample
+    
+    Resample --> Output[("Dual-Channel Input (2, 1000): Raw & Folded")]
+
+    class Norm,Detrend,Detrended,Fold,Folded,Resample,UseCatalog steps
+    class CheckPeriod decision
+    class Output output
+```
 
 ### Phase 3 — Training & Validation
 
@@ -268,45 +339,65 @@ python training/visualize_attention.py --model transformer_shared
 
 The production model processes a star's **dual-channel input** `(B, 2, 1000)` — raw photometry and phase-folded light curve — through a parallel CNN tokenizer followed by a shared self-attention encoder.
 
-```
-Input: (B, 2, 1000)
-       │
-       ├──── Raw Branch ───────────────────────────────────────────┐
-       │     Conv1d(1→32, k=7) → BN → ReLU → MaxPool(2)          │
-       │     Conv1d(32→64, k=5) → BN → ReLU → MaxPool(2)         │
-       │     Conv1d(64→128, k=5) → BN → ReLU → MaxPool(2)        │
-       │     → Tokens: (B, 125, 128) + learnable pos_enc          │
-       │     → CNN Tail: Conv(128→256→512) → AdaptiveAvgPool(1)   │
-       │                                                            │
-       └──── Folded Branch ────────────────────────────────────────┤
-             Conv1d(1→32, k=7) → BN → ReLU → MaxPool(2)          │
-             Conv1d(32→64, k=5) → BN → ReLU → MaxPool(2)         │
-             Conv1d(64→128, k=5) → BN → ReLU → MaxPool(2)        │
-             → Tokens: (B, 125, 128) + learnable pos_enc          │
-             → CNN Tail: Conv(128→256) → AdaptiveAvgPool(1)       │
-                                                                    │
-       ┌──────────────────────────────────────────────────────────┘
-       │  Branch embeddings added (raw_branch_emb, folded_branch_emb)
-       │
-       └── Joint Sequence: cat([T_raw, T_folded]) → (B, 250, 128)
-                │
-                ▼
-       Shared Transformer Encoder (2 × Pre-LN layers)
-         MultiheadAttention(d_model=128, nhead=4) → FFN(256) → Dropout(0.2)
-                │
-                ▼
-       Mean pooling → (B, 128)
-                │
-       cat([pooled(128), raw_tail(512), folded_tail(256)]) → (B, 896)
-                │
-                ▼
-       Classifier: Linear(896→384) → BN → ReLU → Dropout
-                   Linear(384→128) → BN → ReLU → Dropout
-                   Linear(128→5)
-                │
-                ▼
-       Output: (B, 5) class logits
-```
+```mermaid
+graph TD
+    %% Styling
+    classDef input fill:#e0f2fe,stroke:#0369a1,stroke-width:2px,color:#0f172a
+    classDef raw fill:#fee2e2,stroke:#dc2626,stroke-width:2px,color:#0f172a
+    classDef folded fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#0f172a
+    classDef shared fill:#faf5ff,stroke:#7c3aed,stroke-width:2px,color:#0f172a
+    classDef classifier fill:#f0fdf4,stroke:#16a34a,stroke-width:2px,color:#0f172a
+
+    Input["Dual-Channel Input (B, 2, 1000)"] --> SplitRaw["Raw Channel (B, 1, 1000)"]
+    Input --> SplitFolded["Folded Channel (B, 1, 1000)"]
+
+    subgraph RawBranch ["Raw CNN Tokenizer"]
+        SplitRaw --> RC1["Conv1d(1→32, k=7) + BN + ReLU + MaxPool(2)"]
+        RC1 --> RC2["Conv1d(32→64, k=5) + BN + ReLU + MaxPool(2)"]
+        RC2 --> RC3["Conv1d(64→128, k=5) + BN + ReLU + MaxPool(2)"]
+        RC3 --> RawTokens["Raw Tokens: (B, 125, 128)"]
+        RC3 --> RCTail["CNN Tail: Conv1d(128→256→512) + AdaptiveAvgPool(1)"]
+        RCTail --> RawEmb["Raw Global Feature (B, 512)"]
+    end
+
+    subgraph FoldedBranch ["Folded CNN Tokenizer"]
+        SplitFolded --> FC1["Conv1d(1→32, k=7) + BN + ReLU + MaxPool(2)"]
+        FC1 --> FC2["Conv1d(32→64, k=5) + BN + ReLU + MaxPool(2)"]
+        FC2 --> FC3["Conv1d(64→128, k=5) + BN + ReLU + MaxPool(2)"]
+        FC3 --> FoldedTokens["Folded Tokens: (B, 125, 128)"]
+        FC3 --> FCTail["CNN Tail: Conv1d(128→256) + AdaptiveAvgPool(1)"]
+        FCTail --> FoldedEmb["Folded Global Feature (B, 256)"]
+    end
+
+    RawTokens --> AddPosRaw["Add Position & Branch Embeddings"]
+    FoldedTokens --> AddPosFolded["Add Position & Branch Embeddings"]
+
+    AddPosRaw --> CatTokens["Concat Tokens: (B, 250, 128)"]
+    AddPosFolded --> CatTokens
+
+    subgraph SharedEncoder ["Shared Transformer Encoder"]
+        CatTokens --> TE1["Transformer Layer 1 (Pre-LN, MHA=4, FFN=256)"]
+        TE1 --> TE2["Transformer Layer 2 (Pre-LN, MHA=4, FFN=256)"]
+        TE2 --> MeanPool["Global Mean Pooling (B, 128)"]
+    end
+
+    MeanPool --> ConcatAll["Concat Features: (B, 896)"]
+    RawEmb --> ConcatAll
+    FoldedEmb --> ConcatAll
+
+    subgraph Classifier ["Multi-Layer Classifier"]
+        ConcatAll --> CL1["Linear(896→384) + BN + ReLU + Dropout(0.2)"]
+        CL1 --> CL2["Linear(384→128) + BN + ReLU + Dropout(0.2)"]
+        CL2 --> CL3["Linear(128→5)"]
+    end
+
+    CL3 --> Output["Class Logits (B, 5)"]
+
+    class Input,SplitRaw,SplitFolded input
+    class RC1,RC2,RC3,RawTokens,RCTail,RawEmb,AddPosRaw raw
+    class FC1,FC2,FC3,FoldedTokens,FCTail,FoldedEmb,AddPosFolded folded
+    class CatTokens,TE1,TE2,MeanPool shared
+    class ConcatAll,CL1,CL2,CL3,Output classifier
 
 **Key design choices:**
 - **Pre-LN Transformer layers** for training stability on small datasets
