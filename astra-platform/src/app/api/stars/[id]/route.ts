@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { DatabaseSync } from 'node:sqlite';
+import { pathToFileURL } from 'node:url';
 import * as path from 'path';
 
 export const dynamic = 'force-dynamic';
@@ -13,7 +14,7 @@ export async function GET(
     const ticId = parseInt(id.replace('TIC_', ''));
     
     const dbPath = path.join(process.cwd(), 'data', 'astra.sqlite');
-    const db = new DatabaseSync(dbPath, { readOnly: true });
+    const db = new DatabaseSync(pathToFileURL(dbPath).toString() + '?immutable=1', { readOnly: true });
     
     const stmt = db.prepare('SELECT * FROM stars WHERE tic_id = ?');
     const r = stmt.get(ticId) as any;

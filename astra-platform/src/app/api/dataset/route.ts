@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { DatabaseSync } from 'node:sqlite';
+import { pathToFileURL } from 'node:url';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -19,7 +20,7 @@ export async function GET() {
     
     // Compute split class matrix from database
     const dbPath = path.join(process.cwd(), 'data', 'astra.sqlite');
-    const db = new DatabaseSync(dbPath, { readOnly: true });
+    const db = new DatabaseSync(pathToFileURL(dbPath).toString() + '?immutable=1', { readOnly: true });
     const splitClassCounts = db.prepare('SELECT split, astra_class, COUNT(*) as count FROM stars GROUP BY split, astra_class').all() as any[];
     
     const classSplitMatrix: Record<string, Record<string, number>> = {

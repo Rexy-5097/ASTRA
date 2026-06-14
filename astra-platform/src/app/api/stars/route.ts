@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { DatabaseSync } from 'node:sqlite';
+import { pathToFileURL } from 'node:url';
 import * as path from 'path';
 
 export const dynamic = 'force-dynamic';
@@ -15,7 +16,7 @@ export async function GET(request: NextRequest) {
     const limit = parseInt(searchParams.get('limit') || '50');
     
     const dbPath = path.join(process.cwd(), 'data', 'astra.sqlite');
-    const db = new DatabaseSync(dbPath, { readOnly: true });
+    const db = new DatabaseSync(pathToFileURL(dbPath).toString() + '?immutable=1', { readOnly: true });
     
     let sql = 'SELECT * FROM stars WHERE 1=1';
     const params: any[] = [];
