@@ -9,6 +9,11 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
+  experimental: {
+    outputFileTracingIncludes: {
+      '/api/**/*': ['./data/**/*'],
+    },
+  },
 };
 
 export default nextConfig;
