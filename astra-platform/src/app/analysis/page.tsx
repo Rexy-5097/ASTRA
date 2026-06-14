@@ -47,7 +47,7 @@ function LightCurveChart({
     <div className="astra-glass rounded">
       <div className="px-4 py-2.5 border-b border-white/5 flex items-center justify-between">
         <span className="text-[0.8125rem] font-medium text-[#D7DEE7]">{title}</span>
-        {data && (
+        {data && data.flux_1000 && data.folded_flux_200 && (
           <span className="text-[10px] font-mono text-[#5A6878]">
             {type === 'raw' ? `${data.flux_1000.length.toLocaleString()} pts` : `${data.folded_flux_200.length} pts`}
           </span>
@@ -156,7 +156,7 @@ export default function AnalysisPage() {
   const [query, setQuery] = useState('');
   const [activeChart, setActiveChart] = useState<'raw' | 'folded'>('raw');
 
-  const { data, isLoading } = useStars({
+  const { data, isLoading, isError, error } = useStars({
     q: query || undefined,
     limit: 100,
   });
@@ -185,7 +185,12 @@ export default function AnalysisPage() {
           {isLoading && (
             <p className="text-[0.75rem] text-[#5A6878] p-3">Loading…</p>
           )}
-          {data?.stars.map((star) => (
+          {isError && (
+            <p className="text-[0.75rem] text-[#F85149] p-3 font-mono">
+              Err: {error instanceof Error ? error.message : "Failed to load"}
+            </p>
+          )}
+          {!isLoading && !isError && data?.stars && Array.isArray(data.stars) && data.stars.map((star) => (
             <StarListItem
               key={star.tic_id}
               star={star}
@@ -196,7 +201,7 @@ export default function AnalysisPage() {
         </div>
         <div className="px-3 py-2 border-t border-white/5">
           <p className="text-[10px] text-[#5A6878]">
-            {data?.total.toLocaleString() ?? 0} targets
+            {typeof data?.total === 'number' ? data.total.toLocaleString() : 0} targets
           </p>
         </div>
       </div>

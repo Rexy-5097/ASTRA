@@ -27,7 +27,7 @@ export default function TargetSearchPage() {
   }, [inputValue]);
 
   // Hook fetching data
-  const { data, isLoading } = useStars({
+  const { data, isLoading, isError, error } = useStars({
     q: debouncedQuery || undefined,
     class: selectedClass !== 'all' ? selectedClass : undefined,
     source: selectedSource !== 'all' ? selectedSource : undefined,
@@ -62,7 +62,7 @@ export default function TargetSearchPage() {
           </p>
         </div>
         <div className="font-mono text-[11px] text-[#5A6878]">
-          {data ? `${data.total.toLocaleString()} targets match filter` : 'Loading registry…'}
+          {data && typeof data.total === 'number' ? `${data.total.toLocaleString()} targets match filter` : 'Loading registry…'}
         </div>
       </div>
 
@@ -173,7 +173,17 @@ export default function TargetSearchPage() {
             </thead>
             <tbody className="divide-y divide-[#1A2430]">
               {isLoading && <LoadingRows count={10} />}
-              {!isLoading && (!data || data.stars.length === 0) && (
+              {!isLoading && isError && (
+                <tr>
+                  <td colSpan={9} className="py-8">
+                    <EmptyState
+                      message="Failed to load target registry"
+                      sub={error instanceof Error ? error.message : "An unknown error occurred."}
+                    />
+                  </td>
+                </tr>
+              )}
+              {!isLoading && !isError && (!data || !data.stars || data.stars.length === 0) && (
                 <tr>
                   <td colSpan={9} className="py-8">
                     <EmptyState
@@ -183,8 +193,9 @@ export default function TargetSearchPage() {
                   </td>
                 </tr>
               )}
-              {!isLoading &&
-                data?.stars.map((star) => (
+              {!isLoading && !isError &&
+                data?.stars && Array.isArray(data.stars) &&
+                data.stars.map((star) => (
                   <tr key={star.tic_id} className="hover:bg-[#111922]">
                     <td className="px-4 py-2.5 font-mono">
                       <Link

@@ -1,0 +1,50 @@
+{
+  "tic_id": 256314807,
+  "astra_class": "rr_lyrae",
+  "label": 0,
+  "source_catalogs": [
+    "VSX"
+  ],
+  "primary_source": "VSX",
+  "catalog_label": "RRAB",
+  "ra": 15.3419,
+  "dec": 61.89593,
+  "n_sectors": 1,
+  "n_points_raw": 1103,
+  "n_points_clean": 1079,
+  "selected_period": 0.9475055,
+  "period": 0.9475055,
+  "bls_period": 1.896759351870374,
+  "catalog_period": 0.9475055,
+  "bls_power": 0.013202053734143907,
+  "source_cadence": 30.0,
+  "cadence_type": "long",
+  "sector_information": [
+    {
+      "mission": "TESS Sector 18",
+      "author": "TEQUILA",
+      "exptime": 1800.0,
+      "target_name": "s0018-cam2-ccd2-x0667-y0787",
+      "sequence_number": 18
+    }
+  ],
+  "source_pipeline": "TEQUILA",
+  "variability_amplitude": 0.029219814864659098,
+  "snr_estimate": 1.8397497306951927,
+  "estimated_snr": 1.8397497306951927,
+  "period_source": "catalog",
+  "has_folded_lc": true,
+  "duplicate_group_id": null,
+  "preprocessing_version": "phase6_preprocess_v1",
+  "preprocessing_hash": "546fec6012426ce722d695c35507a8cff37094ddca8f537567fa5f1657f96ec4",
+  "raw_file_hashes": {
+    "raw/TIC_256314807/lightcurve_000.npz": "cfdafc4fe3812388a08509525fcec1c527a18f05c8c201ab9453fbf1c3573338"
+  },
+  "processed_file_hashes": {
+    "flux_1000.npy": "78bd1fb84a42e095b4d32e738e04854830f556e3d2eac7a8ae679236eedc9408",
+    "flux_200.npy": "6d5c29d173748791034442c46948f2d20c5f4260a9d152de9a2385195124e323",
+    "folded_flux_1000.npy": "b8cf4f6e4eb3699bded0be446f18431689ba7137f6861dbb4bc94a8911372da6",
+    "folded_flux_200.npy": "f5746b9b99f481fba0fadc6227e6dcee0959d4300d36c641619d9cc1a3c8e6c0"
+  },
+  "processing_timestamp": "2026-06-12T04:32:56.364443+00:00"
+}

@@ -11,8 +11,7 @@ export async function GET(
   const { id } = await params;
   const ticId = id.replace('TIC_', '');
   
-  // Data root is one level up from the Next.js project
-  const dataRoot = path.join(process.cwd(), '..', 'data', 'phase6', 'processed', `TIC_${ticId}`);
+  const dataRoot = path.join(process.cwd(), 'data', 'processed', `TIC_${ticId}`);
   
   try {
     const flux1000 = parseNPY(path.join(dataRoot, 'flux_1000.npy'));

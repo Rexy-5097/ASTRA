@@ -1,0 +1,74 @@
+{
+  "tic_id": 344299442,
+  "astra_class": "rr_lyrae",
+  "label": 0,
+  "source_catalogs": [
+    "VSX"
+  ],
+  "primary_source": "VSX",
+  "catalog_label": "RRAB",
+  "ra": 23.03404,
+  "dec": 1.34175,
+  "n_sectors": 4,
+  "n_points_raw": 63116,
+  "n_points_clean": 56148,
+  "selected_period": 0.55303,
+  "period": 0.55303,
+  "bls_period": 2.7651930386077215,
+  "catalog_period": 0.55303,
+  "bls_power": 21.837366704084783,
+  "source_cadence": 2.0,
+  "cadence_type": "short",
+  "sector_information": [
+    {
+      "mission": "TESS Sector 03",
+      "author": "SPOC",
+      "exptime": 120.0,
+      "target_name": "344299442",
+      "sequence_number": 3
+    },
+    {
+      "mission": "TESS Sector 30",
+      "author": "SPOC",
+      "exptime": 120.0,
+      "target_name": "344299442",
+      "sequence_number": 30
+    },
+    {
+      "mission": "TESS Sector 42",
+      "author": "SPOC",
+      "exptime": 120.0,
+      "target_name": "344299442",
+      "sequence_number": 42
+    },
+    {
+      "mission": "TESS Sector 43",
+      "author": "SPOC",
+      "exptime": 120.0,
+      "target_name": "344299442",
+      "sequence_number": 43
+    }
+  ],
+  "source_pipeline": "SPOC",
+  "variability_amplitude": 0.4196495448438393,
+  "snr_estimate": 24.055045115196883,
+  "estimated_snr": 24.055045115196883,
+  "period_source": "catalog",
+  "has_folded_lc": true,
+  "duplicate_group_id": null,
+  "preprocessing_version": "phase6_preprocess_v1",
+  "preprocessing_hash": "a9bd081601fe4726139cf3fd59b89497c6364940f242ac66930efa6985bda292",
+  "raw_file_hashes": {
+    "raw/TIC_344299442/lightcurve_000.npz": "6c41b9ed30abb940b16b293690d77efc810f17df9e92f430003ca099c2afed9d",
+    "raw/TIC_344299442/lightcurve_001.npz": "81ca82012a5dc5461698f75a36d3f97eb605ba7128aed862f4b19b45f9ab1006",
+    "raw/TIC_344299442/lightcurve_002.npz": "fbc97a09d52129d1f6254e0570cae5ee7b36b61b5c7f393684330321a81c723f",
+    "raw/TIC_344299442/lightcurve_003.npz": "a7ae7ca610fc1fe599d8285e17c04642d43c2d7b011b3dcb39601cfee5715ea5"
+  },
+  "processed_file_hashes": {
+    "flux_1000.npy": "09be26da3d02a2bbb130b47b299e4f99d0f8448604f00c0286697f7254f6abf1",
+    "flux_200.npy": "e98ddd61b665ba11db5406458139add55beca0088cfb0436dc59a48479a055dc",
+    "folded_flux_1000.npy": "c5b12ed074635e797b947acf0a092bc28355a8178464a8cd15615af5b6d728cd",
+    "folded_flux_200.npy": "c88d0b549c7deb05faec75f86f972fb48605b0450f8604e5738ae8f3e263d8c4"
+  },
+  "processing_timestamp": "2026-06-12T04:46:33.422385+00:00"
+}

@@ -1,0 +1,50 @@
+{
+  "tic_id": 38856301,
+  "astra_class": "solar_like",
+  "label": 3,
+  "source_catalogs": [
+    "literature"
+  ],
+  "primary_source": "literature",
+  "catalog_label": "solar_like",
+  "ra": 255.469853792677,
+  "dec": -34.6714251310016,
+  "n_sectors": 1,
+  "n_points_raw": 1046,
+  "n_points_clean": 1005,
+  "selected_period": 13.21634326865373,
+  "period": 13.21634326865373,
+  "bls_period": 13.21634326865373,
+  "catalog_period": null,
+  "bls_power": 0.014100649477221346,
+  "source_cadence": 30.0,
+  "cadence_type": "long",
+  "sector_information": [
+    {
+      "mission": "TESS Sector 12",
+      "author": "GSFC-ELEANOR-LITE",
+      "exptime": 1800.0,
+      "target_name": "38856301",
+      "sequence_number": 12
+    }
+  ],
+  "source_pipeline": "GSFC-ELEANOR-LITE",
+  "variability_amplitude": 0.03594648277658991,
+  "snr_estimate": 1.3699069352420545,
+  "estimated_snr": 1.3699069352420545,
+  "period_source": "BLS",
+  "has_folded_lc": true,
+  "duplicate_group_id": null,
+  "preprocessing_version": "phase6_preprocess_v1",
+  "preprocessing_hash": "8802954d43f52f711f7e5f427bb3ebdf4d7a65886bd927546da39fbd6b2976ce",
+  "raw_file_hashes": {
+    "raw/TIC_38856301/lightcurve_000.npz": "07cc275307495e4a82f206b2472536e59327a8eb4311b67ab0551f3793146f03"
+  },
+  "processed_file_hashes": {
+    "flux_1000.npy": "56120b9472a673d353f83a3fbb69b2ff09dd5d3813a244ff10444b3c0b36fd40",
+    "flux_200.npy": "259a1f1d74a634b3da6e2b1423b3525599e44f192657cf07b5b2a694eb17af0a",
+    "folded_flux_1000.npy": "2900e543cc482ed3c7a9ad51a3ae35cc1618bc513684eb148721f6f65b3e4f5f",
+    "folded_flux_200.npy": "72f01ed3d874598de83db5f21dccf8e8a85b68337f191a5629c1623b8fa06f59"
+  },
+  "processing_timestamp": "2026-06-12T07:10:39.718491+00:00"
+}

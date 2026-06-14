@@ -1,0 +1,58 @@
+{
+  "tic_id": 122515509,
+  "astra_class": "solar_like",
+  "label": 3,
+  "source_catalogs": [
+    "Santos2021_TESS_rotation"
+  ],
+  "primary_source": "Santos2021_TESS_rotation",
+  "catalog_label": "solar_like",
+  "ra": 290.69614,
+  "dec": 37.17886,
+  "n_sectors": 2,
+  "n_points_raw": 2482,
+  "n_points_clean": 851,
+  "selected_period": 0.7588117623524705,
+  "period": 0.7588117623524705,
+  "bls_period": 0.7588117623524705,
+  "catalog_period": null,
+  "bls_power": 6.967050076894294,
+  "source_cadence": 30.0,
+  "cadence_type": "long",
+  "sector_information": [
+    {
+      "mission": "TESS Sector 14",
+      "author": "TASOC",
+      "exptime": 1800.0,
+      "target_name": "122515509",
+      "sequence_number": 14
+    },
+    {
+      "mission": "TESS Sector 14",
+      "author": "TASOC",
+      "exptime": 1800.0,
+      "target_name": "122515509",
+      "sequence_number": 14
+    }
+  ],
+  "source_pipeline": "TASOC",
+  "variability_amplitude": 2.723383011133192,
+  "snr_estimate": 1.57382677790076,
+  "estimated_snr": 1.57382677790076,
+  "period_source": "BLS",
+  "has_folded_lc": true,
+  "duplicate_group_id": null,
+  "preprocessing_version": "phase6_preprocess_v1",
+  "preprocessing_hash": "841f6e53ad449c8ffd19dbea6f0d8d6cdae04d74d00c1c854b05217291403e19",
+  "raw_file_hashes": {
+    "raw/TIC_122515509/lightcurve_000.npz": "3a80e3cfae132ade2abb69d3566233f87c025e28181e09d47f3c99183d3d9f34",
+    "raw/TIC_122515509/lightcurve_001.npz": "59db1ec8d711cf95bbe8f6cb5205399bcb4e56d04c6ab6193e0c1f9aed603c31"
+  },
+  "processed_file_hashes": {
+    "flux_1000.npy": "3e2e78bcb66fc889834ce2bec58db75e6d2b2cc378649c30f5cf9b82f8ee91ac",
+    "flux_200.npy": "a034f74bc882095fd4d78adefd5b379b8d1a1ea5c1118d1cb122ff3872f7c16a",
+    "folded_flux_1000.npy": "14bd16f92b0d6a48978d3e3c75b42e4b194f810cffa0b85871c0f735737a0d2f",
+    "folded_flux_200.npy": "c55639de94e0ddf05f76e28673561d0b981552f68ca7841f4be1f76a6bc19a2a"
+  },
+  "processing_timestamp": "2026-06-12T05:17:13.193995+00:00"
+}

@@ -1,0 +1,58 @@
+{
+  "tic_id": 122784720,
+  "astra_class": "solar_like",
+  "label": 3,
+  "source_catalogs": [
+    "Santos2021_TESS_rotation"
+  ],
+  "primary_source": "Santos2021_TESS_rotation",
+  "catalog_label": "solar_like",
+  "ra": 291.03369,
+  "dec": 36.77104,
+  "n_sectors": 2,
+  "n_points_raw": 37930,
+  "n_points_clean": 37930,
+  "selected_period": 28.398959791958394,
+  "period": 28.398959791958394,
+  "bls_period": 28.398959791958394,
+  "catalog_period": null,
+  "bls_power": 0.00035739864131260055,
+  "source_cadence": 2.0,
+  "cadence_type": "short",
+  "sector_information": [
+    {
+      "mission": "TESS Sector 40",
+      "author": "SPOC",
+      "exptime": 120.0,
+      "target_name": "122784720",
+      "sequence_number": 40
+    },
+    {
+      "mission": "TESS Sector 41",
+      "author": "SPOC",
+      "exptime": 120.0,
+      "target_name": "122784720",
+      "sequence_number": 41
+    }
+  ],
+  "source_pipeline": "SPOC",
+  "variability_amplitude": 0.0030379927569712194,
+  "snr_estimate": 1.1031122263144495,
+  "estimated_snr": 1.1031122263144495,
+  "period_source": "BLS",
+  "has_folded_lc": true,
+  "duplicate_group_id": null,
+  "preprocessing_version": "phase6_preprocess_v1",
+  "preprocessing_hash": "b6ceccc07e531354e680f3fcc2c5655928ec9a09c71289ab60e2bb22efcc3557",
+  "raw_file_hashes": {
+    "raw/TIC_122784720/lightcurve_000.npz": "26147d166f907421d0d1ce419827e920a65352f27e1fcb628344a9a2d63d4d73",
+    "raw/TIC_122784720/lightcurve_001.npz": "16f22a0b2bae4ee700ea043f74168208753af66e0e42a052ef2f0a6133dac417"
+  },
+  "processed_file_hashes": {
+    "flux_1000.npy": "47cd4bec1e8ca2f8c32543ef057393ab651b9eb168c630934ce32623d16bf98c",
+    "flux_200.npy": "6479696d64dc3a28008d40c489de2b281d96da6a723390c337ea2fe043c44b22",
+    "folded_flux_1000.npy": "a40571c0b3c6c11a664b3641f05f5b3155df13a97266a8b826c17568c6375f05",
+    "folded_flux_200.npy": "644ee4c75a2fba05d3e53b4b1bac1a97a5b9acfd26d27d83e018b9915eb2abbc"
+  },
+  "processing_timestamp": "2026-06-12T04:37:48.768764+00:00"
+}

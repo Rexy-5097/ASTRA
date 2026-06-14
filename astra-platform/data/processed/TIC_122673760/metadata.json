@@ -1,0 +1,58 @@
+{
+  "tic_id": 122673760,
+  "astra_class": "solar_like",
+  "label": 3,
+  "source_catalogs": [
+    "Santos2021_TESS_rotation"
+  ],
+  "primary_source": "Santos2021_TESS_rotation",
+  "catalog_label": "solar_like",
+  "ra": 290.75815,
+  "dec": 37.14333,
+  "n_sectors": 2,
+  "n_points_raw": 2482,
+  "n_points_clean": 820,
+  "selected_period": 2.4657331466293257,
+  "period": 2.4657331466293257,
+  "bls_period": 2.4657331466293257,
+  "catalog_period": null,
+  "bls_power": 5.935982356371796,
+  "source_cadence": 30.0,
+  "cadence_type": "long",
+  "sector_information": [
+    {
+      "mission": "TESS Sector 14",
+      "author": "TASOC",
+      "exptime": 1800.0,
+      "target_name": "122673760",
+      "sequence_number": 14
+    },
+    {
+      "mission": "TESS Sector 14",
+      "author": "TASOC",
+      "exptime": 1800.0,
+      "target_name": "122673760",
+      "sequence_number": 14
+    }
+  ],
+  "source_pipeline": "TASOC",
+  "variability_amplitude": 2.1759939051205865,
+  "snr_estimate": 1.5961126778143624,
+  "estimated_snr": 1.5961126778143624,
+  "period_source": "BLS",
+  "has_folded_lc": true,
+  "duplicate_group_id": null,
+  "preprocessing_version": "phase6_preprocess_v1",
+  "preprocessing_hash": "25e9535fc177991de5ac536e6aa0cb0fba173a96a1c05b1ac6d3a6a0dd132044",
+  "raw_file_hashes": {
+    "raw/TIC_122673760/lightcurve_000.npz": "a4237b6512d1e7070d45e456915f7212ae459a3f525433c8799d29d28f338276",
+    "raw/TIC_122673760/lightcurve_001.npz": "85ca7b1222eaabf187079f754a59a75fab01ffe23632d5faa2f7166bb9a66ba2"
+  },
+  "processed_file_hashes": {
+    "flux_1000.npy": "fedf40d83023ad93d5869e79d967934736eb17a5e3a0c25fa95e9612bdc26403",
+    "flux_200.npy": "07954209ca8e889e6a2811c4d245f0b8ffc3f336947c97b71915ffcd570da2c2",
+    "folded_flux_1000.npy": "15eb1c0b51bd89b2c566c85bbc5f346cc4f5c9d8f838295aeb0d8fb8dd454fee",
+    "folded_flux_200.npy": "39e852e200e35f2673bce0b62e2944c6e5ccad4a129fe2d3e4fa17e8066490c9"
+  },
+  "processing_timestamp": "2026-06-12T05:17:15.263742+00:00"
+}

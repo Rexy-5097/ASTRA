@@ -1,0 +1,58 @@
+{
+  "tic_id": 351053716,
+  "astra_class": "solar_like",
+  "label": 3,
+  "source_catalogs": [
+    "Santos2021_TESS_rotation"
+  ],
+  "primary_source": "Santos2021_TESS_rotation",
+  "catalog_label": "solar_like",
+  "ra": 291.86801,
+  "dec": 37.26988,
+  "n_sectors": 2,
+  "n_points_raw": 38262,
+  "n_points_clean": 35559,
+  "selected_period": 1.6072814562912583,
+  "period": 1.6072814562912583,
+  "bls_period": 1.6072814562912583,
+  "catalog_period": null,
+  "bls_power": 0.00016626610729039105,
+  "source_cadence": 2.0,
+  "cadence_type": "short",
+  "sector_information": [
+    {
+      "mission": "TESS Sector 74",
+      "author": "SPOC",
+      "exptime": 120.0,
+      "target_name": "351053716",
+      "sequence_number": 74
+    },
+    {
+      "mission": "TESS Sector 75",
+      "author": "SPOC",
+      "exptime": 120.0,
+      "target_name": "351053716",
+      "sequence_number": 75
+    }
+  ],
+  "source_pipeline": "SPOC",
+  "variability_amplitude": 0.013542267951972938,
+  "snr_estimate": 0.9954960674646001,
+  "estimated_snr": 0.9954960674646001,
+  "period_source": "BLS",
+  "has_folded_lc": true,
+  "duplicate_group_id": null,
+  "preprocessing_version": "phase6_preprocess_v1",
+  "preprocessing_hash": "8d055dffc281eb448dad750afba7b633788a9033d379a4b35862e155f44a6bc3",
+  "raw_file_hashes": {
+    "raw/TIC_351053716/lightcurve_000.npz": "95192ea4f648a941a1d9784956d42b9066446f0c22285d4a88688ee0ee554100",
+    "raw/TIC_351053716/lightcurve_001.npz": "37f6fd580c2dab07ae930be8bf03ed627c820a6e9854ad830ec6f37f1eb69ec2"
+  },
+  "processed_file_hashes": {
+    "flux_1000.npy": "87bf41f7a0d049454c78895e332a9b7341bb3951771d71d36334ebbe3755d9b2",
+    "flux_200.npy": "24bdcbcab43644f0b1fbd927a9a6a194256859848b017d142202a44456a4f7fc",
+    "folded_flux_1000.npy": "13f1a778b2c25cab929cb9267c195603588cd064f343e89ca742638584c11991",
+    "folded_flux_200.npy": "6071c547306c47482361ce6b4773d46c1d142d30e91341552257f905ab256eca"
+  },
+  "processing_timestamp": "2026-06-12T05:21:05.444421+00:00"
+}

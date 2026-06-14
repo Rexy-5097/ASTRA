@@ -46,7 +46,7 @@ export default function TargetPage() {
     );
   }
 
-  const topProb = prediction ? prediction.calibrated_confidence : 0.7;
+  const topProb = prediction && typeof prediction.calibrated_confidence === 'number' ? prediction.calibrated_confidence : 0.7;
 
   // Format light curve data
   const rawChartData = lc ? sampleArray(lc.flux_1000, 500) : [];
@@ -146,9 +146,9 @@ export default function TargetPage() {
                 </div>
               </div>
 
-              {Object.entries(prediction.probabilities).map(([key, val]) => {
+              {prediction.probabilities && Object.entries(prediction.probabilities).map(([key, val]) => {
                 const isTrueClass = key === star.astra_class;
-                const isPredictedClass = key === prediction.predicted_class;
+                const isPredictedClass = prediction.predicted_class ? key === prediction.predicted_class : false;
                 return (
                   <div key={key} className={`p-2 rounded border transition-colors ${
                     isPredictedClass

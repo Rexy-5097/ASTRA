@@ -1,0 +1,50 @@
+{
+  "tic_id": 440606785,
+  "astra_class": "cepheid",
+  "label": 1,
+  "source_catalogs": [
+    "VSX"
+  ],
+  "primary_source": "VSX",
+  "catalog_label": "DCEP",
+  "ra": 196.64713,
+  "dec": -65.09942,
+  "n_sectors": 1,
+  "n_points_raw": 18314,
+  "n_points_clean": 17222,
+  "selected_period": 4.29567,
+  "period": 4.29567,
+  "bls_period": 12.926865373074614,
+  "catalog_period": 4.29567,
+  "bls_power": 0.11420502024295645,
+  "source_cadence": 2.0,
+  "cadence_type": "short",
+  "sector_information": [
+    {
+      "mission": "TESS Sector 100",
+      "author": "SPOC",
+      "exptime": 120.0,
+      "target_name": "440606785",
+      "sequence_number": 100
+    }
+  ],
+  "source_pipeline": "SPOC",
+  "variability_amplitude": 0.12606675010115037,
+  "snr_estimate": 1.0434753403779686,
+  "estimated_snr": 1.0434753403779686,
+  "period_source": "catalog",
+  "has_folded_lc": true,
+  "duplicate_group_id": null,
+  "preprocessing_version": "phase6_preprocess_v1",
+  "preprocessing_hash": "e5e2e869b0fd409b85e0eafe4b52e5b9bb94d3e7d3ea4a17fb727931f92eebce",
+  "raw_file_hashes": {
+    "raw/TIC_440606785/lightcurve_000.npz": "9afebb80f37ec2c216124e83d7bd5617dd2f513f71081b8a10bf37ecdc26f2d0"
+  },
+  "processed_file_hashes": {
+    "flux_1000.npy": "bc5539356419e4fb90cfc5494b7572b816a565ed89911ddfa7596fb60c833e26",
+    "flux_200.npy": "76bddeec4f53118bc292936d176f429017808c375351502f4004229e7311578d",
+    "folded_flux_1000.npy": "30df75fa00630f5068ab9b9b450c6d8b8505c9f40a5e5719a77ff1eb2b19a811",
+    "folded_flux_200.npy": "f366e887302e5bb5e2bbcf957176796620e5957ab7a228c53b27e559cfa8d02e"
+  },
+  "processing_timestamp": "2026-06-12T03:12:41.000721+00:00"
+}

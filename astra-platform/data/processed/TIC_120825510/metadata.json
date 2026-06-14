@@ -1,0 +1,58 @@
+{
+  "tic_id": 120825510,
+  "astra_class": "solar_like",
+  "label": 3,
+  "source_catalogs": [
+    "Santos2021_TESS_rotation"
+  ],
+  "primary_source": "Santos2021_TESS_rotation",
+  "catalog_label": "solar_like",
+  "ra": 286.3443,
+  "dec": 37.41197,
+  "n_sectors": 2,
+  "n_points_raw": 36964,
+  "n_points_clean": 34352,
+  "selected_period": 46.33660732146429,
+  "period": 46.33660732146429,
+  "bls_period": 46.33660732146429,
+  "catalog_period": null,
+  "bls_power": 0.0017172871769274467,
+  "source_cadence": 2.0,
+  "cadence_type": "short",
+  "sector_information": [
+    {
+      "mission": "TESS Sector 80",
+      "author": "SPOC",
+      "exptime": 120.0,
+      "target_name": "120825510",
+      "sequence_number": 80
+    },
+    {
+      "mission": "TESS Sector 81",
+      "author": "SPOC",
+      "exptime": 120.0,
+      "target_name": "120825510",
+      "sequence_number": 81
+    }
+  ],
+  "source_pipeline": "SPOC",
+  "variability_amplitude": 0.03378001440750139,
+  "snr_estimate": 1.0036301319985796,
+  "estimated_snr": 1.0036301319985796,
+  "period_source": "BLS",
+  "has_folded_lc": true,
+  "duplicate_group_id": null,
+  "preprocessing_version": "phase6_preprocess_v1",
+  "preprocessing_hash": "df39778982f5367f0b13abe186b90e117dcdb67af04a33d754985bd18cdeb894",
+  "raw_file_hashes": {
+    "raw/TIC_120825510/lightcurve_000.npz": "ed2ed5b10234f9cd5f4211f6ad364334d94fbb5cafd9f4bc6cd58feb47d65232",
+    "raw/TIC_120825510/lightcurve_001.npz": "f0f3c9b073b87dc8083c67c96cd602a3aef6e77e46847c82787a36df04a73e67"
+  },
+  "processed_file_hashes": {
+    "flux_1000.npy": "4b96f5ce6d46da6652f90caafb6f9c7262ecd71116bea1bfa6a69f91a6f8bd44",
+    "flux_200.npy": "cf2bbc6e4aae68030bf07eb9b71183ecf54da025d7e7e8b319e5ac4657fb4473",
+    "folded_flux_1000.npy": "f6915b5cb754f7759dd82ed7cb2e8d47ffcf678b0492d6696724de6367e0125f",
+    "folded_flux_200.npy": "aa7afda71e86b452240d80de6db4a88472e7c7610a0af23de4c8bca6074f745b"
+  },
+  "processing_timestamp": "2026-06-12T05:21:38.576025+00:00"
+}

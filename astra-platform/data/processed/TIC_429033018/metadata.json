@@ -1,0 +1,70 @@
+{
+  "tic_id": 429033018,
+  "astra_class": "stable",
+  "label": 4,
+  "source_catalogs": [
+    "\"",
+    "H",
+    "Hipparcos",
+    "[",
+    "]",
+    "a",
+    "c",
+    "i",
+    "o",
+    "p",
+    "r",
+    "s",
+    "stable_negative_screen"
+  ],
+  "primary_source": "Hipparcos",
+  "catalog_label": "stable",
+  "ra": 1.264401,
+  "dec": 1.037829,
+  "n_sectors": 2,
+  "n_points_raw": 120541,
+  "n_points_clean": 100514,
+  "selected_period": 14.194578915783156,
+  "period": 14.194578915783156,
+  "bls_period": 14.194578915783156,
+  "catalog_period": null,
+  "bls_power": 2.4540327575759835e-06,
+  "source_cadence": 0.3,
+  "cadence_type": "short",
+  "sector_information": [
+    {
+      "mission": "TESS Sector 70",
+      "author": "SPOC",
+      "exptime": 20.0,
+      "target_name": "429033018",
+      "sequence_number": 70
+    },
+    {
+      "mission": "TESS Sector 70",
+      "author": "SPOC",
+      "exptime": 120.0,
+      "target_name": "429033018",
+      "sequence_number": 70
+    }
+  ],
+  "source_pipeline": "SPOC",
+  "variability_amplitude": 0.002743026382877922,
+  "snr_estimate": 0.9967487289457391,
+  "estimated_snr": 0.9967487289457391,
+  "period_source": "BLS",
+  "has_folded_lc": true,
+  "duplicate_group_id": null,
+  "preprocessing_version": "phase6_preprocess_v1",
+  "preprocessing_hash": "fd70be2ac67397846dabc59d78d043e1c29a178ff505f47e721187ed5a52a6f9",
+  "raw_file_hashes": {
+    "raw/TIC_429033018/lightcurve_000.npz": "fbcd8b30264f32df9efbd12ebf00be3a50e33d6c43f816921769cf6f508cd9ec",
+    "raw/TIC_429033018/lightcurve_001.npz": "ea4fc831c468af0ba411796eb25235b6dcbb18674f61d3a28a9cdfa6b4b9d605"
+  },
+  "processed_file_hashes": {
+    "flux_1000.npy": "6f3c4ed27a2fff0c711f2ad79fa3762b46fc19eea4f4e77ee32123c348d64ced",
+    "flux_200.npy": "2759fa185487155a5974ef0e77fe228839ae4662e42052bed8cdde8c2c57ede0",
+    "folded_flux_1000.npy": "221d59bf690b33623f8bb91d87ac8dc765e20e2571b10cc8dfb66ac9c8a3055d",
+    "folded_flux_200.npy": "2e3f1e11aac9059645db8efa03f97eb8cb3db189bddc8111536359d15daea947"
+  },
+  "processing_timestamp": "2026-06-12T05:13:45.137961+00:00"
+}

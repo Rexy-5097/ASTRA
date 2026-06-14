@@ -1,0 +1,58 @@
+{
+  "tic_id": 122515241,
+  "astra_class": "solar_like",
+  "label": 3,
+  "source_catalogs": [
+    "Santos2021_TESS_rotation"
+  ],
+  "primary_source": "Santos2021_TESS_rotation",
+  "catalog_label": "solar_like",
+  "ra": 290.64301,
+  "dec": 37.07511,
+  "n_sectors": 2,
+  "n_points_raw": 2482,
+  "n_points_clean": 828,
+  "selected_period": 2.4258051610322067,
+  "period": 2.4258051610322067,
+  "bls_period": 2.4258051610322067,
+  "catalog_period": null,
+  "bls_power": 18.630571903618783,
+  "source_cadence": 30.0,
+  "cadence_type": "long",
+  "sector_information": [
+    {
+      "mission": "TESS Sector 14",
+      "author": "TASOC",
+      "exptime": 1800.0,
+      "target_name": "122515241",
+      "sequence_number": 14
+    },
+    {
+      "mission": "TESS Sector 14",
+      "author": "TASOC",
+      "exptime": 1800.0,
+      "target_name": "122515241",
+      "sequence_number": 14
+    }
+  ],
+  "source_pipeline": "TASOC",
+  "variability_amplitude": 3.026086772229457,
+  "snr_estimate": 2.806167200345261,
+  "estimated_snr": 2.806167200345261,
+  "period_source": "BLS",
+  "has_folded_lc": true,
+  "duplicate_group_id": null,
+  "preprocessing_version": "phase6_preprocess_v1",
+  "preprocessing_hash": "fe148fe1452cd3c0848d2c9d03b34a912ae8db08edacfe4778e86f8d5ff94041",
+  "raw_file_hashes": {
+    "raw/TIC_122515241/lightcurve_000.npz": "431ea3e7732e2e35fda8f2a8a5d5af879da9bc5f0fc4fd2761fdcacb2f71c8e5",
+    "raw/TIC_122515241/lightcurve_001.npz": "d75426b433fd43944d14e7021dea03bd6909532fee453fe845fbb5f2af7e259b"
+  },
+  "processed_file_hashes": {
+    "flux_1000.npy": "a1bd9f52be0492d75964d62c027650a2dc1e3df855a06e1708f2f1d9a4f0a702",
+    "flux_200.npy": "c7048987439f8f444a1d2a7668662a3302b7eb740a260a6bb81f7d3dbaaf7d46",
+    "folded_flux_1000.npy": "a9e8afa7fb07dc3d8ad34be4c1c3aa1d248f6154f28b8e2c31a94b87ba74560b",
+    "folded_flux_200.npy": "ab07a724d8a30e86b765d2a1ef5b58dc2e528fc368f637149a56e62c26746f43"
+  },
+  "processing_timestamp": "2026-06-12T04:40:51.315755+00:00"
+}

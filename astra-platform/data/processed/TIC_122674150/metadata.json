@@ -1,0 +1,58 @@
+{
+  "tic_id": 122674150,
+  "astra_class": "solar_like",
+  "label": 3,
+  "source_catalogs": [
+    "Santos2021_TESS_rotation"
+  ],
+  "primary_source": "Santos2021_TESS_rotation",
+  "catalog_label": "solar_like",
+  "ra": 290.73218,
+  "dec": 36.99249,
+  "n_sectors": 2,
+  "n_points_raw": 2482,
+  "n_points_clean": 816,
+  "selected_period": 0.928505701140228,
+  "period": 0.928505701140228,
+  "bls_period": 0.928505701140228,
+  "catalog_period": null,
+  "bls_power": 4.371304782127354,
+  "source_cadence": 30.0,
+  "cadence_type": "long",
+  "sector_information": [
+    {
+      "mission": "TESS Sector 14",
+      "author": "TASOC",
+      "exptime": 1800.0,
+      "target_name": "122674150",
+      "sequence_number": 14
+    },
+    {
+      "mission": "TESS Sector 14",
+      "author": "TASOC",
+      "exptime": 1800.0,
+      "target_name": "122674150",
+      "sequence_number": 14
+    }
+  ],
+  "source_pipeline": "TASOC",
+  "variability_amplitude": 2.196009509313088,
+  "snr_estimate": 1.5123373435630674,
+  "estimated_snr": 1.5123373435630674,
+  "period_source": "BLS",
+  "has_folded_lc": true,
+  "duplicate_group_id": null,
+  "preprocessing_version": "phase6_preprocess_v1",
+  "preprocessing_hash": "1024c2543e9359641381f9ee4a6a1b5375e4d5b92f01b1424de8e8feccc0d474",
+  "raw_file_hashes": {
+    "raw/TIC_122674150/lightcurve_000.npz": "3027d75904daec6a7278a4a03c13d3a245ec9733806718b7bb60d719c90a2251",
+    "raw/TIC_122674150/lightcurve_001.npz": "2ee1a315c55a2644bba0a9e1002bde65f4fcff8a84714098656c52ff54457d8b"
+  },
+  "processed_file_hashes": {
+    "flux_1000.npy": "99f1a3fdb92ea6caa13e1f2583e7a5bcc495557cd95165514f5f7f0cdbc99f58",
+    "flux_200.npy": "d6de1291d48b33110d079b64436ffb357ee3cb28b2fcb0d885f401a5bdaf8ec1",
+    "folded_flux_1000.npy": "addecb87787b4fc1db4f5e80607ef4b97432c381ad4c0d896ab22bbbb4e53e47",
+    "folded_flux_200.npy": "1257441269e45a7102fd540f0aa867d0770fb2867264fb9bbf0458a6aeef6820"
+  },
+  "processing_timestamp": "2026-06-12T04:39:53.966136+00:00"
+}

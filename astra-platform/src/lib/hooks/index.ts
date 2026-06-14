@@ -1,6 +1,23 @@
 import { useQuery } from '@tanstack/react-query';
 import type { Star, StarsResponse, LightCurveData } from '../types';
 
+// Robust fetch helper that checks r.ok and parses the JSON error details if present
+async function fetchJson<T>(url: string): Promise<T> {
+  const r = await fetch(url);
+  if (!r.ok) {
+    const errorText = await r.text();
+    let errorMessage = `HTTP error! status: ${r.status}`;
+    try {
+      const errJson = JSON.parse(errorText);
+      errorMessage = errJson.error || errJson.details || errorMessage;
+    } catch {
+      // Not JSON
+    }
+    throw new Error(errorMessage);
+  }
+  return r.json();
+}
+
 // ─── Stars list ────────────────────────────────────────────────────────────────
 interface StarsParams {
   q?: string;
@@ -22,8 +39,7 @@ export function useStars(params: StarsParams = {}) {
 
   return useQuery<StarsResponse>({
     queryKey: ['stars', params],
-    queryFn: () =>
-      fetch(`/api/stars?${searchParams}`).then((r) => r.json()),
+    queryFn: () => fetchJson<StarsResponse>(`/api/stars?${searchParams}`),
   });
 }
 
@@ -31,7 +47,7 @@ export function useStars(params: StarsParams = {}) {
 export function useStar(id: string | number | null) {
   return useQuery<Star>({
     queryKey: ['star', id],
-    queryFn: () => fetch(`/api/stars/${id}`).then((r) => r.json()),
+    queryFn: () => fetchJson<Star>(`/api/stars/${id}`),
     enabled: id !== null,
   });
 }
@@ -40,7 +56,7 @@ export function useStar(id: string | number | null) {
 export function useLightCurve(id: string | number | null) {
   return useQuery<LightCurveData>({
     queryKey: ['lightcurve', id],
-    queryFn: () => fetch(`/api/lightcurve/${id}`).then((r) => r.json()),
+    queryFn: () => fetchJson<LightCurveData>(`/api/lightcurve/${id}`),
     enabled: id !== null,
     staleTime: Infinity, // light curves don't change
   });
@@ -50,8 +66,7 @@ export function useLightCurve(id: string | number | null) {
 export function useSearch(query: string) {
   return useQuery({
     queryKey: ['search', query],
-    queryFn: () =>
-      fetch(`/api/search?q=${encodeURIComponent(query)}`).then((r) => r.json()),
+    queryFn: () => fetchJson<any>(`/api/search?q=${encodeURIComponent(query)}`),
     enabled: query.length >= 2,
     staleTime: 30_000,
   });
@@ -61,7 +76,7 @@ export function useSearch(query: string) {
 export function useModelDetails() {
   return useQuery({
     queryKey: ['model-details'],
-    queryFn: () => fetch('/api/model').then((r) => r.json()),
+    queryFn: () => fetchJson<any>('/api/model'),
   });
 }
 
@@ -69,7 +84,7 @@ export function useModelDetails() {
 export function useCheckpoints() {
   return useQuery({
     queryKey: ['checkpoints'],
-    queryFn: () => fetch('/api/checkpoints').then((r) => r.json()),
+    queryFn: () => fetchJson<any>('/api/checkpoints'),
   });
 }
 
@@ -77,7 +92,7 @@ export function useCheckpoints() {
 export function useDatasetDetails() {
   return useQuery({
     queryKey: ['dataset-details'],
-    queryFn: () => fetch('/api/dataset').then((r) => r.json()),
+    queryFn: () => fetchJson<any>('/api/dataset'),
   });
 }
 
@@ -85,7 +100,7 @@ export function useDatasetDetails() {
 export function useResearchFindings() {
   return useQuery({
     queryKey: ['research-findings'],
-    queryFn: () => fetch('/api/research').then((r) => r.json()),
+    queryFn: () => fetchJson<any>('/api/research'),
   });
 }
 
@@ -93,7 +108,7 @@ export function useResearchFindings() {
 export function useBenchmarkMetrics() {
   return useQuery({
     queryKey: ['benchmark-metrics'],
-    queryFn: () => fetch('/api/benchmark').then((r) => r.json()),
+    queryFn: () => fetchJson<any>('/api/benchmark'),
   });
 }
 
@@ -101,7 +116,7 @@ export function useBenchmarkMetrics() {
 export function useCalibrationDetails() {
   return useQuery({
     queryKey: ['calibration-details'],
-    queryFn: () => fetch('/api/calibration').then((r) => r.json()),
+    queryFn: () => fetchJson<any>('/api/calibration'),
   });
 }
 
@@ -109,7 +124,7 @@ export function useCalibrationDetails() {
 export function useExplain(id: string | number | null) {
   return useQuery({
     queryKey: ['explain', id],
-    queryFn: () => fetch(`/api/explain/${id}`).then((r) => r.json()),
+    queryFn: () => fetchJson<any>(`/api/explain/${id}`),
     enabled: id !== null,
     staleTime: Infinity,
   });
@@ -119,7 +134,7 @@ export function useExplain(id: string | number | null) {
 export function usePredict(id: string | number | null) {
   return useQuery({
     queryKey: ['predict', id],
-    queryFn: () => fetch(`/api/predict/${id}`).then((r) => r.json()),
+    queryFn: () => fetchJson<any>(`/api/predict/${id}`),
     enabled: id !== null,
     staleTime: Infinity,
   });

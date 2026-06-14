@@ -45,6 +45,7 @@ export async function GET() {
 
     return NextResponse.json({
       status,
+      node_version: process.version,
       dataset_hash: datasetHash || 'NOT_FOUND',
       expected_dataset_hash: EXPECTED_DATASET_HASH,
       model_hash: EXPECTED_MODEL_HASH,

@@ -1,0 +1,58 @@
+{
+  "tic_id": 137307176,
+  "astra_class": "solar_like",
+  "label": 3,
+  "source_catalogs": [
+    "Santos2021_TESS_rotation"
+  ],
+  "primary_source": "Santos2021_TESS_rotation",
+  "catalog_label": "solar_like",
+  "ra": 291.53973,
+  "dec": 37.05697,
+  "n_sectors": 2,
+  "n_points_raw": 2482,
+  "n_points_clean": 777,
+  "selected_period": 7.69629925985197,
+  "period": 7.69629925985197,
+  "bls_period": 7.69629925985197,
+  "catalog_period": null,
+  "bls_power": 8.144782725843802,
+  "source_cadence": 30.0,
+  "cadence_type": "long",
+  "sector_information": [
+    {
+      "mission": "TESS Sector 14",
+      "author": "TASOC",
+      "exptime": 1800.0,
+      "target_name": "137307176",
+      "sequence_number": 14
+    },
+    {
+      "mission": "TESS Sector 14",
+      "author": "TASOC",
+      "exptime": 1800.0,
+      "target_name": "137307176",
+      "sequence_number": 14
+    }
+  ],
+  "source_pipeline": "TASOC",
+  "variability_amplitude": 3.26029887015863,
+  "snr_estimate": 1.6733674225475972,
+  "estimated_snr": 1.6733674225475972,
+  "period_source": "BLS",
+  "has_folded_lc": true,
+  "duplicate_group_id": null,
+  "preprocessing_version": "phase6_preprocess_v1",
+  "preprocessing_hash": "f6daa4e912de933b2eab307a71d9db1f105359c93cfc5cd97f0ecc580378b6ec",
+  "raw_file_hashes": {
+    "raw/TIC_137307176/lightcurve_000.npz": "c3b02e8a6096313a571ea1a56d76d8bf2856c594db3525c88bc7c6f6b0b7e6c2",
+    "raw/TIC_137307176/lightcurve_001.npz": "6380a3adfe21e0ab7e2a625045266487df36f4b0c12bd13316a8dad050a32c70"
+  },
+  "processed_file_hashes": {
+    "flux_1000.npy": "5133637ab1ce57edbe1fb811ebdd9829323a52cb29da9000e6a7d372fe1067c8",
+    "flux_200.npy": "057813aff8ed716567530bdd1b59dba8ea2b6c5587e57383a0bb4a5a74e5222b",
+    "folded_flux_1000.npy": "c81612a18787944e64f9b0503dc270f37bd8ca6ad9afed6d282e99ffe1783aab",
+    "folded_flux_200.npy": "38ccd3efbfc7bcf9eeedf94e8e24ce64cd6d1d8515d20ee626d3eab9e1c39228"
+  },
+  "processing_timestamp": "2026-06-12T04:41:36.270579+00:00"
+}

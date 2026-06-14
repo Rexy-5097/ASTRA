@@ -1,0 +1,58 @@
+{
+  "tic_id": 137099457,
+  "astra_class": "solar_like",
+  "label": 3,
+  "source_catalogs": [
+    "Santos2021_TESS_rotation"
+  ],
+  "primary_source": "Santos2021_TESS_rotation",
+  "catalog_label": "solar_like",
+  "ra": 291.26428,
+  "dec": 36.66848,
+  "n_sectors": 2,
+  "n_points_raw": 2482,
+  "n_points_clean": 773,
+  "selected_period": 0.20980196039207843,
+  "period": 0.20980196039207843,
+  "bls_period": 0.20980196039207843,
+  "catalog_period": null,
+  "bls_power": 122.27722230833777,
+  "source_cadence": 30.0,
+  "cadence_type": "long",
+  "sector_information": [
+    {
+      "mission": "TESS Sector 14",
+      "author": "TASOC",
+      "exptime": 1800.0,
+      "target_name": "137099457",
+      "sequence_number": 14
+    },
+    {
+      "mission": "TESS Sector 14",
+      "author": "TASOC",
+      "exptime": 1800.0,
+      "target_name": "137099457",
+      "sequence_number": 14
+    }
+  ],
+  "source_pipeline": "TASOC",
+  "variability_amplitude": 12.281135728498576,
+  "snr_estimate": 1.4727894351584918,
+  "estimated_snr": 1.4727894351584918,
+  "period_source": "BLS",
+  "has_folded_lc": true,
+  "duplicate_group_id": null,
+  "preprocessing_version": "phase6_preprocess_v1",
+  "preprocessing_hash": "5a213f009094f79a30ac80ca42018bebc8887645df729bbb9f4931a8e1e9a3db",
+  "raw_file_hashes": {
+    "raw/TIC_137099457/lightcurve_000.npz": "4fb1f58672ae25cbe8e4b998c5031d45a3ef924ad775fd8eb00280f638ce5b5f",
+    "raw/TIC_137099457/lightcurve_001.npz": "4ec4ecd973f79344e08896f20a49c160d5e339c2c1a020a0408a801fc6582965"
+  },
+  "processed_file_hashes": {
+    "flux_1000.npy": "dd9e8d955588f638e8d443b9bd88191b67d77102d0dcf62408e9b2e951e70f42",
+    "flux_200.npy": "f23b1c08a44a17dc2f1926f929feb0e177a41d7d920979f0950bcf9c299eaaee",
+    "folded_flux_1000.npy": "d1fa142fc526fe7e25415dad69554ad0ab14232ec2f0f8a27a19b4e9a39f7f4f",
+    "folded_flux_200.npy": "e5993dc5d05b1e1561e35f2df7e49dd79515234e5bedf5a253b57a13ffc86ffa"
+  },
+  "processing_timestamp": "2026-06-12T04:37:21.679218+00:00"
+}

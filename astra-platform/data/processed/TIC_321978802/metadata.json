@@ -1,0 +1,78 @@
+{
+  "tic_id": 321978802,
+  "astra_class": "stable",
+  "label": 4,
+  "source_catalogs": [
+    "\"",
+    "H",
+    "Hipparcos",
+    "[",
+    "]",
+    "a",
+    "c",
+    "i",
+    "o",
+    "p",
+    "r",
+    "s",
+    "stable_negative_screen"
+  ],
+  "primary_source": "Hipparcos",
+  "catalog_label": "stable",
+  "ra": 0.991102,
+  "dec": -48.125187,
+  "n_sectors": 3,
+  "n_points_raw": 53474,
+  "n_points_clean": 46783,
+  "selected_period": 23.547709541908382,
+  "period": 23.547709541908382,
+  "bls_period": 23.547709541908382,
+  "catalog_period": null,
+  "bls_power": 4.534117512471752e-06,
+  "source_cadence": 2.0,
+  "cadence_type": "short",
+  "sector_information": [
+    {
+      "mission": "TESS Sector 02",
+      "author": "SPOC",
+      "exptime": 120.0,
+      "target_name": "321978802",
+      "sequence_number": 2
+    },
+    {
+      "mission": "TESS Sector 28",
+      "author": "SPOC",
+      "exptime": 120.0,
+      "target_name": "321978802",
+      "sequence_number": 28
+    },
+    {
+      "mission": "TESS Sector 29",
+      "author": "SPOC",
+      "exptime": 120.0,
+      "target_name": "321978802",
+      "sequence_number": 29
+    }
+  ],
+  "source_pipeline": "SPOC",
+  "variability_amplitude": 0.0013651647056126203,
+  "snr_estimate": 1.0161254113884017,
+  "estimated_snr": 1.0161254113884017,
+  "period_source": "BLS",
+  "has_folded_lc": true,
+  "duplicate_group_id": null,
+  "preprocessing_version": "phase6_preprocess_v1",
+  "preprocessing_hash": "b7b1b422abb7bbabddf7e3322cf6abd5718d344b25e5f0cf7b559c1be207c040",
+  "raw_file_hashes": {
+    "raw/TIC_321978802/lightcurve_000.npz": "449b466cbce24d01460651babc8e0c6340c6c021d25a14d1c8de77abd1fdd64b",
+    "raw/TIC_321978802/lightcurve_001.npz": "1eca2594f46685a5ef4435a87a5fe413703986dae5c1e04396427703cb5d2966",
+    "raw/TIC_321978802/lightcurve_002.npz": "bfae4df55e6222c280e1f44d46ae44c9f3aa6da517fa173df40e534da148fcd6"
+  },
+  "processed_file_hashes": {
+    "flux_1000.npy": "4751a8e492da416211786b41904d5dee092f7f383198b8f1991e2649abab6a34",
+    "flux_200.npy": "6dd620c3edff7eaf244b17d8df83ebe0d0d5e7c9eed7c71e6b2c00963b266533",
+    "folded_flux_1000.npy": "cd1bd1138c84864b33c4871523bec0d3d46b6604b85bb09318b6811f670688db",
+    "folded_flux_200.npy": "41058fa0ae63f54370edfcb0b9ba2eae22a27317fa31691454dc25ffdf730dad"
+  },
+  "processing_timestamp": "2026-06-12T04:18:25.825154+00:00"
+}

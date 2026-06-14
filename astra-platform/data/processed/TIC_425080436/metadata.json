@@ -1,0 +1,74 @@
+{
+  "tic_id": 425080436,
+  "astra_class": "rr_lyrae",
+  "label": 0,
+  "source_catalogs": [
+    "VSX"
+  ],
+  "primary_source": "VSX",
+  "catalog_label": "RRAB",
+  "ra": 41.62105,
+  "dec": -13.95094,
+  "n_sectors": 4,
+  "n_points_raw": 3900,
+  "n_points_clean": 3886,
+  "selected_period": 0.561532,
+  "period": 0.561532,
+  "bls_period": 0.5591718343668733,
+  "catalog_period": 0.561532,
+  "bls_power": 1.4480560570231478,
+  "source_cadence": 30.0,
+  "cadence_type": "long",
+  "sector_information": [
+    {
+      "mission": "TESS Sector 04",
+      "author": "GSFC-ELEANOR-LITE",
+      "exptime": 1800.0,
+      "target_name": "425080436",
+      "sequence_number": 4
+    },
+    {
+      "mission": "TESS Sector 04",
+      "author": "T16",
+      "exptime": 1800.0,
+      "target_name": "425080436",
+      "sequence_number": 4
+    },
+    {
+      "mission": "TESS Sector 04",
+      "author": "TEQUILA",
+      "exptime": 1800.0,
+      "target_name": "s0004-cam1-ccd1-x1475-y0263",
+      "sequence_number": 4
+    },
+    {
+      "mission": "TESS Sector 04",
+      "author": "TGLC",
+      "exptime": 1800.0,
+      "target_name": "425080436",
+      "sequence_number": 4
+    }
+  ],
+  "source_pipeline": "GSFC-ELEANOR-LITE, T16, TEQUILA, TGLC",
+  "variability_amplitude": 0.4195051006723014,
+  "snr_estimate": 2.853176924900667,
+  "estimated_snr": 2.853176924900667,
+  "period_source": "catalog",
+  "has_folded_lc": true,
+  "duplicate_group_id": null,
+  "preprocessing_version": "phase6_preprocess_v1",
+  "preprocessing_hash": "3cf43e615fbd591db5a5dcc4903feea36f1269607c10d647cf0277c52cfc2422",
+  "raw_file_hashes": {
+    "raw/TIC_425080436/lightcurve_000.npz": "90374421b83e6e2b5812490c6bf007e20c524635d7589eeedbe7bd069fb78120",
+    "raw/TIC_425080436/lightcurve_001.npz": "35334000df61fa2a0757b7b52d9b590b2332a3588e2a962cb7fc1af16c48e7bb",
+    "raw/TIC_425080436/lightcurve_002.npz": "4286f7720b54d8f203e76a57d983cc2664ce0f8e49f003e570b93a77bbd5ac99",
+    "raw/TIC_425080436/lightcurve_003.npz": "9d8984a2f971de33f98cde9b56b754c8add3a17f7da62994e0ee8772165f06ad"
+  },
+  "processed_file_hashes": {
+    "flux_1000.npy": "061036e806beb737f8ef9b472b213404126531f0b2eb937f400c5db4d5194f11",
+    "flux_200.npy": "510d8d4e88ca559881cf71767d4d43820335107c79228b566db34125a6372664",
+    "folded_flux_1000.npy": "14445a3c2ca15ed4a45b45d5045c0e0536f3ed7931a3a2fe87f9115ebcc2b06e",
+    "folded_flux_200.npy": "213fbfb7e6ca256a817c3f55b9c1186090f8aac38fdc2eb400fb3cd193723663"
+  },
+  "processing_timestamp": "2026-06-12T04:50:58.235485+00:00"
+}

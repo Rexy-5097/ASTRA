@@ -1,0 +1,106 @@
+{
+  "tic_id": 149603524,
+  "astra_class": "solar_like",
+  "label": 3,
+  "source_catalogs": [
+    "literature"
+  ],
+  "primary_source": "literature",
+  "catalog_label": "solar_like",
+  "ra": 87.1399740872908,
+  "dec": -63.988440787086,
+  "n_sectors": 8,
+  "n_points_raw": 127241,
+  "n_points_clean": 119141,
+  "selected_period": 4.412222444488897,
+  "period": 4.412222444488897,
+  "bls_period": 4.412222444488897,
+  "catalog_period": null,
+  "bls_power": 0.0004541042569725229,
+  "source_cadence": 2.0,
+  "cadence_type": "short",
+  "sector_information": [
+    {
+      "mission": "TESS Sector 01",
+      "author": "SPOC",
+      "exptime": 120.0,
+      "target_name": "149603524",
+      "sequence_number": 1
+    },
+    {
+      "mission": "TESS Sector 02",
+      "author": "SPOC",
+      "exptime": 120.0,
+      "target_name": "149603524",
+      "sequence_number": 2
+    },
+    {
+      "mission": "TESS Sector 03",
+      "author": "SPOC",
+      "exptime": 120.0,
+      "target_name": "149603524",
+      "sequence_number": 3
+    },
+    {
+      "mission": "TESS Sector 04",
+      "author": "SPOC",
+      "exptime": 120.0,
+      "target_name": "149603524",
+      "sequence_number": 4
+    },
+    {
+      "mission": "TESS Sector 06",
+      "author": "SPOC",
+      "exptime": 120.0,
+      "target_name": "149603524",
+      "sequence_number": 6
+    },
+    {
+      "mission": "TESS Sector 07",
+      "author": "SPOC",
+      "exptime": 120.0,
+      "target_name": "149603524",
+      "sequence_number": 7
+    },
+    {
+      "mission": "TESS Sector 08",
+      "author": "SPOC",
+      "exptime": 120.0,
+      "target_name": "149603524",
+      "sequence_number": 8
+    },
+    {
+      "mission": "TESS Sector 09",
+      "author": "SPOC",
+      "exptime": 120.0,
+      "target_name": "149603524",
+      "sequence_number": 9
+    }
+  ],
+  "source_pipeline": "SPOC",
+  "variability_amplitude": 0.0029348358479113212,
+  "snr_estimate": 1.0219862254774552,
+  "estimated_snr": 1.0219862254774552,
+  "period_source": "BLS",
+  "has_folded_lc": true,
+  "duplicate_group_id": null,
+  "preprocessing_version": "phase6_preprocess_v1",
+  "preprocessing_hash": "709b71848db4749c2ce1d030098ccad8e8764c0143c0d9dcef3ab666ab893ec9",
+  "raw_file_hashes": {
+    "raw/TIC_149603524/lightcurve_000.npz": "805cdbbba4118ec828a4d82acf47b07c6e0dda3a1d1a0e2d625b997d672e4e3e",
+    "raw/TIC_149603524/lightcurve_001.npz": "6f71d30551413e88569bce718a181de4a7159beff2364cb4f05ca522f003a718",
+    "raw/TIC_149603524/lightcurve_002.npz": "afd4e781d5b43762fccf525c61a1ae755e1ea3a80f14c3056273d6329cc369cc",
+    "raw/TIC_149603524/lightcurve_003.npz": "dc46d987d7ac497240b860ac4258bbe7f14d35270cb7fc8e20dc30c1d79d6bbb",
+    "raw/TIC_149603524/lightcurve_004.npz": "ec60dd3a1aa96aee6249c81629b3a620e5d10b2cb23b7a0c6f27600c25673c85",
+    "raw/TIC_149603524/lightcurve_005.npz": "ee39a007734dd8561bf4f5ea2c53f9d4e4ef79702499d40b1aa1a6a9ad8f73f5",
+    "raw/TIC_149603524/lightcurve_006.npz": "1939a950160fb2a5750b1f56b92d6b8902bfc999823388fa7ba241b89510d2ff",
+    "raw/TIC_149603524/lightcurve_007.npz": "86d892746abedb81fd19d93864ce1bd2b3c0afd8b11a8d31cea31c476bea277a"
+  },
+  "processed_file_hashes": {
+    "flux_1000.npy": "41e20bec4c6893ee4d00130942c4c9c7d63e2131d6a5117d26e7f6610b106bcb",
+    "flux_200.npy": "a436706ff25cf12c70d5861d2f5ed1b87763be2430d10ae84c79228b6fb4de06",
+    "folded_flux_1000.npy": "c6d26fe8bfb497367190c5e21a01be50bb4e331ffbe9d535bbfb704565f4c528",
+    "folded_flux_200.npy": "1e0ba2eb3b222013bd856b0f80b735dd5b49456da7efdb5cacff98ab303de086"
+  },
+  "processing_timestamp": "2026-06-12T07:10:39.691602+00:00"
+}

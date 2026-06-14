@@ -1,0 +1,50 @@
+{
+  "tic_id": 122680392,
+  "astra_class": "solar_like",
+  "label": 3,
+  "source_catalogs": [
+    "Santos2021_TESS_rotation"
+  ],
+  "primary_source": "Santos2021_TESS_rotation",
+  "catalog_label": "solar_like",
+  "ra": 290.88843,
+  "dec": 37.08936,
+  "n_sectors": 1,
+  "n_points_raw": 18012,
+  "n_points_clean": 11701,
+  "selected_period": 9.992158431686336,
+  "period": 9.992158431686336,
+  "bls_period": 9.992158431686336,
+  "catalog_period": null,
+  "bls_power": 6.652771921414679e-06,
+  "source_cadence": 2.0,
+  "cadence_type": "short",
+  "sector_information": [
+    {
+      "mission": "TESS Sector 14",
+      "author": "SPOC",
+      "exptime": 120.0,
+      "target_name": "122680392",
+      "sequence_number": 14
+    }
+  ],
+  "source_pipeline": "SPOC",
+  "variability_amplitude": 0.0024031577243723845,
+  "snr_estimate": 1.0006704231254993,
+  "estimated_snr": 1.0006704231254993,
+  "period_source": "BLS",
+  "has_folded_lc": true,
+  "duplicate_group_id": null,
+  "preprocessing_version": "phase6_preprocess_v1",
+  "preprocessing_hash": "0c4b8667c3ec78ff90c6d21cbfa019e0950cca71c5bb5ce6804d41d7af0122bc",
+  "raw_file_hashes": {
+    "raw/TIC_122680392/lightcurve_000.npz": "ea080baa569b262b3a180653163308b7546a3137ca9f9ace5dbd0527cef04664"
+  },
+  "processed_file_hashes": {
+    "flux_1000.npy": "3d5c9becc02a4ab96affcc0dbbccee96d85b9329162bd4c9c74fdd16226a8005",
+    "flux_200.npy": "5d31ed296556a7fb3fb59203db83155b3c187ffac5fc73dd5bf8e064217b22df",
+    "folded_flux_1000.npy": "068dc7d50ee7f18e3f153734c8d4acff31e89cf99754f7fd70852160296548cd",
+    "folded_flux_200.npy": "f01520a7b74b9583edf0d9788759c1150ac961a5d3a991ae694ea06d244bc3b7"
+  },
+  "processing_timestamp": "2026-06-12T04:40:52.655524+00:00"
+}

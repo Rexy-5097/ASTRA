@@ -1,0 +1,62 @@
+{
+  "tic_id": 117547410,
+  "astra_class": "stable",
+  "label": 4,
+  "source_catalogs": [
+    "\"",
+    "H",
+    "Hipparcos",
+    "[",
+    "]",
+    "a",
+    "c",
+    "i",
+    "o",
+    "p",
+    "r",
+    "s",
+    "stable_negative_screen"
+  ],
+  "primary_source": "Hipparcos",
+  "catalog_label": "stable",
+  "ra": 0.084346,
+  "dec": -13.393297,
+  "n_sectors": 1,
+  "n_points_raw": 18297,
+  "n_points_clean": 18296,
+  "selected_period": 0.10998199639927986,
+  "period": 0.10998199639927986,
+  "bls_period": 0.10998199639927986,
+  "catalog_period": null,
+  "bls_power": 2.366434355928772e-06,
+  "source_cadence": 2.0,
+  "cadence_type": "short",
+  "sector_information": [
+    {
+      "mission": "TESS Sector 02",
+      "author": "SPOC",
+      "exptime": 120.0,
+      "target_name": "117547410",
+      "sequence_number": 2
+    }
+  ],
+  "source_pipeline": "SPOC",
+  "variability_amplitude": 0.001639643470041141,
+  "snr_estimate": 1.0016127784693711,
+  "estimated_snr": 1.0016127784693711,
+  "period_source": "BLS",
+  "has_folded_lc": true,
+  "duplicate_group_id": null,
+  "preprocessing_version": "phase6_preprocess_v1",
+  "preprocessing_hash": "4e7869973ef006e2d41cadb9bb4f9ddf2e4d6a9e0d8f5664d14e3f13f0471fbe",
+  "raw_file_hashes": {
+    "raw/TIC_117547410/lightcurve_000.npz": "bc458f35088748cc783cd98b9d31abfb128e461092a1ba1913a0cc0086ee298f"
+  },
+  "processed_file_hashes": {
+    "flux_1000.npy": "b6ed217bb2ee869e9bc31de303862a415c4309cad6426ca16a4deca856db039f",
+    "flux_200.npy": "5b58276a9e8bbc7b2f6f82f7a70f571fd3e97e49ab729b3fd3dc0c709378e7b8",
+    "folded_flux_1000.npy": "b53f4d7bd6adf028fa4e57aeec8a14148cb08adc7e12a974ba69e6a10d5f1759",
+    "folded_flux_200.npy": "c72085c7b81cbccf3eb17c79d911ed02f297bb2a3f32a015e6114b09273c34f7"
+  },
+  "processing_timestamp": "2026-06-12T03:07:56.536562+00:00"
+}

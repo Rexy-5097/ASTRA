@@ -1,0 +1,58 @@
+{
+  "tic_id": 229980647,
+  "astra_class": "solar_like",
+  "label": 3,
+  "source_catalogs": [
+    "literature"
+  ],
+  "primary_source": "literature",
+  "catalog_label": "solar_like",
+  "ra": 198.952583216966,
+  "dec": -29.4749765315438,
+  "n_sectors": 2,
+  "n_points_raw": 2174,
+  "n_points_clean": 1053,
+  "selected_period": 12.5375675135027,
+  "period": 12.5375675135027,
+  "bls_period": 12.5375675135027,
+  "catalog_period": null,
+  "bls_power": 0.19019575797457636,
+  "source_cadence": 30.0,
+  "cadence_type": "long",
+  "sector_information": [
+    {
+      "mission": "TESS Sector 10",
+      "author": "GSFC-ELEANOR-LITE",
+      "exptime": 1800.0,
+      "target_name": "229980647",
+      "sequence_number": 10
+    },
+    {
+      "mission": "TESS Sector 10",
+      "author": "TGLC",
+      "exptime": 1800.0,
+      "target_name": "229980647",
+      "sequence_number": 10
+    }
+  ],
+  "source_pipeline": "GSFC-ELEANOR-LITE, TGLC",
+  "variability_amplitude": 0.029764080816172298,
+  "snr_estimate": 2.0296928270892463,
+  "estimated_snr": 2.0296928270892463,
+  "period_source": "BLS",
+  "has_folded_lc": true,
+  "duplicate_group_id": null,
+  "preprocessing_version": "phase6_preprocess_v1",
+  "preprocessing_hash": "50ea0ed7541f192f106e36d790a8cb0c63025b2e7a088834bd048d0472993ec2",
+  "raw_file_hashes": {
+    "raw/TIC_229980647/lightcurve_000.npz": "a894c33e1b6c328249a5a17e70a2ed4e66662994adde2d4b7df9174da0e320dc",
+    "raw/TIC_229980647/lightcurve_001.npz": "60f436214e467755a186940516eec48d5d197e83d5a4138ff123f0ee451032a4"
+  },
+  "processed_file_hashes": {
+    "flux_1000.npy": "61b87f0d94e9aa34e05796732f3692551c58b70dc1f4454643bfccaa69c83042",
+    "flux_200.npy": "2c88c8c99b019e5f94253064822d45ff438259e68b0f636ead9b464458226263",
+    "folded_flux_1000.npy": "8e29491693d1207ebf0ab6e67a0b63a692822003ca2188031b1764957996fb9b",
+    "folded_flux_200.npy": "4c0f61484c27069dcbd59c0f90998ccb1f74282ab8c27b08a7ea3e45c55051d8"
+  },
+  "processing_timestamp": "2026-06-12T07:10:39.701062+00:00"
+}

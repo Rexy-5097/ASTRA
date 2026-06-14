@@ -1,0 +1,74 @@
+{
+  "tic_id": 429002156,
+  "astra_class": "cepheid",
+  "label": 1,
+  "source_catalogs": [
+    "VSX"
+  ],
+  "primary_source": "VSX",
+  "catalog_label": "DCEP",
+  "ra": 350.98232,
+  "dec": 81.47067,
+  "n_sectors": 4,
+  "n_points_raw": 20647,
+  "n_points_clean": 11637,
+  "selected_period": 4.7121139,
+  "period": 4.7121139,
+  "bls_period": 10.36149229845969,
+  "catalog_period": 4.7121139,
+  "bls_power": 8.944141331445268,
+  "source_cadence": 2.0,
+  "cadence_type": "short",
+  "sector_information": [
+    {
+      "mission": "TESS Sector 26",
+      "author": "TASOC",
+      "exptime": 120.0,
+      "target_name": "429002156",
+      "sequence_number": 26
+    },
+    {
+      "mission": "TESS Sector 26",
+      "author": "TASOC",
+      "exptime": 1800.0,
+      "target_name": "429002156",
+      "sequence_number": 26
+    },
+    {
+      "mission": "TESS Sector 26",
+      "author": "TASOC",
+      "exptime": 1800.0,
+      "target_name": "429002156",
+      "sequence_number": 26
+    },
+    {
+      "mission": "TESS Sector 18",
+      "author": "TEQUILA",
+      "exptime": 1800.0,
+      "target_name": "s0018-cam3-ccd3-x0992-y1891",
+      "sequence_number": 18
+    }
+  ],
+  "source_pipeline": "TASOC, TEQUILA",
+  "variability_amplitude": 1.4921478215144202,
+  "snr_estimate": 1.2743607407951174,
+  "estimated_snr": 1.2743607407951174,
+  "period_source": "catalog",
+  "has_folded_lc": true,
+  "duplicate_group_id": null,
+  "preprocessing_version": "phase6_preprocess_v1",
+  "preprocessing_hash": "e4e9f6b424f128183683c743f24ea5f09872b3efb6c84c47d4713f2a0ecf1fe1",
+  "raw_file_hashes": {
+    "raw/TIC_429002156/lightcurve_000.npz": "96ecebe7b5780f269a80cbbef0f422d1369589e06e04ef9160481fe69d04ae9d",
+    "raw/TIC_429002156/lightcurve_001.npz": "7d240d7a2e6745a6075763cf7feba45b603fc796b13895b537a9aca3dd03cf39",
+    "raw/TIC_429002156/lightcurve_002.npz": "d65e7eb14f002db978ef4ab54c7be81f601f628a0aa91910eeb1fc499981d480",
+    "raw/TIC_429002156/lightcurve_003.npz": "67ecbba6bccf93e42294ab3c5d809f49765ca78012c8ba7a81404f61bc6431f5"
+  },
+  "processed_file_hashes": {
+    "flux_1000.npy": "14d9c658c3832ae86ce667c9ee4a2a4f888fce605d0c258045988315b25b61d4",
+    "flux_200.npy": "9056dd618bbd0a214eb49e449dac70dce1e521e4c1a245212b987dfacc39e88b",
+    "folded_flux_1000.npy": "d2276b8135cc358bd5f76101c24d1fd12434e1b0f79a288b3bc6ab83df678447",
+    "folded_flux_200.npy": "17961cbc8d4ae6dcef081e52c588eb29aaeae394e2b02c0636b24b1b715d8f65"
+  },
+  "processing_timestamp": "2026-06-12T05:04:09.020159+00:00"
+}
