@@ -29,31 +29,31 @@ def preprocess_raw_flux(raw_flux: list[float]) -> np.ndarray:
     flux = flux[np.isfinite(flux)]
     if len(flux) < 50:
         raise ValueError(f"Insufficient valid observations: found {len(flux)}, minimum 50 required.")
-        
+
     # 3-sigma outlier clipping
     mean, std = np.mean(flux), np.std(flux)
     if std > 0:
         flux = np.clip(flux, mean - 3 * std, mean + 3 * std)
-        
+
     # Median detrending
     med = np.median(flux)
     if abs(med) > 1e-5:
         flux = (flux - med) / abs(med)
     else:
         flux = flux - med
-        
+
     # Resample to exactly 1000 points
     x_orig = np.linspace(0, 1, len(flux))
     x_new = np.linspace(0, 1, 1000)
     flux_1000 = np.interp(x_new, x_orig, flux).astype(np.float32)
-    
+
     # Z-score normalization
     std_1000 = flux_1000.std()
     if std_1000 > 0:
         flux_1000 = (flux_1000 - flux_1000.mean()) / std_1000
     else:
         flux_1000 = flux_1000 - flux_1000.mean()
-        
+
     return flux_1000
 
 def fold_light_curve_linear(flux_1000: np.ndarray, period: float) -> np.ndarray:
@@ -65,7 +65,7 @@ def fold_light_curve_linear(flux_1000: np.ndarray, period: float) -> np.ndarray:
     sort_idx = np.argsort(phase)
     phase_sorted = phase[sort_idx]
     flux_sorted = flux_1000[sort_idx]
-    
+
     FLUX_1000_LEN = 1000
     bin_edges = np.linspace(0, 1, FLUX_1000_LEN + 1)
     folded = np.zeros(FLUX_1000_LEN, dtype=np.float32)
@@ -75,7 +75,7 @@ def fold_light_curve_linear(flux_1000: np.ndarray, period: float) -> np.ndarray:
             folded[i] = np.mean(flux_sorted[mask])
         else:
             folded[i] = np.interp((bin_edges[i] + bin_edges[i+1])/2, phase_sorted, flux_sorted)
-            
+
     std = folded.std()
     if std > 0:
         folded = (folded - folded.mean()) / std
@@ -97,13 +97,13 @@ def main() -> None:
     parser.add_argument("--tic_id", type=str, default="999999999", help="Optional target identification")
     parser.add_argument("--onnx", type=str, default="models/saved/best_star_transformer_shared_explain.onnx", help="Path to explainable ONNX model")
     args = parser.parse_args()
-    
+
     onnx_path = PROJECT_ROOT / args.onnx
-    
+
     if not onnx_path.exists():
         print(json.dumps({"error": f"ONNX checkpoint {onnx_path} not found."}))
         sys.exit(1)
-        
+
     # Parse flux input
     try:
         if "," in args.flux:
@@ -118,48 +118,48 @@ def main() -> None:
     except Exception as e:
         print(json.dumps({"error": f"Failed to parse flux input: {str(e)}"}))
         sys.exit(1)
-        
+
     # Preprocess
     try:
         flux_1000 = preprocess_raw_flux(raw_flux)
     except Exception as e:
         print(json.dumps({"error": f"Preprocessing failed: {str(e)}"}))
         sys.exit(1)
-        
+
     # Fold
     folded_flux = fold_light_curve_linear(flux_1000, args.period)
-    
+
     # Prepare batch tensor: shape (1, 2, 1000)
     input_tensor = np.stack([flux_1000, folded_flux], axis=0)[np.newaxis, ...]
-    
+
     # Run ONNX session
     sess = ort.InferenceSession(str(onnx_path))
     input_name = sess.get_inputs()[0].name
-    
+
     outputs = sess.run(
         ["logits", "attention_weights", "cnn_features", "pooled_features"],
         {input_name: input_tensor}
     )
-    
+
     logits, attn_w, cnn_feats, pooled_feats = outputs
-    
+
     # Calibration
     calibrated_logits = logits[0] / CALIBRATION_TEMP
     probabilities = softmax(calibrated_logits)
     predicted_class_idx = int(np.argmax(probabilities))
     predicted_class = CLASS_NAMES[predicted_class_idx]
-    
+
     entropy = compute_entropy(probabilities)
-    
+
     # Prepare outputs
     attention_matrix = attn_w[0].tolist()
     cnn_sequence_importance = np.mean(np.abs(cnn_feats[0]), axis=0).tolist()
-    
+
     # Sample down original and folded light curve to 200 points for lighter client charts
     # slice step = 5 for 1000 points
     sampled_raw = flux_1000[::5].tolist()
     sampled_folded = folded_flux[::5].tolist()
-    
+
     output_report = {
         "tic_id": args.tic_id,
         "predicted_class": predicted_class,
@@ -174,7 +174,7 @@ def main() -> None:
         "flux_200": sampled_raw,
         "folded_flux_200": sampled_folded
     }
-    
+
     print(json.dumps(output_report))
 
 if __name__ == "__main__":

@@ -1,8 +1,9 @@
-import pandas as pd
 import signal
-import sys
 from pathlib import Path
+
+import pandas as pd
 from lightkurve import search_lightcurve
+
 
 class TimeoutException(Exception): pass
 def timeout_handler(signum, frame): raise TimeoutException()
@@ -21,7 +22,7 @@ def check_tess(row):
     except TimeoutException:
         print(" Timeout!", end="")
         return ""
-    except Exception as e:
+    except Exception:
         signal.alarm(0)
         return "false"
 
@@ -45,10 +46,10 @@ for idx, row in df.iterrows():
     cls = row.get("astra_class")
     if cls not in target_classes:
         continue
-    
+
     if successful_found[cls] >= needed_successful[cls]:
         continue
-        
+
     tess_val = str(row.get("tess_available")).strip().lower()
     if tess_val in ("true", "false"):
         continue
@@ -57,15 +58,15 @@ for idx, row in df.iterrows():
     res = check_tess(row)
     df.at[idx, "tess_available"] = res
     print(f" Result: {res}")
-    
+
     if res == "true":
         successful_found[cls] += 1
-        
+
     checked_this_run += 1
     if checked_this_run % 5 == 0:
         df.to_csv(manifest_path, index=False)
         print("Saved manifest.")
-        
+
     if successful_found["solar_like"] >= needed_successful["solar_like"] and \
        successful_found["stable"] >= needed_successful["stable"]:
         print("Hit all targets!")

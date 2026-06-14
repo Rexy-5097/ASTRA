@@ -25,8 +25,9 @@ import argparse
 import json
 import logging
 import shutil
-import sys
 import socket
+import sys
+
 # Set a default timeout of 120 seconds for all socket operations to prevent indefinite hangs
 socket.setdefaulttimeout(120)
 
@@ -50,26 +51,28 @@ from pipeline.phase6_utils import (
     validate_phase6_metadata,
 )
 
+
 # ---------------------------------------------------------------------------
 # Monkey Patch Lightkurve to handle custom HLSP FITS formats and signature bugs
 # ---------------------------------------------------------------------------
 def patch_lightkurve():
     try:
         import importlib
+
         import lightkurve as lk
-        import lightkurve.search as lks
         import lightkurve.io as lkio
-        
+        import lightkurve.search as lks
+
         lkread_mod = importlib.import_module('lightkurve.io.read')
         if hasattr(lkread_mod, "original_read"):
             return
-            
+
         original_read = lkread_mod.read
         lkread_mod.original_read = original_read
-        
+
         def custom_read_fits(path):
-            from astropy.io import fits
             import numpy as np
+            from astropy.io import fits
             with fits.open(path) as hdus:
                 data = None
                 for hdu in hdus:
@@ -78,9 +81,9 @@ def patch_lightkurve():
                         break
                 if data is None:
                     raise ValueError("No BinTableHDU found in FITS file")
-                
+
                 cols = [c.lower() for c in data.columns.names]
-                
+
                 # Time column
                 time_cols = ['time', 'time_bjd', 'tmid_bjd', 'tmid_utc', 'bjd', 'tmid']
                 time_name = None
@@ -95,7 +98,7 @@ def patch_lightkurve():
                             break
                 if time_name is None:
                     raise ValueError(f"Could not find time column in {data.columns.names}")
-                
+
                 # Flux column
                 flux_cols = ['flux', 'sap_flux', 'pdcsap_flux', 'tfa1', 'tfa2', 'tfa3', 'ifl1', 'ifl2', 'ifl3', 'lc_flux']
                 flux_name = None
@@ -110,7 +113,7 @@ def patch_lightkurve():
                             break
                 if flux_name is None:
                     raise ValueError(f"Could not find flux column in {data.columns.names}")
-                
+
                 # Err column
                 err_cols = ['flux_err', 'sap_flux_err', 'pdcsap_flux_err', 'ife1', 'ife2', 'ife3', 'lc_flux_err']
                 err_name = None
@@ -123,21 +126,21 @@ def patch_lightkurve():
                         if 'err' in col.lower() or 'ife' in col.lower():
                             err_name = col
                             break
-                
+
                 time_vals = data[time_name]
                 flux_vals = data[flux_name]
                 if err_name:
                     err_vals = data[err_name]
                 else:
                     err_vals = np.zeros_like(flux_vals)
-                
+
                 if hasattr(time_vals, 'value'):
                     time_vals = time_vals.value
                 if hasattr(flux_vals, 'value'):
                     flux_vals = flux_vals.value
                 if hasattr(err_vals, 'value'):
                     err_vals = err_vals.value
-                
+
                 return lk.LightCurve(time=time_vals, flux=flux_vals, flux_err=err_vals)
 
         def patched_read(*args, **kwargs):
@@ -369,8 +372,8 @@ def process_star(
 
         # If coordinates are available and target search failed or was skipped, use coordinates
         if (search is None or len(search) == 0) and ra is not None and dec is not None:
-            from astropy.coordinates import SkyCoord
             import astropy.units as u
+            from astropy.coordinates import SkyCoord
             coord = SkyCoord(ra=ra, dec=dec, unit="deg")
             log.info("Searching via coordinates (%.4f, %.4f) for %s…", ra, dec, target)
             search = lk.search_lightcurve(coord, mission="TESS", author="SPOC")
@@ -415,9 +418,9 @@ def process_star(
 
             if tic_id is None and ra is not None and dec is not None:
                 try:
-                    from astroquery.mast import Catalogs
-                    from astropy.coordinates import SkyCoord
                     import astropy.units as u
+                    from astropy.coordinates import SkyCoord
+                    from astroquery.mast import Catalogs
                     coord = SkyCoord(ra=ra, dec=dec, unit="deg")
                     catalog_data = Catalogs.query_region(coord, radius=0.01, catalog="TIC")
                     if len(catalog_data) > 0:

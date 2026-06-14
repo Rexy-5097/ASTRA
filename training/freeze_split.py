@@ -7,10 +7,11 @@ seed (42), computes split fingerprinting, and writes the frozen split JSON files
 
 from __future__ import annotations
 
-import json
 import hashlib
+import json
 from datetime import datetime, timezone
 from pathlib import Path
+
 import numpy as np
 from sklearn.model_selection import GroupShuffleSplit
 
@@ -23,9 +24,9 @@ def main() -> None:
     # 1. Scan for valid TIC directories
     tic_dirs = sorted(DATA_DIR.glob("TIC_*"))
     valid_tic_ids: list[str] = []
-    
+
     required_files = ("flux_1000.npy", "flux_200.npy", "folded_flux_1000.npy", "folded_flux_200.npy", "metadata.json")
-    
+
     for tic_dir in tic_dirs:
         if not tic_dir.is_dir():
             continue
@@ -34,7 +35,7 @@ def main() -> None:
             valid_tic_ids.append(tic_dir.name)
 
     print(f"Found {len(valid_tic_ids)} valid stellar directories.")
-    
+
     if len(valid_tic_ids) == 0:
         print("❌ ERROR: No processed stars found in data/processed/. Run batch preprocessing first.")
         return
@@ -70,7 +71,7 @@ def main() -> None:
 
     # 5. Write outputs
     SPLITS_DIR.mkdir(parents=True, exist_ok=True)
-    
+
     with open(SPLITS_DIR / "train_ids.json", "w") as f:
         json.dump(train_ids, f, indent=2)
     with open(SPLITS_DIR / "val_ids.json", "w") as f:

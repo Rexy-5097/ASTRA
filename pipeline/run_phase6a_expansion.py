@@ -33,7 +33,6 @@ from __future__ import annotations
 import argparse
 import json
 import logging
-import shutil
 import sys
 import time
 from collections import defaultdict
@@ -45,10 +44,10 @@ sys.path.insert(0, str(PROJECT_ROOT))
 from data.labels import CLASS_NAMES
 from pipeline.phase6_utils import (
     DEFAULT_PHASE6_ROOT,
+    MANIFEST_COLUMNS,
     read_csv_rows,
     utc_now,
     write_csv_rows,
-    MANIFEST_COLUMNS,
 )
 
 logging.basicConfig(
@@ -159,8 +158,8 @@ def _write_candidate_balance_report(
         "",
         "## Balance Summary",
         "",
-        f"| Class | Candidate Count | Usable Count | Target | Status |",
-        f"| :--- | :---: | :---: | :---: | :--- |",
+        "| Class | Candidate Count | Usable Count | Target | Status |",
+        "| :--- | :---: | :---: | :---: | :--- |",
     ]
 
     all_meet_target = True
@@ -247,8 +246,8 @@ def _write_duplicate_resolution_report(candidate_path: Path, output_path: Path) 
         "",
         "## Summary Statistics",
         "",
-        f"| Metric | Count |",
-        f"| :--- | :---: |",
+        "| Metric | Count |",
+        "| :--- | :---: |",
         f"| Total candidates | {len(rows)} |",
         f"| Stars in strict duplicate groups (<2\") | {n_strict} |",
         f"| Stars in review duplicate groups (2–10\") | {n_review} |",
@@ -442,12 +441,12 @@ def run_phase6a_expansion(
         log.info("Running TESS availability check on expanded manifest (limit=%s)...", tess_check_limit)
         try:
             from pipeline.dataset_builder import (
-                _verify_tess_availability,
                 _apply_stable_negative_screen,
                 _apply_strict_label_policy,
+                _verify_tess_availability,
                 _write_catalog_rejections,
             )
-            from pipeline.phase6_utils import write_csv_rows, MANIFEST_COLUMNS
+            from pipeline.phase6_utils import MANIFEST_COLUMNS, write_csv_rows
 
             # Read the expanded candidate manifest we just wrote
             candidate_path = catalog_dir / "candidate_manifest.csv"
@@ -457,10 +456,10 @@ def run_phase6a_expansion(
             # Filter to only unchecked rows (preserve already-verified ones)
             unchecked = [r for r in expanded_rows if not r.get("tess_available") or r.get("tess_available") == ""]
             already_checked = [r for r in expanded_rows if str(r.get("tess_available", "")).lower() in ("true", "false")]
-            
+
             # Prioritize solar_like and stable since they are our primary targets
             unchecked.sort(key=lambda r: 0 if r.get("astra_class") in ("solar_like", "stable") else 1)
-            
+
             log.info("  Already verified: %d rows", len(already_checked))
             log.info("  Unchecked rows:   %d rows (will check up to %s)", len(unchecked), tess_check_limit)
 
@@ -652,13 +651,13 @@ def _print_final_summary(summary: dict) -> None:
     print("=" * 70)
     print(f"  Duration:           {summary.get('elapsed_seconds', '?')}s")
     print()
-    print(f"  CANDIDATE EXPANSION:")
+    print("  CANDIDATE EXPANSION:")
     print(f"    Rows before:      {expansion.get('existing_rows_before', '?')}")
     print(f"    Rows after:       {expansion.get('total_rows_after', '?')}")
     print(f"    New solar_like:   {expansion.get('new_solar_like_acquired', '?')}")
     print(f"    New stable:       {expansion.get('new_stable_acquired', '?')}")
     print()
-    print(f"  USABLE MANIFEST COUNTS:")
+    print("  USABLE MANIFEST COUNTS:")
     for cls in CLASS_NAMES:
         n = gate.get("usable_counts", {}).get(cls, 0)
         ok = gate.get("conditions", {}).get("per_class_ok", {}).get(cls, False)

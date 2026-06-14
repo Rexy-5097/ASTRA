@@ -9,14 +9,14 @@ strict determinism, checkpoint hashing, and environment metadata tracking.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import logging
-import sys
-import time
 import math
 import random
-import hashlib
 import subprocess
+import sys
+import time
 from collections import defaultdict
 from pathlib import Path
 
@@ -28,10 +28,9 @@ import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader
 
-from data.labels import CLASS_NAMES, LABEL_TO_NAME, NUM_CLASSES
+from data.labels import CLASS_NAMES, NUM_CLASSES
 from pipeline.phase6_utils import assert_phase6_training_allowed
 from training.dataset import ASTRADataset
-from training.focal_loss import FocalLoss
 from training.models.hybrid_transformer import HybridTransformer
 
 logger = logging.getLogger(__name__)
@@ -50,7 +49,7 @@ def set_deterministic_seeds(seed: int = 42) -> None:
     torch.manual_seed(seed)
     if torch.cuda.is_available():
         torch.cuda.manual_seed_all(seed)
-        
+
     try:
         # Enforce deterministic algorithms if supported
         torch.use_deterministic_algorithms(True)
@@ -100,7 +99,7 @@ def get_gpu_memory_mb() -> float:
 # ─── Attention Entropy ───────────────────────────────────────────────
 def compute_attention_entropy(attn_weights: torch.Tensor) -> float:
     """Compute mean Shannon entropy (in nats) of the attention probability distribution.
-    
+
     attn_weights shape: (B, L, L) or similar.
     Entropy is computed along the last dimension (keys).
     """
@@ -129,27 +128,27 @@ class RegularizedFocalLoss(nn.Module):
     def forward(self, inputs: torch.Tensor, targets: torch.Tensor) -> torch.Tensor:
         # Cross entropy with label smoothing
         log_probs = torch.log_softmax(inputs, dim=-1)
-        
+
         # Build soft targets
         num_classes = inputs.size(-1)
         with torch.no_grad():
             targets_smooth = torch.empty_like(inputs).fill_(self.label_smoothing / (num_classes - 1))
             targets_smooth.scatter_(1, targets.unsqueeze(1), 1.0 - self.label_smoothing)
-            
+
         ce_loss = -torch.sum(targets_smooth * log_probs, dim=-1)
-        
+
         # Focal modulation factor
         # Probabilities p_t corresponding to the true classes
         probs = torch.softmax(inputs, dim=-1)
         p_t = probs.gather(1, targets.unsqueeze(1)).squeeze(1)
         focal_weight = (1.0 - p_t) ** self.gamma
-        
+
         loss = focal_weight * ce_loss
-        
+
         if self.alpha is not None:
             alpha_t = self.alpha[targets]
             loss = alpha_t * loss
-            
+
         return loss.mean()
 
 
@@ -228,7 +227,7 @@ def validate(
     total = 0
     total_entropy = 0.0
     num_batches = 0
-    
+
     per_class_correct: dict[int, int] = defaultdict(int)
     per_class_total: dict[int, int] = defaultdict(int)
     all_preds: list[int] = []
@@ -306,11 +305,11 @@ def evaluate_subgroups(model: nn.Module, dataset: ASTRADataset, device: torch.de
     # Calculate accuracies
     cat_acc = 0.0
     if catalog_labels:
-        cat_acc = sum(p == l for p, l in zip(catalog_preds, catalog_labels)) / len(catalog_labels)
+        cat_acc = sum(p == lbl for p, lbl in zip(catalog_preds, catalog_labels)) / len(catalog_labels)
 
     bls_acc = 0.0
     if bls_labels:
-        bls_acc = sum(p == l for p, l in zip(bls_preds, bls_labels)) / len(bls_labels)
+        bls_acc = sum(p == lbl for p, lbl in zip(bls_preds, bls_labels)) / len(bls_labels)
 
     return {
         "catalog": {
@@ -429,9 +428,9 @@ def save_diagnostics(
 def main() -> None:
     parser = argparse.ArgumentParser(description="Train Hybrid Transformer on ASTRA variable star dataset.")
     parser.add_argument(
-        "--variant", 
-        type=str, 
-        default="shared", 
+        "--variant",
+        type=str,
+        default="shared",
         choices=["separate", "shared", "cross", "only", "shared_no_folded", "shared_no_folded_matched"]
     )
     parser.add_argument("--epochs", type=int, default=50, help="Epochs")
@@ -460,7 +459,7 @@ def main() -> None:
     variant = args.variant
     tag = args.tag if args.tag else variant
     use_folded = (variant not in ("only", "shared_no_folded", "shared_no_folded_matched"))
-    
+
     # ── Device selection ──
     device = get_device()
 
@@ -488,7 +487,7 @@ def main() -> None:
     # ── Optimizer, Scheduler, and regularized Focal Loss ──
     class_weights = train_dataset.class_weights.to(device)
     criterion = RegularizedFocalLoss(alpha=class_weights, gamma=2.0, label_smoothing=0.1)
-    
+
     optimizer = torch.optim.AdamW(model.parameters(), lr=args.lr, weight_decay=1e-3)
     epochs_to_run = 5 if args.pilot else args.epochs
     scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=epochs_to_run)
@@ -603,14 +602,14 @@ def main() -> None:
     print(f"\n{'─' * 87}")
     print(f"  Training Complete — Best Val Acc: {best_val_acc:.4f} (Epoch {best_epoch})")
     print(f"  Checkpoints saved to: models/saved/best_star_transformer_{tag}.pt")
-    
+
     # ── Evaluate Subgroups ──
-    print(f"\n  Running subgroup evaluation...")
+    print("\n  Running subgroup evaluation...")
     # Load best checkpoint
     checkpoint_file = save_dir / f"best_star_transformer_{tag}.pt"
     ckpt = torch.load(checkpoint_file, map_location=device, weights_only=True)
     model.load_state_dict(ckpt["model_state_dict"])
-    
+
     subgroups = evaluate_subgroups(model, val_dataset, device)
     print(f"    Catalog Stars Subgroup Accuracy: {subgroups['catalog']['accuracy']:.4f} ({subgroups['catalog']['count']} stars)")
     print(f"    BLS Fallback Stars Subgroup Accuracy: {subgroups['bls']['accuracy']:.4f} ({subgroups['bls']['count']} stars)")
@@ -655,7 +654,7 @@ def main() -> None:
     val_split_path = PROJECT_ROOT / "data" / "phase6" / "splits" / "val_ids.json"
     test_split_path = PROJECT_ROOT / "data" / "phase6" / "splits" / "test_ids.json"
     from datetime import datetime
-    
+
     split_hashes = {
         "train": get_file_sha256(train_split_path),
         "val": get_file_sha256(val_split_path),
@@ -701,7 +700,7 @@ def main() -> None:
     print("\n🔒 Test set lock protection verified: TEST_SET_ACCESSED is FALSE.")
 
     # ── Post-training diagnostics ──
-    print(f"\n  Generating diagnostics (confusion matrix, classification report)...")
+    print("\n  Generating diagnostics (confusion matrix, classification report)...")
     final_val = validate(model, val_loader, criterion, device, collect_predictions=True)
     save_diagnostics(
         all_labels=final_val["all_labels"],

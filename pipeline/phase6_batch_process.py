@@ -88,8 +88,8 @@ def _process_one_star(args_tuple: tuple) -> dict:
     output_dir = Path(output_dir_str)
     raw_dir = Path(raw_dir_str)
 
-    from pipeline.preprocess import process_star
     from pipeline.phase6_utils import normalize_tic_id, parse_jsonish_list
+    from pipeline.preprocess import process_star
 
     tic_raw = normalize_tic_id(row.get("tic_id"))
     tic_id = int(tic_raw) if tic_raw else None

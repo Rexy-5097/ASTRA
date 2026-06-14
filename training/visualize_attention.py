@@ -14,20 +14,20 @@ from __future__ import annotations
 
 import argparse
 import sys
-import json
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
-import torch
-import numpy as np
 import matplotlib
+import numpy as np
+import torch
+
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-from data.labels import CLASS_NAMES, LABEL_TO_NAME, NUM_CLASSES
+from data.labels import LABEL_TO_NAME, NUM_CLASSES
 from training.dataset import ASTRADataset
 from training.models.hybrid_transformer import HybridTransformer
 
@@ -115,7 +115,7 @@ def main() -> None:
         class_name = LABEL_TO_NAME[label]
         sample = dataset._samples[idx]
         tic_id = sample["tic_id"]
-        
+
         # Load raw data for plotting
         raw_flux = np.load(sample["flux_path"]).astype(np.float32)
         folded_flux = np.load(sample["folded_flux_path"]).astype(np.float32) if use_folded else None
@@ -124,7 +124,7 @@ def main() -> None:
         flux_tensor, _ = dataset[idx]
         with torch.no_grad():
             _ = model(flux_tensor.unsqueeze(0))
-        
+
         # Extract attention weights
         # Shape: (1, L_q, L_k)
         attn_w = model.last_attention_weights
@@ -143,7 +143,7 @@ def main() -> None:
             square=True,
         )
         ax.set_title(f"2D Attention Matrix: {class_name} ({tic_id})", fontsize=12, fontweight="bold")
-        
+
         if variant == "cross":
             ax.set_xlabel("Keys (Raw Time Tokens, 0..124)", fontsize=10)
             ax.set_ylabel("Queries (Folded Phase Tokens, 0..124)", fontsize=10)

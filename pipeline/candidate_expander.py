@@ -46,11 +46,10 @@ from typing import Any
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
-from data.labels import CLASS_NAMES, NAME_TO_LABEL
+from data.labels import CLASS_NAMES
 from pipeline.phase6_utils import (
     DEFAULT_PHASE6_ROOT,
     MANIFEST_COLUMNS,
-    angular_separation_arcsec,
     assign_duplicate_groups,
     normalize_tic_id,
     read_csv_rows,

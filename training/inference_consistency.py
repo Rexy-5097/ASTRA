@@ -10,10 +10,10 @@ Logs any drift and writes the results to inference_consistency_report.md.
 from __future__ import annotations
 
 import sys
-import json
-import torch
-import numpy as np
 from pathlib import Path
+
+import numpy as np
+import torch
 import torch.nn.functional as F
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
@@ -163,8 +163,8 @@ def main() -> None:
         "The consistency audit is designed to ensure deterministic model execution during production inference. We load the frozen checkpoint `best_star_transformer_shared.pt` and run **100 repeated inference passes** over the validation set (N=54).",
         "",
         f"- **Device Evaluated**: `{device}`",
-        f"- **Total Passes**: `100`",
-        f"- **Data Split**: `val`",
+        "- **Total Passes**: `100`",
+        "- **Data Split**: `val`",
         "",
         "## 2. Quantitative Drift Metrics",
         "",
@@ -183,7 +183,7 @@ def main() -> None:
         "This confirms that the inference pipeline is fully deterministic, stable, and ready for deployment.",
         "",
         "---",
-        f"*Report generated automatically on local system time: 2026-05-27.*",
+        "*Report generated automatically on local system time: 2026-05-27.*",
     ]
 
     report_path = ARTIFACT_DIR / "inference_consistency_report.md"

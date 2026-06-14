@@ -28,7 +28,6 @@ Usage:
 from __future__ import annotations
 
 import argparse
-import csv
 import json
 import logging
 import sys
@@ -41,7 +40,6 @@ import numpy as np
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
-from data.labels import CLASS_NAMES
 from pipeline.phase6_utils import (
     DEFAULT_PHASE6_ROOT,
     read_csv_rows,
@@ -474,8 +472,8 @@ def generate_screening_report(
         lines += [
             "### RMS Distribution",
             "",
-            f"| Metric | Value |",
-            f"| :--- | :--- |",
+            "| Metric | Value |",
+            "| :--- | :--- |",
             f"| Median RMS | {np.median(rms_values):.5f} |",
             f"| Mean RMS | {np.mean(rms_values):.5f} |",
             f"| Min RMS | {np.min(rms_values):.5f} |",
@@ -488,8 +486,8 @@ def generate_screening_report(
         lines += [
             "### Lomb-Scargle FAP Distribution",
             "",
-            f"| Metric | Value |",
-            f"| :--- | :--- |",
+            "| Metric | Value |",
+            "| :--- | :--- |",
             f"| Median FAP | {np.median(fap_values):.4e} |",
             f"| Fraction with non-significant period (FAP>{thresholds.fap_threshold}) | {sum(1 for f in fap_values if f > thresholds.fap_threshold)/len(fap_values)*100:.1f}% |",
             "",

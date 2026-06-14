@@ -21,15 +21,15 @@ Features:
 """
 
 import argparse
+import hashlib
 import json
 import logging
+import random
+import subprocess
 import sys
 import time
-import random
-import hashlib
-import subprocess
-from datetime import datetime
 from collections import defaultdict
+from datetime import datetime
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
@@ -40,10 +40,10 @@ import torch
 from torch.utils.data import DataLoader
 
 from data.labels import CLASS_NAMES, LABEL_TO_NAME, NUM_CLASSES
+from pipeline.phase6_utils import assert_phase6_training_allowed
 from training.dataset import ASTRADataset
 from training.focal_loss import FocalLoss
 from training.models.star_cnn import StarCNN
-from pipeline.phase6_utils import assert_phase6_training_allowed
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(
@@ -61,7 +61,7 @@ def set_deterministic_seeds(seed: int = 42) -> None:
     torch.manual_seed(seed)
     if torch.cuda.is_available():
         torch.cuda.manual_seed_all(seed)
-        
+
     try:
         # Enforce deterministic algorithms if supported
         torch.use_deterministic_algorithms(True)
@@ -599,7 +599,7 @@ def main() -> None:
     train_split_path = PROJECT_ROOT / "data" / "phase6" / "splits" / "train_ids.json"
     val_split_path = PROJECT_ROOT / "data" / "phase6" / "splits" / "val_ids.json"
     test_split_path = PROJECT_ROOT / "data" / "phase6" / "splits" / "test_ids.json"
-    
+
     split_hashes = {
         "train": get_file_sha256(train_split_path),
         "val": get_file_sha256(val_split_path),
@@ -640,7 +640,7 @@ def main() -> None:
         json.dump(consolidated_data, f, indent=2)
     logger.info("Updated consolidated experiment metadata at %s", consolidated_path)
 
-    print(f"\n✅ Done!")
+    print("\n✅ Done!")
 
 
 

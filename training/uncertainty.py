@@ -9,26 +9,27 @@ Outputs uncertainty_analysis.md, uncertainty_metrics.csv, and diagnostic plots.
 
 from __future__ import annotations
 
-import sys
-import json
 import csv
+import json
 import logging
+import sys
 from pathlib import Path
 
+import matplotlib
 import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-import matplotlib
+
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
+from data.labels import LABEL_TO_NAME
 from training.dataset import ASTRADataset
 from training.models.hybrid_transformer import HybridTransformer
-from data.labels import NUM_CLASSES, CLASS_NAMES, LABEL_TO_NAME
 
 # Setup logging
 logger = logging.getLogger(__name__)
@@ -72,48 +73,48 @@ def main() -> None:
     print("=" * 70)
     print("  ASTRA Uncertainty Quantification & MC Dropout")
     print("=" * 70)
-    
+
     if torch.backends.mps.is_available():
         device = torch.device("mps")
     else:
         device = torch.device("cpu")
     print(f"Device: {device}")
-    
+
     # 1. Load model checkpoint
     if not CHECKPOINT_PATH.exists():
         print(f"❌ ERROR: Checkpoint not found at {CHECKPOINT_PATH}.")
         sys.exit(1)
-        
+
     ckpt = torch.load(CHECKPOINT_PATH, map_location=device, weights_only=True)
     model = HybridTransformer(variant=ckpt["variant"], num_classes=ckpt["num_classes"])
     model.load_state_dict(ckpt["model_state_dict"])
     model.to(device)
-    
+
     # Enable MC Dropout
     enable_dropout(model)
-    
+
     # 2. Load validation dataset
     val_dataset = ASTRADataset(data_dir=PROJECT_ROOT / "data" / "phase6" / "processed", split="val", use_folded=True)
     val_loader = torch.utils.data.DataLoader(val_dataset, batch_size=32, shuffle=False)
-    
+
     # 3. Extract inputs
     all_flux = []
     all_labels = []
-    
+
     for flux, label in val_loader:
         all_flux.append(flux.to(device))
         all_labels.append(label)
-        
+
     flux_inputs = torch.cat(all_flux, dim=0)
     labels = torch.cat(all_labels, dim=0).numpy()
-    
+
     # 4. Perform 30 Stochastic MC Dropout Passes
     num_passes = 30
     print(f"Running {num_passes} Monte Carlo Dropout passes on validation set...")
-    
+
     # We will record the output probabilities for each pass
     all_pass_probs = []
-    
+
     with torch.no_grad():
         for i in range(num_passes):
             logits = model(flux_inputs)
@@ -121,43 +122,43 @@ def main() -> None:
             calibrated_logits = logits / CALIBRATION_TEMP
             probs = F.softmax(calibrated_logits, dim=-1)
             all_pass_probs.append(probs.cpu().numpy())
-            
+
     # Shape: (num_passes, num_samples, num_classes)
     pass_probs = np.stack(all_pass_probs, axis=0)
-    
+
     # 5. Compute Uncertainty Metrics per Validation Sample
     mean_probs = np.mean(pass_probs, axis=0) # (num_samples, num_classes)
-    
+
     predicted_classes = np.argmax(mean_probs, axis=1)
     calibrated_confidences = np.max(mean_probs, axis=1)
-    
+
     entropies = []
     variances = []
-    
+
     csv_rows = []
     correct_list = []
-    
+
     for i in range(len(labels)):
         # Compute Shannon entropy of the mean probability vector
         ent = compute_entropy(mean_probs[i])
         entropies.append(ent)
-        
+
         # Variance of the predicted class probability across the 30 runs
         pred_c = predicted_classes[i]
         var = np.var(pass_probs[:, i, pred_c])
         variances.append(var)
-        
+
         # Correctness check
         true_l = labels[i]
         is_correct = int(pred_c == true_l)
         correct_list.append(is_correct)
-        
+
         # Load period source from metadata
         sample_meta = val_dataset._samples[i]
         with open(sample_meta["flux_path"].parent / "metadata.json") as f:
             meta = json.load(f)
         period_source = meta.get("period_source", "unknown")
-        
+
         csv_rows.append({
             "tic_id": sample_meta["tic_id"],
             "true_label": true_l,
@@ -170,7 +171,7 @@ def main() -> None:
             "prediction_variance": var,
             "period_source": period_source
         })
-        
+
     # Write to uncertainty_metrics.csv
     csv_path = ARTIFACT_DIR / "uncertainty_metrics.csv"
     with open(csv_path, "w", newline="") as f:
@@ -178,11 +179,11 @@ def main() -> None:
         writer.writeheader()
         writer.writerows(csv_rows)
     print(f"Uncertainty metrics saved successfully → {csv_path}")
-    
+
     # 6. Analyze Selective Prediction
     thresholds = [0.0, 0.5, 0.6, 0.7, 0.8, 0.9]
     selective_results = []
-    
+
     print("\nSelective Prediction Analysis:")
     for th in thresholds:
         retained_idx = [i for i, conf in enumerate(calibrated_confidences) if conf >= th]
@@ -197,15 +198,15 @@ def main() -> None:
             "accuracy": retained_acc
         })
         print(f"  Threshold: {th:.1f} | Coverage: {coverage*100:5.1f}% | Retained Accuracy: {retained_acc*100:5.2f}%")
-        
+
     # 7. Generate Diagnostic Plots
     print("\nGenerating Diagnostic Plots...")
-    
+
     # Plot A: Entropy Histograms (Correct vs Incorrect)
     fig, ax = plt.subplots(figsize=(6, 5))
     ents = np.array(entropies)
     corr = np.array(correct_list)
-    
+
     ax.hist(ents[corr == 1], bins=10, alpha=0.6, color="green", label="Correct Predictions", edgecolor="black")
     if np.any(corr == 0):
         ax.hist(ents[corr == 0], bins=10, alpha=0.6, color="red", label="Incorrect Predictions", edgecolor="black")
@@ -218,12 +219,12 @@ def main() -> None:
     plot1_path = ARTIFACT_DIR / "entropy_histograms.png"
     plt.savefig(plot1_path, dpi=120)
     plt.close()
-    
+
     # Plot B: Selective Prediction (Accuracy vs Coverage Curve)
     fig, ax = plt.subplots(figsize=(6, 5))
     covs = [r["coverage"] * 100 for r in selective_results]
     accs = [r["accuracy"] * 100 for r in selective_results]
-    
+
     ax.plot(covs, accs, marker="o", linewidth=2.5, color="royalblue")
     ax.set_xlabel("Coverage (Retained Samples %)", fontsize=11)
     ax.set_ylabel("Retained Accuracy (%)", fontsize=11)
@@ -236,14 +237,14 @@ def main() -> None:
     plot2_path = ARTIFACT_DIR / "uncertainty_vs_accuracy.png"
     plt.savefig(plot2_path, dpi=120)
     plt.close()
-    
+
     # Plot C: Subgroup Boxplots (Catalog vs BLS Fallback Entropy)
     fig, ax = plt.subplots(figsize=(6, 5))
     subgroup_sources = [r["period_source"] for r in csv_rows]
-    
+
     cat_ents = [ents[i] for i, src in enumerate(subgroup_sources) if src == "catalog"]
     bls_ents = [ents[i] for i, src in enumerate(subgroup_sources) if src == "BLS"]
-    
+
     ax.boxplot([cat_ents, bls_ents], tick_labels=["Catalog-Period", "BLS-Fallback"], patch_artist=True,
                boxprops=dict(facecolor="lightblue", color="darkblue"),
                medianprops=dict(color="red", linewidth=2))
@@ -254,16 +255,16 @@ def main() -> None:
     plot3_path = ARTIFACT_DIR / "subgroup_uncertainty_boxplots.png"
     plt.savefig(plot3_path, dpi=120)
     plt.close()
-    
+
     print("Uncertainty diagnostic plots saved successfully.")
-    
+
     # 8. Generate uncertainty_analysis.md
     # Calculate average uncertainty metrics
     mean_corr_entropy = np.mean(ents[corr == 1])
     mean_incorr_entropy = np.mean(ents[corr == 0]) if np.any(corr == 0) else 0.0
     mean_cat_entropy = np.mean(cat_ents) if cat_ents else 0.0
     mean_bls_entropy = np.mean(bls_ents) if bls_ents else 0.0
-    
+
     report_lines = [
         "# ASTRA — Predictive Uncertainty Analysis",
         "",
@@ -292,7 +293,7 @@ def main() -> None:
     for r in selective_results:
         rating = "Standard" if r["threshold"] == 0.0 else "High Precision" if r["accuracy"] >= 0.90 else "Standard"
         report_lines.append(f"| {r['threshold']:.1f} | {r['coverage']*100:.1f}% | {r['accuracy']*100:.2f}% | {rating} |")
-        
+
     report_lines.extend([
         "",
         "## 3. Diagnostic Plots Reference",
@@ -306,7 +307,7 @@ def main() -> None:
         "",
         "- Complete validation uncertainty table: [uncertainty_metrics.csv](file:///Users/soumyadebtripathy/.gemini/antigravity/brain/7aa41dc5-db47-45ef-8656-9ec7563f47c3/uncertainty_metrics.csv)",
     ])
-    
+
     report_path = ARTIFACT_DIR / "uncertainty_analysis.md"
     report_path.write_text("\n".join(report_lines) + "\n")
     print(f"Uncertainty analysis report saved successfully → {report_path}")

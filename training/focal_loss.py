@@ -18,7 +18,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from data.labels import CLASS_NAMES, NUM_CLASSES
+from data.labels import NUM_CLASSES
 
 
 class FocalLoss(nn.Module):
@@ -96,7 +96,7 @@ if __name__ == "__main__":
     # Test 1: Basic focal loss (no alpha)
     fl_basic = FocalLoss(gamma=2.0, reduction="mean")
     loss_basic = fl_basic(logits, targets)
-    print(f"\n[Test 1] FocalLoss(gamma=2.0, alpha=None)")
+    print("\n[Test 1] FocalLoss(gamma=2.0, alpha=None)")
     print(f"  Loss: {loss_basic.item():.4f}")
 
     # Test 2: With per-class alpha weights
@@ -110,7 +110,7 @@ if __name__ == "__main__":
     fl_gamma0 = FocalLoss(gamma=0.0, reduction="mean")
     ce_ref = F.cross_entropy(logits, targets, reduction="mean")
     loss_gamma0 = fl_gamma0(logits, targets)
-    print(f"\n[Test 3] FocalLoss(gamma=0.0) vs CrossEntropy")
+    print("\n[Test 3] FocalLoss(gamma=0.0) vs CrossEntropy")
     print(f"  Focal (gamma=0): {loss_gamma0.item():.6f}")
     print(f"  CrossEntropy:    {ce_ref.item():.6f}")
     print(f"  Difference:      {abs(loss_gamma0.item() - ce_ref.item()):.2e}")
@@ -120,7 +120,7 @@ if __name__ == "__main__":
     loss_none = fl_none(logits, targets)
     fl_sum = FocalLoss(gamma=2.0, reduction="sum")
     loss_sum = fl_sum(logits, targets)
-    print(f"\n[Test 4] Reduction modes")
+    print("\n[Test 4] Reduction modes")
     print(f"  'none' shape: {tuple(loss_none.shape)}")
     print(f"  'sum':        {loss_sum.item():.4f}")
     print(f"  'mean':       {loss_basic.item():.4f}")
@@ -128,7 +128,7 @@ if __name__ == "__main__":
     # Test 5: Alpha from list (not tensor)
     fl_list_alpha = FocalLoss(alpha=[1.0, 1.0, 1.0, 1.0, 1.0], gamma=2.0)
     loss_list = fl_list_alpha(logits, targets)
-    print(f"\n[Test 5] Alpha from list (uniform)")
+    print("\n[Test 5] Alpha from list (uniform)")
     print(f"  Loss: {loss_list.item():.4f}")
 
     print("\n✅ All FocalLoss tests passed!")

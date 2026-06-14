@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 import json
 import pathlib
-import shutil
 import re
+import shutil
 
 PROJECT_ROOT = pathlib.Path(__file__).resolve().parent.parent
 DATA_DIR = PROJECT_ROOT / "data"

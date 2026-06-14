@@ -11,20 +11,20 @@ from data.labels import CLASS_NAMES, NAME_TO_LABEL
 from pipeline.dataset_audit import run_audit
 from pipeline.download_manager import _row_is_processable, download_phase6
 from pipeline.freeze_phase6_splits import freeze_splits
+from pipeline.phase6_utils import (
+    REJECTED_COLUMNS,
+    append_csv_row,
+    array_content_hash,
+    assert_phase6_training_allowed,
+    assign_duplicate_groups,
+    sha256_file,
+    stable_json_hash,
+)
 from pipeline.preprocess import (
     _cleanup_star_dir,
     _phase_bin_normalized,
     _resample_normalized,
     _select_period,
-)
-from pipeline.phase6_utils import (
-    REJECTED_COLUMNS,
-    append_csv_row,
-    array_content_hash,
-    assign_duplicate_groups,
-    assert_phase6_training_allowed,
-    sha256_file,
-    stable_json_hash,
 )
 
 
@@ -181,9 +181,15 @@ class Phase6PipelineTests(unittest.TestCase):
                 self.assertTrue((root / "audits" / report).exists())
 
     def test_training_guard_refuses_unverified_phase6_path(self) -> None:
-        phase6_processed = Path("data/phase6/processed")
-        with self.assertRaises(RuntimeError):
-            assert_phase6_training_allowed(phase6_processed)
+        from unittest.mock import patch
+
+        from pipeline import phase6_utils
+
+        with tempfile.TemporaryDirectory() as tmp:
+            fake_root = Path(tmp) / "fake_phase6"
+            with patch.object(phase6_utils, "DEFAULT_PHASE6_ROOT", fake_root):
+                with self.assertRaises(RuntimeError):
+                    assert_phase6_training_allowed(fake_root / "processed")
 
     def test_array_hash_is_stable(self) -> None:
         arr = _normalized_array(1000)

@@ -7,15 +7,13 @@ benchmarks CPU and MPS latencies, and writes deployment_report.md.
 
 from __future__ import annotations
 
+import logging
 import sys
 import time
-import logging
 from pathlib import Path
 
 import numpy as np
 import torch
-import torch.nn as nn
-import torch.nn.functional as F
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
@@ -38,21 +36,21 @@ def main() -> None:
     print("=" * 70)
     print("  ASTRA Model Export & Deployment Benchmarking")
     print("=" * 70)
-    
+
     # 1. Load PyTorch Checkpoint
     if not CHECKPOINT_PATH.exists():
         print(f"❌ ERROR: Checkpoint not found at {CHECKPOINT_PATH}.")
         sys.exit(1)
-        
+
     device = torch.device("cpu") # export is safest on CPU first
     ckpt = torch.load(CHECKPOINT_PATH, map_location=device, weights_only=True)
     model = HybridTransformer(variant=ckpt["variant"], num_classes=ckpt["num_classes"])
     model.load_state_dict(ckpt["model_state_dict"])
     model.eval()
-    
+
     # Dummy input representing (batch_size=1, channels=2, sequence_length=1000)
     dummy_input = torch.randn(1, 2, 1000, dtype=torch.float32)
-    
+
     # 2. Export to TorchScript (JIT Trace)
     print("Exporting model to TorchScript...")
     ts_path = PROJECT_ROOT / "models" / "saved" / "best_star_transformer_shared.torchscript"
@@ -60,7 +58,7 @@ def main() -> None:
         traced_model = torch.jit.trace(model, dummy_input)
     traced_model.save(ts_path)
     print(f"  ✅ TorchScript exported successfully → {ts_path}")
-    
+
     # 3. Export to ONNX
     print("Exporting model to ONNX...")
     onnx_path = PROJECT_ROOT / "models" / "saved" / "best_star_transformer_shared.onnx"
@@ -77,21 +75,21 @@ def main() -> None:
             dynamic_axes={"input": {0: "batch_size"}, "output": {0: "batch_size"}}
         )
     print(f"  ✅ ONNX exported successfully → {onnx_path}")
-    
+
     # 4. Verification Check
     print("Verifying exported formats...")
     # Load TorchScript
     model_ts = torch.jit.load(ts_path)
     model_ts.eval()
-    
+
     with torch.no_grad():
         out_pt = model(dummy_input)
         out_ts = model_ts(dummy_input)
-        
+
     diff_ts = torch.max(torch.abs(out_pt - out_ts)).item()
     print(f"  Max output difference (PyTorch vs TorchScript): {diff_ts:.2e}")
     assert diff_ts < 1e-5, "TorchScript outputs do not match PyTorch baseline!"
-    
+
     # Load ONNX using ONNX Runtime (if available)
     onnx_runtime_available = False
     try:
@@ -105,48 +103,48 @@ def main() -> None:
         onnx_runtime_available = True
     except ImportError:
         print("  ⚠️ ONNX Runtime not installed. Bypassing ONNX output check.")
-        
+
     # 5. Benchmarking Latency & Throughput (CPU and MPS)
     print("\nBenchmarking Latency & Throughput...")
-    
+
     num_iterations = 200
     benchmark_results = {}
-    
+
     devices = [torch.device("cpu")]
     if torch.backends.mps.is_available():
         devices.append(torch.device("mps"))
-        
+
     for dev in devices:
         print(f"  Target Device: {dev}")
         model_bench = model.to(dev)
         inp_bench = dummy_input.to(dev)
-        
+
         # Warmup
         for _ in range(20):
             _ = model_bench(inp_bench)
         if dev.type == "mps":
             torch.mps.synchronize()
-            
+
         t0 = time.perf_counter()
         for _ in range(num_iterations):
             _ = model_bench(inp_bench)
         if dev.type == "mps":
             torch.mps.synchronize()
         dt = time.perf_counter() - t0
-        
+
         avg_latency_ms = (dt / num_iterations) * 1000
         throughput = num_iterations / dt
-        
+
         benchmark_results[dev.type] = {
             "avg_latency_ms": avg_latency_ms,
             "throughput_seq_sec": throughput
         }
         print(f"    Avg Latency:  {avg_latency_ms:.2f} ms")
         print(f"    Throughput:   {throughput:.1f} inferences/sec")
-        
+
     # Move model back to CPU
     model.to(torch.device("cpu"))
-    
+
     # 6. Generate deployment_report.md
     report_lines = [
         "# ASTRA — Deployment & Export Verification Report",
@@ -167,7 +165,7 @@ def main() -> None:
         report_lines.append(f"| **ONNX** | Max absolute difference: `{diff_onnx:.2e}` | ✅ Verified |")
     else:
         report_lines.append("| **ONNX** | ONNX Runtime not installed for check | ⚠️ Exported |")
-        
+
     report_lines.extend([
         "",
         "## 2. Latency & Throughput Benchmark",
@@ -183,7 +181,7 @@ def main() -> None:
             f"| **MPS (Apple Silicon GPU)** | {benchmark_results['mps']['avg_latency_ms']:.2f} ms | {benchmark_results['mps']['throughput_seq_sec']:.1f} | "
             f"{'✅ Met' if benchmark_results['mps']['avg_latency_ms'] < 15.0 else '⚠️ Exceeded'} |"
         )
-        
+
     report_lines.extend([
         "",
         "## 3. Deployment Inference Guide",
@@ -195,7 +193,7 @@ def main() -> None:
         "python training/predict.py --input data/processed/TIC_109718459/",
         "```",
     ])
-    
+
     report_path = ARTIFACT_DIR / "deployment_report.md"
     report_path.write_text("\n".join(report_lines) + "\n")
     print(f"Deployment report saved successfully → {report_path}")

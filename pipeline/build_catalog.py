@@ -367,7 +367,7 @@ def _build_stable(target_n: int, exclude_tics: set[int]) -> list[dict]:
         )
         if not tables or len(tables) == 0:
             raise ValueError("No tables returned from VizieR Hipparcos query")
-            
+
         tbl = tables[0]
         candidates = []
         for row in tbl:
@@ -377,7 +377,7 @@ def _build_stable(target_n: int, exclude_tics: set[int]) -> list[dict]:
                 dec = float(row["DEICRS"])
             except (ValueError, TypeError, KeyError):
                 continue
-                
+
             candidates.append({
                 "tic_id":      None,  # resolved at download time
                 "name":        f"HIP {hip_id}",

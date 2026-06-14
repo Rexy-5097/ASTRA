@@ -131,9 +131,9 @@ def _classify_contamination(match_type: str, sep: float) -> str:
 def _query_vsx_single(ra: float, dec: float, radius_arcsec: float = 20.0) -> tuple[str, float, bool]:
     """Query VSX catalog for a single position. Returns (type, sep_arcsec, query_ok)."""
     try:
-        from astroquery.vizier import Vizier
         import astropy.units as u
         from astropy.coordinates import SkyCoord
+        from astroquery.vizier import Vizier
 
         coord = SkyCoord(ra=ra, dec=dec, unit="deg")
         viz = Vizier(columns=["OID", "Type", "RAJ2000", "DEJ2000"], row_limit=5)
@@ -149,16 +149,16 @@ def _query_vsx_single(ra: float, dec: float, radius_arcsec: float = 20.0) -> tup
             sep = 0.0
         vsx_type = str(row.get("Type", "") or "")
         return vsx_type, sep, True
-    except Exception as exc:
+    except Exception:
         return "", -1.0, False
 
 
 def _query_gaia_variable_single(ra: float, dec: float, radius_arcsec: float = 20.0) -> tuple[str, float, bool]:
     """Query Gaia DR3 variability catalog for a single position."""
     try:
-        from astroquery.vizier import Vizier
         import astropy.units as u
         from astropy.coordinates import SkyCoord
+        from astroquery.vizier import Vizier
 
         coord = SkyCoord(ra=ra, dec=dec, unit="deg")
         viz = Vizier(columns=["**"], row_limit=5)
@@ -178,16 +178,16 @@ def _query_gaia_variable_single(ra: float, dec: float, radius_arcsec: float = 20
             except Exception:
                 pass
         return gaia_type, sep, True
-    except Exception as exc:
+    except Exception:
         return "", -1.0, False
 
 
 def _query_asas_single(ra: float, dec: float, radius_arcsec: float = 20.0) -> tuple[str, float, bool]:
     """Query ASAS-SN variable catalog for a single position."""
     try:
-        from astroquery.vizier import Vizier
         import astropy.units as u
         from astropy.coordinates import SkyCoord
+        from astroquery.vizier import Vizier
 
         coord = SkyCoord(ra=ra, dec=dec, unit="deg")
         viz = Vizier(columns=["**"], row_limit=5)
@@ -207,7 +207,7 @@ def _query_asas_single(ra: float, dec: float, radius_arcsec: float = 20.0) -> tu
             except Exception:
                 pass
         return asas_type, sep, True
-    except Exception as exc:
+    except Exception:
         return "", -1.0, False
 
 
@@ -378,14 +378,14 @@ def _generate_contamination_report(
         "",
         f"**Generated**: {utc_now()}",
         f"**Search radius**: {radius_arcsec:.1f} arcsec",
-        f"**Catalogs consulted**: VSX (AAVSO), Gaia DR3 variability, ASAS-SN",
+        "**Catalogs consulted**: VSX (AAVSO), Gaia DR3 variability, ASAS-SN",
         "",
         "---",
         "",
         "## 1. Executive Summary",
         "",
-        f"| Metric | Count |",
-        f"| :--- | :---: |",
+        "| Metric | Count |",
+        "| :--- | :---: |",
         f"| Total stars checked | {len(results)} |",
         f"| CLEAN (no variable catalog match) | {total_clean} |",
         f"| BORDERLINE (10–20\" from variable) | {total_borderline} |",
@@ -393,10 +393,10 @@ def _generate_contamination_report(
         f"| CONFIRMED CONTAMINATION | {total_confirmed} |",
         f"| Catalog query failures | {total_failures} |",
         "",
-        f"> [!NOTE]",
-        f"> CONFIRMED contamination candidates should be removed from the usable manifest.",
-        f"> SUSPECTED and BORDERLINE candidates require human review.",
-        f"> Stars with catalog query failures are treated as CLEAN (fail-open) for acquisition.",
+        "> [!NOTE]",
+        "> CONFIRMED contamination candidates should be removed from the usable manifest.",
+        "> SUSPECTED and BORDERLINE candidates require human review.",
+        "> Stars with catalog query failures are treated as CLEAN (fail-open) for acquisition.",
         "",
         "---",
         "",

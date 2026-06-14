@@ -225,7 +225,7 @@ if __name__ == "__main__":
     model = StarCNN(num_classes=NUM_CLASSES, use_folded=False)
     params = StarCNN.count_parameters(model)
 
-    print(f"\n[Mode: single-branch (use_folded=False)]")
+    print("\n[Mode: single-branch (use_folded=False)]")
     print(f"  Num classes:          {NUM_CLASSES}")
     print(f"  Total parameters:     {params['total']:,}")
     print(f"  Trainable parameters: {params['trainable']:,}")
@@ -258,7 +258,7 @@ if __name__ == "__main__":
     model_dual = StarCNN(num_classes=NUM_CLASSES, use_folded=True)
     params_dual = StarCNN.count_parameters(model_dual)
 
-    print(f"\n[Mode: dual-branch (use_folded=True)]")
+    print("\n[Mode: dual-branch (use_folded=True)]")
     print(f"  Num classes:          {NUM_CLASSES}")
     print(f"  Total parameters:     {params_dual['total']:,}")
     print(f"  Trainable parameters: {params_dual['trainable']:,}")

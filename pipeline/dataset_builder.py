@@ -21,19 +21,19 @@ from typing import Any
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
-from data.labels import CLASS_NAMES, NAME_TO_LABEL
+from data.labels import CLASS_NAMES
 from pipeline.phase6_utils import (
     DEFAULT_PHASE6_ROOT,
     MANIFEST_COLUMNS,
     REJECTED_COLUMNS,
-    assign_duplicate_groups,
-    append_csv_row,
     angular_separation_arcsec,
+    append_csv_row,
+    assign_duplicate_groups,
     ensure_phase6_structure,
     normalize_tic_id,
     read_csv_rows,
-    write_csv_rows,
     utc_now,
+    write_csv_rows,
 )
 
 logging.basicConfig(
@@ -394,8 +394,8 @@ def _stable_has_catalog_variable_match(row: dict[str, Any]) -> bool:
     stable-confirmed.
     """
     try:
-        from astropy.coordinates import SkyCoord
         import astropy.units as u
+        from astropy.coordinates import SkyCoord
         from astroquery.vizier import Vizier
 
         coord = SkyCoord(ra=float(row["ra"]), dec=float(row["dec"]), unit="deg")

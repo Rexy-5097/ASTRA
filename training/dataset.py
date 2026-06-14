@@ -167,21 +167,21 @@ class ASTRADataset(Dataset):
             split_dir = PROJECT_ROOT / "splits"
         split_file = split_dir / f"{self.split}_ids.json"
         metadata_file = split_dir / "split_metadata.json"
-        
+
         if split_file.exists() and metadata_file.exists():
             with open(split_file, "r") as f:
                 frozen_ids = set(json.load(f))
             with open(metadata_file, "r") as f:
                 meta = json.load(f)
-                
+
             expected_size = meta[f"{self.split}_size"]
-            
+
             # Select samples strictly matching frozen IDs
             for s in all_samples:
                 if s["tic_id"] in frozen_ids:
                     self._samples.append(s)
                     self._label_list.append(s["label"])
-            
+
             # Additional validation
             # 1. Check exact size match
             if len(self._samples) != expected_size:
@@ -189,7 +189,7 @@ class ASTRADataset(Dataset):
                     f"Sample count mismatch for split '{self.split}': "
                     f"Expected {expected_size} stars, but got {len(self._samples)}."
                 )
-                
+
             # 2. Check no leakage if both files exist (verify validation set doesn't overlap)
             other_split = "val" if self.split == "train" else "train"
             other_file = split_dir / f"{other_split}_ids.json"
@@ -201,7 +201,7 @@ class ASTRADataset(Dataset):
                     raise ValueError(
                         f"Leakage detected! Overlap between train and val splits: {overlap}"
                     )
-            
+
             # 3. Check all labels present
             unique_labels = set(self._label_list)
             if len(unique_labels) != NUM_CLASSES:
@@ -209,7 +209,7 @@ class ASTRADataset(Dataset):
                     f"Label representation failure in split '{self.split}': "
                     f"Expected {NUM_CLASSES} classes, but found only {len(unique_labels)}."
                 )
-                
+
             logger.info(
                 f"ASTRADataset [{self.split}]: Loaded {len(self._samples)} frozen samples "
                 f"from {split_file.name} (validated split hash: {meta['split_hash'][:8]})"
@@ -376,13 +376,13 @@ if __name__ == "__main__":
 
         counts = ds.class_counts
         weights = ds.class_weights
-        print(f"\n  Class distribution:")
+        print("\n  Class distribution:")
         for i, name in enumerate(CLASS_NAMES):
             print(f"    {name:20s}: {counts[name]:5d}  (weight: {weights[i]:.4f})")
 
         # Test loading a sample
         flux, label = ds[0]
-        print(f"\n  Sample [0]:")
+        print("\n  Sample [0]:")
         print(f"    Flux shape: {tuple(flux.shape)}")
         print(f"    Flux dtype: {flux.dtype}")
         print(f"    Label:      {label.item()} ({LABEL_TO_NAME[label.item()]})")
