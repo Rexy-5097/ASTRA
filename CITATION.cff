@@ -5,7 +5,7 @@ type: software
 authors:
   - family-names: Tripathy
     given-names: Soumyadeb
-repository-code: 'https://github.com/soumyadebtripathy/ASTRA'
+repository-code: 'https://github.com/Rexy-5097/ASTRA'
 license: MIT
 version: '1.0.0'
 date-released: '2026-06-13'

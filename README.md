@@ -89,8 +89,9 @@ ASTRA — Automated Stellar Transient Recognition & Analysis/
 ├── 📄 CITATION.cff                       # Machine-readable citation metadata
 ├── 📄 LICENSE                            # MIT License
 ├── 📄 requirements.txt                   # Python dependencies
-├── 📄 dataset_fingerprint.md             # SHA256 hashes for all data splits
 ├── 📄 lineage.json                       # Dataset provenance & version tracking
+├── 📂 docs/engineering-log/              # Phase-by-phase audit trail (incl. dataset_fingerprint.md,
+│                                         #   ground_truth_final_verdict.md, phase6/7/8 audits)
 │
 ├── 📂 pipeline/                          # Data acquisition & preprocessing
 │   ├── build_catalog.py                  # VSX/AAVSO catalog construction via VizieR
@@ -163,7 +164,7 @@ ASTRA — Automated Stellar Transient Recognition & Analysis/
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/soumyadebtripathy/ASTRA.git
+git clone https://github.com/Rexy-5097/ASTRA.git
 cd "ASTRA — Automated Stellar Transient Recognition & Analysis"
 ```
 
@@ -425,6 +426,10 @@ A convolutional baseline with two parallel branches (raw + folded) using deeper 
 | ECE (calibrated) | 0.0478 | — |
 | NLL (calibrated) | 0.5332 | — |
 
+<p align="center">
+  <img src="models/saved/test_confusion_matrix_transformer_shared.png" alt="Test set confusion matrix — HybridTransformer (shared)" width="480"/>
+</p>
+
 ### Selective Prediction via MC Dropout Uncertainty
 
 By thresholding on model confidence (30 stochastic MC Dropout passes), accuracy can be traded for coverage:
@@ -447,7 +452,7 @@ By thresholding on model confidence (30 stochastic MC Dropout passes), accuracy 
 | BLS Fallback (computed) | 52 | 57.69% |
 
 > [!NOTE]
-> The 32-percentage-point gap between catalog-period and BLS-fallback stars reflects the inherent difficulty of classifying stars whose periods were computed by Box Least Squares rather than referenced from cataloged surveys. This is a documented limitation in `phase7_testset_results.md`.
+> The 32-percentage-point gap between catalog-period and BLS-fallback stars reflects the inherent difficulty of classifying stars whose periods were computed by Box Least Squares rather than referenced from cataloged surveys. This is a documented limitation in [`docs/engineering-log/phase7_testset_results.md`](docs/engineering-log/phase7_testset_results.md).
 
 ---
 
@@ -506,7 +511,7 @@ python training/cross_validate.py \
 | Transformer Shared checkpoint | `bf374ce492825916f2f97a4e29673a1eca35f76cc08f603b384d103fbe95d388` |
 | CNN Dual checkpoint | `65da1034868c5460b2c269e1a11936864fe6191fa81116d5fe2be934d8478af2` |
 
-All hashes are recorded in `models/saved/experiment_metadata.json` and reproduced in `ground_truth_final_verdict.md`.
+All hashes are recorded in `models/saved/experiment_metadata.json` and reproduced in [`docs/engineering-log/ground_truth_final_verdict.md`](docs/engineering-log/ground_truth_final_verdict.md).
 
 ---
 
@@ -579,7 +584,7 @@ If you use ASTRA in your research, please cite it using the information in [`CIT
   title     = {{ASTRA}: Automated Stellar Transient Recognition \& Analysis},
   year      = {2026},
   version   = {1.0.0},
-  url       = {https://github.com/soumyadebtripathy/ASTRA},
+  url       = {https://github.com/Rexy-5097/ASTRA},
   license   = {MIT},
   abstract  = {An end-to-end machine learning pipeline for automated classification
                of stellar variability from TESS light curves, implementing a Hybrid
@@ -598,5 +603,5 @@ This project is licensed under the **MIT License** — see [`LICENSE`](LICENSE) 
 ---
 
 <div align="center">
-<sub>Built with 🔭 by <a href="https://github.com/soumyadebtripathy">Soumyadeb Tripathy</a> · ASTRA v1.0.0 · 2026</sub>
+<sub>Built with 🔭 by <a href="https://github.com/Rexy-5097">Soumyadeb Tripathy</a> · ASTRA v1.0.0 · 2026</sub>
 </div>
